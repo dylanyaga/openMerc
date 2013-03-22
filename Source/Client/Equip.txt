@@ -1,0 +1,57 @@
+
+									Weapon	Prereq								Value					Max Damage		Power
+Bronze Dagger					4			Skill  1, Agil  1, Stre  1         0.20         10000          10
+Steel Dagger					8			Skill 15, Agil 12, Stre  8         1.00         20000          30
+Golden Dagger					12			Skill 30, Agil 16, Stre 10         5.00         30000          60
+Crystal Dagger				16			Skill 45, Agil 24, Stre 14        25.00         40000          90
+Titanium Dagger				24			Skill 60, Agil 30, Stre 18        75.00         40000          90
+
+Bronze Sword					8			Skill  1, Agil  8, Stre  8         0.40
+Bone Sword:               12       Skill 10, Agil 12, Stre 12         0.50
+Steel Sword					16			Skill 15, Agil 12, Stre 16         2.00
+Barbarian Sword           18       Skill 18, Agil 10, Stre 18         5.00
+Golden Sword					24			Skill 30, Agil 16, Stre 32        10.00
+Sword of Stealth          25       Skill 28, Agil 20, Stre 40        15.00
+Crystal Sword					32			Skill 45, Agil 24, Stre 48        50.00
+Titanium Sword				48			Skill 60, Agil 32, Stre 56       250.00
+
+Two-Handed:
+Bronze Two-Handed			12			Skill  1, Agil 10, Stre 12          0.80
+Steel Two-Handed				24			Skill 15, Agil 20, Stre 24          4.00
+Golden Two-Handed			36			Skill 30, Agil 30, Stre 40         20.00
+Crystal Two-Handed			48			Skill 45, Agil 40, Stre 60        100.00
+Titanium Two-Handed			72			Skill 60, Agil 50, Stre 75        500.00	(magical, no-repair)
+
+Two-Handed:
+Wooden Staff					6			Skill  1, Agil  8, Stre  8         0.15
+Steel Staff					12			Skill 15, Agil 12, Stre 12         7.50
+Gold Staff						18			Skill 30, Agil 16, Stre 16       375.00
+Crystal Staff					24			Skill 45, Agil 24, Stre 24    18,750.00
+
+Bronze Axe						10			Skill  1, Agil  8, Stre 15         0.60
+Steel Axe						20			Skill 15, Agil 12, Stre 30         3.00
+Gold Axe						30			Skill 30, Agil 16, Stre 45        15.00
+Crystal Axe					40			Skill 45, Agil 24, Stre 60        75.00
+
+Cloth total					6			Agil  1, Stren  1                  0.60                          10
+each 							1													     0.10
+
+Leather total				  12			Agil 12, Stren 12                  1.20                          17
+each 							2                                           0.20
+
+Bronze total				  18			Agil 16, Stren 16					     2.40                          24
+each								3                                           0.40
+Bronze+Ruby: maxdamage 15000
+
+Steel total				  24			Agil 24, Stren 24					     4.80                          30
+each								4													     0.80
+
+Gold total					  30			Agil 40, Stren 40                 18.00                          60
+each								5                                           3.00
+
+Crystal total				  36			Agil 72, Stren 72                 60.00                          90
+each 						  	6                                          10.00
+
+Titanium total			  48			Agil 90, Stren 90				      300.00
+each								8												       50.00	Magical, No-Repair
+

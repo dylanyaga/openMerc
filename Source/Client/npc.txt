@@ -1,0 +1,63 @@
+errno:
+
+errno is set by svr_act.c only. it contains the result of the last action. the act_xxx() 
+calls set it to ERR_NONE, while the (internally called) plr_xxx calls (or the functions 
+called by them) set it to ERR_SUCCESS or ERR_FAILED.
+If an action fails at act_xxx() level already, errno is set ERR_FAILED as well.
+An action can fail at driver_generic level as well - so ERR_FAILED may be set there 
+already.
+
+group 1 contains all necessary characters which should never get attacked (merchants,
+janitor etc.).
+
+shout codes:
+1:	joe's house
+2:	damor
+3:	cityguard call
+4:	skeleton lord's house
+5:   templar stronghold
+6:   robbers in strange forest
+7:   cityguard outpost
+
+attack groups
+1:	cityguard/janitor etc.
+2:   thieves house
+3:   haunted castle
+4:	cursed tomb
+5:	damors house, skeleton lord's house
+6:   outlaw templars stronghold
+7:   magic maze
+8:   labyrinth: grolm territory (G1)
+9:   joes house
+10:  random dungeon
+11:  labyrinth: lizard jungle (G2)
+12:  ratlings
+13:  labyrinth: spellcaster (G3)
+14:  labyrinth: knight (G4)
+15:  mine level 1
+16:  mine level 2
+17:  mine level 3
+18:  labyrinth: undead (G5)
+19:  dungeon of doors
+20:  respawn mania (special) ???
+21:  kwai clan
+22:  gorn clan
+23:  forest (special) ???
+24:  labyrinth: light and darkness (G6)
+25:  labyrinth: underwater (G7)
+26:  labyrinth: final test (G13)
+27:  black stronghold
+28:  underground 2
+29:  abandoned clan house 1 (ghosts)
+
+special procs:
+1: stunrun (grolmy)
+2: cityattack
+3: malte (black stronghold prisoner)
+
+special sub-procs:
+1: cityguard outpost (in front of black stronghold)
+2: shiva (black stronghold mage)
+3: cityguard gate (attack from black stronghold)
+4: attack is triggered by trap
+5: warn if player has more than 1 unique

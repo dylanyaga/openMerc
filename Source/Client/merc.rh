@@ -1,0 +1,49 @@
+/****************************************************************************
+
+
+tmp.rh
+
+produced by Borland Resource Workshop
+
+
+*****************************************************************************/
+
+#define CURSOR_9	9
+#define CURSOR_8	8
+#define CURSOR_7	7
+#define CURSOR_6	6
+#define CURSOR_5	5
+#define CURSOR_4	4
+#define CURSOR_3	3
+#define CURSOR_2	2
+#define CURSOR_1	1
+#define ICON_1	        1
+#define OPTIONS	        1
+
+#define IDC_DOSOUND	15
+#define IDC_STATUS	42
+#define IDC_NEW	        17
+#define IDC_RNAME	998
+#define IDC_LOAD	20
+#define IDC_SAVE	39
+#define IDC_HELP	40 
+#define IDC_NEWS	41
+#define IDC_CNAME	18
+#define IDC_DESC	21
+#define IDC_MALE	19
+#define IDC_TEMP	23
+#define IDC_HARA	25
+#define IDC_SEY	        26
+#define IDC_MERC	24
+#define IDC_FEMALE	22
+#define IDC_ARCHTEMPLAR 50
+#define IDC_ARCHHARAKIM 51
+#define IDC_SORCERER    52
+#define IDC_MOD	        16
+#define IDC_PASS	27
+#define IDC_DOSHADOW	28
+#define IDC_WARRIOR     53
+#define IDC_FULLALPHA   54
+#define IDC_PARTIALALPHA        55
+#define IDC_NOALPHA     56
+

@@ -1,0 +1,25 @@
+IF_USE:			Determines if an object is usable at all.
+IF_USEACTIVATE:		Object can be activated (using tab 1 then).
+IF_USEDEACTIVATE:	Object can be deactivated (using tab 0 then).
+IF_USEDESTROY:		Destroys object after first use, adds tab 0 to dynamic
+			values, tab 1 to base values and tab 2 to race
+			maximums.
+
+Driver:
+1:			create item: using it creates item nr data[0] if objects reference by data[1]...data[9] exist (mine walls)
+2:			door: active/deactivate toggles move/sightblock, if
+			   data[0] and data[1] is set, it needs data[0] item to activate/
+			   deactivate it. It uses data[1] to remember if it is locked.
+			   if data[2] is set, the lock can be picked. data[2] determines
+			   the power of the lock
+3:			lock-pick, data[0] is strength (skill bonus)
+4:         potion mixes
+5:         stone sword special, data[0] is item to create
+
+33:        data[0]=pentagram nr
+           data[1]=created NPC
+           data[2]=created NPC
+           data[3]=created NPC
+
+           data[8]=char who activated it last time
+           data[9]=difficulty level

@@ -1,0 +1,31 @@
+0: templar m
+1: seyan m
+2: hara m
+3: merc m
+4: hara f
+5: merc f
+6: temp f
+7: ghost
+8: skeleton
+9: seyan f
+10: grolm
+11: lizard
+12: ratling
+13: ghost comp
+15: golem
+16: gargoyle
+17: undead
+18: spider
+19: ice garg
+20: flame
+21: arch templar m
+22: arch templar f
+23: warrior m
+24: warrior f
+25: sorcerer f
+26: sorcerer m
+27: arch hara m
+28: arch hara f
+29: greenling
+30: minor god m
+

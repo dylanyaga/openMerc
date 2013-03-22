@@ -1,0 +1,83 @@
+
+Please read the LICENSE
+
+There is a bug somewhere if the server finds lost items (garbage collection) or
+lost links!
+
+Take great care not to call act_xxx() twice from a driver!
+
+MAXCHARS may not exceed 0x7fff since 0x8000 is used as a flag for
+do_look_depot() in svr_do and svr_tick
+
+usage of data for players:
+
+0:      away from keyboard
+1-9:    group with X,Y...
+10:     following X
+11:     no fightback
+12:     follow suspension timeout
+13:     money in bank
+14:     number of deaths
+15:     killed by X
+16:      date
+17:      area
+18:     current experience for pentagramas
+19:     lag timer
+20:     highest gorge solved
+21:     seyan'du sword: bits of shrines already used
+22:     current monster in arena
+
+23:     overall kill counter - below own rank
+24:     overall kill counter - at own rank
+25:     overall kill counter - above own rank
+
+26:     black stronghold kill counter - below own rank
+27:     black stronghold kill counter - at own rank
+28:     black stronghold kill counter - above own rank
+29:     other players killed outside of arena
+
+30-39:  soft ignore list
+
+40:     shopkeepers etc. killed
+41:     black stronghold points already spent
+
+42:     group
+
+43:     black candles returned
+44:     number of times X was saved by the gods
+
+45:     level X got hp/end/mana bonus for
+
+46-49:  Flags of explorer points we visited (1,2,4,8,16)
+
+
+50-59:  hard ignore list
+
+60-63:  Flags of killed NPC of certain class
+
+64:     current ghost companion
+65:     player #ALLOWed to search corpse
+66:     Corpse's owner
+67:     Riddle giver (lab 9)
+68:     Date of last player attack (CHD_ATTACKTIME)
+69:     Last player attacked       (CHD_ATTACKVICT)
+70:	number of fire points
+71:     number of says/tells/looks/lights
+72:     bad word score
+
+80-89:	seen logging in from these class C nets
+
+90:     number in database
+
+92:     reserved
+96:     queued spells
+97:     computation time used last action
+98:     computation time used
+99:     used by populate
+
+Text:
+
+(0-2 are clobbered by login)
+0:      afk message
+
+3:      mark message

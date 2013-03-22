@@ -1,0 +1,482 @@
+<H1>The CGI-LIB Library</H1>
+<H2>An ANSI C Library for CGI Programming</H2>
+
+<BR><BR>
+<H3>Table of Contents</H3>
+<UL>
+<LI><A HREF="#index1">What is CGI-LIB?</A>
+	<UL>
+	<LI><A HREF="#index1a">Description</A>
+	<LI><A HREF="#index1b">Files included in this package</A>
+	</UL>
+<LI><A HREF="#index2">Obtaining CGI-LIB</A>
+<LI><A HREF="#index3">Installation</A>
+<LI><A HREF="#index4">Using CGI-LIB</A>
+<LI><A HREF="#index5">Functions</A>
+	<UL>
+	<LI><A HREF="#index5a">cgi-lib.h</A>
+	<LI><A HREF="#index5b">html-lib.h</A>
+	</UL>
+<LI><A HREF="#index6">Example Programs</A>
+<LI><A HREF="#index7">Miscellaneous</A>
+	<UL>
+	<LI><A HREF="#index7a">Release Notes</A>
+	<LI><A HREF="#index7b6">What is New in version 1.4</A>
+	<LI><A HREF="#index7b5">What is New in version 1.3</A>
+	<LI><A HREF="#index7b4">What is New in version 1.2</A>
+	<LI><A HREF="#index7b3">What is New in version 1.1</A>
+	<LI><A HREF="#index7b2">What is New in version 1.01</A>
+	<LI><A HREF="#index7b1">What is New in version 1.0</A>
+	<LI><A HREF="#index7c">Future Releases</A>
+	<LI><A HREF="#index7d">License</A>
+	<LI><A HREF="#index7e">Credits</A>
+	</UL>
+</UL>
+
+<HR>
+<H2><A NAME="index1">What is CGI-LIB?</A></H2>
+<H3><A NAME="index1a">Description</A></H3>
+<P>CGI-LIB is a <B>free</B> ANSI C library that will facilitate the creation of CGI programs.
+The library is written entirely in C using ANSI C functions.  The functions are easy to use and
+the source code is included.</P>
+<P>CGI-LIB was was originally written by Noel V Aguilar and was released to the public domain.
+In February of 2004 I found and fixed a small bug. After contacting the original author, I
+decided to fix and distribute this new version. It is now distributed as Open Source under
+the GPL.</P>
+<H3><A NAME="index1b">Files Included in this Package</A></H3>
+<P>This package contains several files. Below is a list of all these files with a brief description
+of their purpose.
+<UL>
+<LI><B>makefile:</B> File used to build the library.
+<LI><B>cgi-lib.h:</B> A header file that contains the function declarations that will be used in
+building a cgi program.
+<LI><B>html-lib.h:</B> A header file that contains the function declarations that will be used in
+buildiing the html part of a cgi program.
+<LI><B>html-priv.h:</B> A private header file used by CGI-LIB
+<LI><B>lib-list.h:</B> A header file that will help with the creation and maintenance of the linked list use
+by CGI-LIB.
+<LI><B>cgi-lib.c:</B> The functions that will assist in the creation and manipulation of CGI Data are here.
+<LI><B>html-lib.c:</B> The functions that will assist in the creation of the html CGI routines are in this file
+<LI><B>list-lib.c:</B> The functions that will create and maintain teh linked list are located in this file.
+<LI><B>cgi-lib.html:</B> This documentation in an html format.
+</UL>
+
+<HR>
+<H2><A NAME="index2">Obtaining CGI-LIB</A></H2>
+<P>You may obtain the CGI-LIB library by clicking on any of the two links located below, all the source
+code is included along with the makefile to compile the program.
+<P>ZIP Format
+<P>To unzip the file you:
+<UL>
+<LI>unzip &lt;filename.zip&gt;
+</UL>
+<P>TAR Format
+<P>To uncompress files with a gz extension:
+<UL>
+<LI>gunzip &lt;filename.tar.gz&gt;
+<LI>tar -xvf &lt;filename.tar&gt;
+</UL>
+
+<HR>
+<H2><A NAME="index3">Installation</A></H2>
+<P>The library needs to be compiled, a makefile is included in the distribution.  Please modify
+the makefile accordingly and run <I>make</I>.  The final output will be an archive file.
+<P>You may install the compiled archive file in your lib subdirectory and the corresponding header
+files in your include subdirecory, or you may place in a directory and call them from there when
+building your CGI program.
+<HR>
+<H2><A NAME="index4">Using CGI-LIB</A></H2>
+<P>Once you have your archive file you may delete the rest of the files except the archive file,
+cgi-lib.h, html-lib.h and list-lib.h.
+<P>In order to use the library all you will need is the archive file and to include the cgi-lib.h and
+the html-lib.h file in your cgi program.  As mentioned earlier, the html-lib.h file contains functions
+that will help you in writing html.  If you do not wish to use these functions you do not need to include
+this header file in your program.  You will need to include the cgi-lib.h file in order to make use of the
+cgi data manipulation functions.  You can find an example program below.
+<P>One of the important things that you must also do is to declare a variable of type pointer to LIST
+in order to maintian track of the linked list the CGI-LIB library will create. ie: LIST *head;
+<HR>
+<H2><A NAME="index5">Functions</A></H2>
+<P>The CGI-LIB library has a variety of functions that will assist you in generating html and
+manipulating CGI data.  The cgi-lib.h file has the declarations of the functions that can be used
+to help create and manipulate CGI data, and the html-lib.h file has the declarations of the functions
+that will help you generate html.
+<H3><A NAME="index5a">cgi-lib.h</A></H3>
+<P>The following Environment Variables are declared and can be used:
+<UL>
+<LI> GATEWAY_INTERFACE
+<LI> SERVER_PROTOCOL
+<LI> PATH_INFO
+<LI> PATH_TRANSLATED
+<LI> QUERY_STRING
+<LI> CONTENT_TYPE
+<LI> CONTENT_LENGTH
+<LI> REQUEST_METHOD
+<LI> SERVER_SOFTWARE
+<LI> SERVER_NAME
+<LI> SERVER_ADMIN
+<LI> SERVER_PORT
+<LI> SCRIPT_NAME
+<LI> DOCUMENT_ROOT
+<LI> REMOTE_HOST
+<LI> REMOTE_ADDR
+<LI> REMOTE_USER
+<LI> REMOTE_GROUP
+<LI> AUTH_TYPE
+<LI> REMOTE_IDENT
+<LI> HTTP_ACCEPT
+<LI> HTTP_COOKIE
+<LI> HTTP_ACCEPT_LANGUAGE
+<LI> HTTP_REFERER
+<LI> HTTP_USER_AGENT
+</UL>
+<P>The following functions can be used to manipulate CGI data.  When I refer to a True value
+I am referring to a non-zero value (in the case of CGI-LIB: 1), and when I refer to a False
+value, I am referring to zero value.
+<UL>
+<LI>int is_form_empty();
+<DL>
+<DD>The is_form_empty() function will return a True if the form is empty and no data exist, or it
+will return False.  This sub can be used to test to see if the form is empty so we don't waste time
+by calling cgi_input_parse().
+</DL>
+<BR>
+<LI>void cgi_env(void);
+<DL>
+<DD>The cgi_env() function will print out the current environment variables mentioned above.  They
+are being sent out in a Definition List format and without any mime_types or other HTML tags.
+</DL>
+<BR>
+<LI>void cgi_err(char *msg1, char *msg2);
+<DL>
+<DD>The cgi_err() function will compose an error message for the application to display to the user.  It
+sends the proper mime types to the server when used and it terminates the CGI program.  The *msg1 variable
+is the text that will go between H1 tags and the *msg2 variable is the text that will go between H2 tags.
+When this function is called, the text contained in *msg2 will also be sent to stderr.
+</DL>
+<BR>
+<LI>LIST *cgi_input_parse(void);
+<DL>
+<DD>The cgi_input_parse() function should be one of the first functions called in the CGI program.  This
+function will take the raw data passed from the browser to the server and converts it to an understandable
+manner while adding it to a linked list which the user will be able to manipulate through the use
+of different functions. The current methods supported are the GET and POST and method.
+<DD>This function should be initialized at the beginning of the calling program, in order to get
+the data into the linked list and be able to use it.  The value returned by the function will be
+a pointer to the beginning of the list or a NULL if the list was not created (possible because there
+was no data to add).  The user needs only to create a pointer variable of type LIST and have the
+function assign its value to this pointer variable.
+</DL>
+<BR>
+<LI>void list_print(LIST *head);
+<DL>
+<DD>This function will print out the key/value paris in the linked list.  The data is formatted in
+a Definition List format without any headers beign printed out.  The LIST pointer variable is the
+data that needs to be passed.
+</DL>
+<BR>
+<LI>void list_clear(LIST *head);
+<DL>
+<DD>The list_clear() function will clear the linked list and free up the memory.  The LIST pointer
+variable is the data that needs to be passed.
+</DL>
+<BR>
+<LI>long list_count(LIST *head);
+<DL>
+<DD>The list_count() function will return the number of items that exist in the linked list.  The LIST
+pointer variable is the data that needs to be passed.
+</DL>
+<BR>
+<LI>int list_delete_entry(LIST *head, char *key, char *value);
+<DL>
+<DD>The list_delete_entry() function will delete the specified entry in the list, if NULL is supplied
+for the value then the first key found will be deleted, if NULL is supplied for the key then the first
+matching value will be deleted, if the both the key and value are supplied then the key and value must
+match in order for the node entry to be deleted.  A false value will be returned if the deletion was
+not successful and a non-zero value will be returned if it was successful. The LIST pointer variable,
+as well as a key and value is the data that needs to be passed.
+</DL>
+<BR>
+<LI>int list_delete_key_multi(LIST *head, char *key);
+<DL>
+<DD>The list_delete_key_multi() function will delete the list of specified entries based on the key
+passed.  This function should be used when multiple entries with one named key exist.  A False will
+be returned if the deletion was not successful, and a True will be returned if it was successful at
+deleting all the items, assuming any were found. The LIST pointer variable and a key is the data that
+needs to be passed.
+</DL>
+<BR>
+<LI>int list_delete_val_multi(LIST *head, char *value);
+<DL>
+<DD>The list_delete_val_multi() function will delete the list of specified entries based on the value
+passed.  This function should be used when multiple entries with one named value exist.  A False will
+be returned if the deletion was not successful, and a True will be returned if it was successful at
+deleting all the items, assuming any were found. The LIST pointer variable and a value is the data that
+needs to be passed.
+</DL>
+<BR>
+<LI>char *find_val(LIST *head, char *key);
+<DL>
+<DD>The find_val() function will search the linked list and return the value string in the first node
+that it finds that matches the specified key.  If none are found then NULL will be returned. The LIST
+pointer variable and a key is the data that needs to be passed.
+</DL>
+<BR>
+<LI>char *find_key(LIST *head, char *value);
+<DL>
+<DD>The find_key()  function will search the linked list and return the key string in the first node
+that it finds that matches the specified value.  If none are found the NULL will be returned.  The LIST
+pointer variable and a value is the data that needs to be passed.
+</DL>
+<BR>
+<LI>long find_val_multi(LIST *head, char *key, char ***Vals);
+<DL>
+<DD>The find_val_multi() function will search the linked list and build a list of value strings that were
+found that matched the specified key.  The value returned will be the number of items found, if the return
+value is 0 then no items were found, if the value is greater than 0 then items were found and the strings
+are contained in ***Vals, this variable is one that is declared by the user of type &quot;char **Vals&quot;
+and when it is being passed to the function it should be passed as &quot;&amp;Vals&quot;. So this function
+takes three parameters, the LIST pointer variable, the key to search for, and a pointer to a pointer variable
+of type char that will hold the data found.
+</DL>
+<BR>
+<LI>long find_key_multi(LIST *head, char *value, char ***Vals);
+<DL>
+<DD>The find_key_multi() function will search the linked list and build a list of key strings that were
+found that matched the specified value.  The value returned will be the number of items found, if the return
+value is 0 then no items were found, if the value is greater than 0 then items were found and the strings
+are contained in ***Vals, this variable is one that is declared by the user of type &quot;char **Vals&quot;
+and when it is being passed to the function it should be passed as &quot;&amp;Vals&quot;. So this function
+takes three parameters, the LIST pointer variable, the value to search for, and a pointer to a pointer variable
+of type char that will hold the data found.
+</DL>
+</UL>
+<H3><A NAME="index5b">html-lib.h</A></H3>
+<UL>
+<BR>
+<LI>void mime_header(char *mime)
+<DL>
+<DD>The mime_header() function will receive as a parameter the mime type that
+should be sent out to the server.  ie: text/html
+</DL>
+<BR>
+<LI>void html_begin(char *title, char *attributes);
+<DL>
+<DD>The html_begin() function will diplay the top part of an html page, meaning
+everything in the HEAD tags.  The title parameter is the title to be displayed between the TITLE tags
+and the attributes parameter is being used to display embedded text in the BODY tag.  Such as what the
+background color should be or a gif to display as the background graphic.  If you do not want a title or
+have attributes to display then NULL should be passed for the specified parameter.
+</DL>
+<BR>
+<LI>void h1(char *str);
+<DL>
+<DD>The h1() function will displayed the text passed to it between the H1 tags.
+</DL>
+<BR>
+<LI>void h2(char *str);
+<DL>
+<DD>The h2() function will displayed the text passed to it between the H2 tags.
+</DL>
+<BR>
+<LI>void h3(char *str);
+<DL>
+<DD>The h3() function will displayed the text passed to it between the H3 tags.
+</DL>
+<BR>
+<LI>void h4(char *str);
+<DL>
+<DD>The h4() function will displayed the text passed to it between the H4 tags.
+</DL>
+<BR>
+<LI>void h5(char *str);
+<DL>
+<DD>The h5() function will displayed the text passed to it between the H5 tags.
+</DL>
+<BR>
+<LI>void h6(char *str);
+<DL>
+<DD>The h6() function will displayed the text passed to it between the H6 tags.
+</DL>
+<BR>
+<LI>void hidden(char *name, char *value);
+<DL>
+<DD>The hidden() function will receive two values as parameters, the name of the hidden field and
+the value that should go along with the name, it will write out this hidden field with the corresponding
+tags.
+</DL>
+<BR>
+<LI>void html_end(void);
+<DL>
+<DD>The html_end() function will not receive any parameters, all this function will do is
+to close the bottom of the html page with the proper closing BODY and HTML tags.
+</DL>
+<BR>
+<LI>void location(char *loc);
+<DL>
+<DD>The location() function will receive a URL as a parameter, and it will redirect the browser
+to the specified location.
+</DL>
+</UL>
+<HR>
+<H2><A NAME="index6">Example Programs</A></H2>
+<P>Below is a sample program using some of the functions described above.  Please look at the
+program code in order to get a better understanding, the code is documented.</P>
+<BR>
+<CODE>
+<PRE>
+#include &lt;stdio.h&gt;<BR>
+#include &quot;cgi-lib.h&quot; /* include the cgi-lib.h header file */<BR>
+#include &quot;html-lib.h&quot; /* include the html-lib.h header file */<BR>
+<BR>
+int main()<BR>
+{<BR>
+	/* need to declare a pointer variable of type LIST to keep track of our list */<BR>
+	LIST *head;<BR>
+<BR>
+	/* need to call this function at the beginning to initiate and setup out list */<BR>
+	head = cgi_input_parse();<BR>
+<BR>
+	/* send the mime header to the server using our function in html-lib */<BR>
+	mime_header(&quot;text/html&quot;);<BR>
+<BR>
+	/* send the top of our html page to the server */<BR>
+	html_begin(&quot;CGI Sample Application&quot;,NULL);<BR>
+<BR>
+	/* send the text enclosed in the heading tags */<BR>
+	h1(&quot;CGI Sample Application&quot;);<BR>
+<BR>
+	/* send break lines */<BR>
+	printf(&quot;&lt;BR&gt;&lt;BR&gt;\n&quot;);<BR>
+<BR>
+	/* send the text enclosed in the heading tags */<BR>
+	h2(&quot;Parsed Values&quot;);<BR>
+<BR>
+	/*<BR>
+	we need to check if head is NULL, this will tell us if we have<BR>
+	any data in our linked list, if it is NULL then we don't need  to<BR>
+	call any other CGI-LIB functions because there is nothing to do.<BR>
+	*/<BR>
+	if(head == NULL)<BR>
+		h3(&quot;List Empty&quot;);<BR>
+	else<BR>
+		list_print(head);<BR>
+<BR>
+	printf(&quot;&lt;HR&gt;\n&quot;);<BR>
+<BR>
+	/* send text enclosed in heading tags */<BR>
+	h2(&quot;Environment Variables&quot;);<BR>
+<BR>
+	/* print out all the environment variables */<BR>
+	cgi_env();<BR>
+<BR>
+	/* send the html closing tags */<BR>
+	html_end();<BR>
+<BR>
+	return 0;<BR>
+}
+</PRE>
+</CODE>
+<BR>
+<P>Below is a sample makefile that you can use in order to compile your application</P>
+<CODE>
+<PRE>
+# CGI-LIB Library Sample Makefile<BR>
+#<BR>
+# This is a sample makefile that will help you<BR>
+# include the CGI-LIB library in your cgi script.<BR>
+# The CGI-LIB library must already be compiled,<BR>
+# before you you use it.<BR>
+<BR>
+# CC is the variable that will contain your compiler<BR>
+CC=gcc<BR>
+CCFLAGS=-o<BR>
+<BR>
+# CGI is the variable that contains the cgi file name<BR>
+CGI=cgisamp.cgi<BR>
+<BR>
+# CGI-LIB-ARCHIVE contains the path and name of CGI-LIB<BR>
+CGI-LIB-ARCHIVE=cgi-lib.a<BR>
+<BR>
+# CGI-LIB-HEADERS contains the path and names of your header files<BR>
+CGI-LIB-HEADERS=html-lib.h cgi-lib.h list-lib.h<BR>
+<BR>
+all:$(CGI)<BR>
+<BR>
+$(CGI): cgisamp.c $(CGI-LIB-HEADERS)<BR>
+        $(CC) $(CCFLAGS) $@ cgisamp.c $(CGI-LIB-ARCHIVE)
+</PRE>
+</CODE>
+<HR>
+<H2><A NAME="index7">Miscellaneous</A></H2>
+<H3><A NAME="index7a">Release Notes</A></H3>
+<P>CGI-LIB has been compiled and tested on unix (HP-UX and Linux) using the GNU compiler, it
+has been compiled and tested on Windows NT 4.0 using Visual C++ 4.2, 5.0, and 6.0, and also under
+Windows 2000 using the FREE Borland C++ 5.5 compiler.
+<P>For Updates please check <a href="http://www.joeldare.com/page.cgi?p=cgilib">
+http://www.joeldare.com/page.cgi?p=cgilib</a>.
+<H3><A NAME="index7b6">What's New in Release 2.0</A></H3>
+<UL>
+	<LI>This version is now maintained by Joel R. Dare
+	<LI>Fixed an error in the <I>is_form_empty()</I> prototype
+	<LI>Released under the Open Source GPL license
+</UL>
+<H3><A NAME="index7b6">What's New in Release 1.4</A></H3>
+<UL>
+	<LI>Fixed compililation errors with the Borland BCC32 Compiler.
+</UL>
+</H3>
+<H3><A NAME="index7b5">What's New in Release 1.3</A></H3>
+<UL>
+	<LI>Fixed another bug in the Compare function that is used to insert items into the linked list.
+		used to maintain the key/pair values.  Thanks to Mark J. and Eric H. for this report.
+	<LI>Fixed a bug in the is_form_empty() function.  On some systems a the application
+		cgi library would cause the application to crash when testing from the command line and not
+		having the the environment variables set.  Thanks to Oscar F. for this report.
+</UL>
+<H3><A NAME="index7b4">What's New in Release 1.2</A></H3>
+<UL>
+	<LI>Fixed a bug in the Compare() function that is used to insert items into the linked list
+		used to maintain the key/pair values.  The bug might not insert a value into the linked
+		list if the strcmp() result was not -1,0, 1.  It was due to my misunderstanding of the
+		result of the strcmp() function. This problem has been fixed.  Thanks to Euge for this
+		bug report.
+	<LI>Fixed a bug in the cgi_input_parse() function that will cause a core dump on some systems
+		if you test a CGI that uses the library from the command line without first setting the
+		CGI environment variables.  Mainly REQUEST_METHOD.  Thanks to Bill F. for this bug report.
+	<LI>Fixed a bug in the list_delete_entry() function that would not allow it to compile because
+		certain compilers do not allow non-constant initializers.  Thanks to Georg and Marco for
+		this report.
+	<LI>Added some return statements two a couple functions.  These return statements do not affect
+		the function of the library.  They are there so certain compilers will not issue warnings.
+</UL>
+<H3><A NAME="index7b3">What's New in Release 1.1</A></H3>
+<P>Fixed a bug in html_begin(), the attributes being passed for the body tag were not being displayed.
+<H3><A NAME="index7b2">What's New in Release 1.01</A></H3>
+<P>Updated documentation with a sample makefile and inform that list-lib.h should
+not be deleted once the library has been created.  Since it is declared in cgi-lib.h
+<H3><A NAME="index7b1">What's New in Release 1.0</A></H3>
+<P>Initial Release
+<H3><A NAME="index7c">Future Releases</A></H3>
+<UL>
+<LI>Additional HTML functionality
+<LI>File Upload Capability
+<LI>Support for Creating Cookies
+<LI>Support for Reading Cookies
+<LI>Support for Encoding data (ie: urlencode)
+</UL>
+<H3><A NAME="index7d">License</A></H3>
+<P>This program is free software; you can redistribute it and/or modify it under the terms of
+the GNU General Public License as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.</P>
+<P>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See
+the GNU General Public License for more details.</P>
+<P>A copy of the GNU General Public License is available <a href="license.txt">here</a>. You
+can also get a copy by writing to the Free Software Foundation, Inc., 59 Temple Place, Suite
+330, Boston, MA 02111-1307 USA</P>
+<H3><A NAME="index7e">Credits</A></H3>
+<UL>
+<LI>Originally developed by Noel V Aguilar
+<LI>Currently Maintained by Joel R. Dare
+</UL>

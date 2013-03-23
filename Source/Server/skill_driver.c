@@ -1110,7 +1110,7 @@ void skill_blast(int cn)
 
         if (chance(cn,18)) {
                 if (cn!=co && ch[co].skill[SK_SENSE][5]>ch[cn].skill[SK_BLAST][5]+5) {
-                        do_char_log(co,1,"%s tried to cast blast on you but failed.\n",ch[cn].reference);
+                        do_char_log(co,0,"%s tried to cast blast on you but failed.\n",ch[cn].reference);
                         if (!IS_IGNORING_SPELLS(co)) do_notify_char(co,NT_GOTMISS,cn,0,0,0);
                 }
                 return;
@@ -1328,7 +1328,7 @@ void skill_stun(int cn)
 
         if (chance_base(cn,ch[cn].skill[SK_STUN][5],12,ch[co].skill[SK_RESIST][5])) {
                 if (cn!=co && ch[co].skill[SK_SENSE][5]>ch[cn].skill[SK_STUN][5]+5) {
-                        do_char_log(co,1,"%s tried to cast stun on you but failed.\n",ch[cn].reference);
+                        do_char_log(co,0,"%s tried to cast stun on you but failed.\n",ch[cn].reference);
                         if (!IS_IGNORING_SPELLS(co)) do_notify_char(co,NT_GOTMISS,cn,0,0,0);
                 }
                 return;
@@ -1435,7 +1435,7 @@ void skill_dispel(int cn)
 
         if (chance_base(cn,spell_race_mod(ch[cn].skill[SK_DISPEL][5],ch[cn].kindred),12,pwr)) {
                 if (cn!=co && ch[co].skill[SK_SENSE][5]>ch[cn].skill[SK_DISPEL][5]+5)
-                        do_char_log(co,1,"%s tried to cast dispel magic on you but failed.\n",ch[cn].reference);
+                        do_char_log(co,0,"%s tried to cast dispel magic on you but failed.\n",ch[cn].reference);
                 return;
         }
 
@@ -1522,7 +1522,7 @@ void skill_ghost(int cn)
 
         if (chance(cn,15)) {
                 if (co && cn!=co && ch[co].skill[SK_SENSE][5]>ch[cn].skill[SK_GHOST][5]+5) {
-                        do_char_log(co,1,"%s tried to cast ghost companion on you but failed.\n",ch[cn].reference);
+                        do_char_log(co,0,"%s tried to cast ghost companion on you but failed.\n",ch[cn].reference);
                         if (!IS_IGNORING_SPELLS(co)) do_notify_char(co,NT_GOTMISS,cn,0,0,0);
                 }
                 return;

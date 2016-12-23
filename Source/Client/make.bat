@@ -2,6 +2,8 @@
 SET BINPATH=C:\Borland\BCC55\Bin
 SET INCPATH=C:\Borland\BCC55\Include
 SET LIBPATH=C:\Borland\BCC55\Lib
+SET OUTPATH=openMerc
+rmdir %OUTPATH%
 echo Compiling Source
 %BINPATH%\bcc32.exe -I%INCPATH% -Izlib -O2 -5 -d -ff -k- -OS -Q -X -W -WM -c dd.c -o dd.obj
 %BINPATH%\bcc32.exe -I%INCPATH% -Izlib -O2 -5 -d -ff -k- -OS -Q -X -W -WM -c engine.c -o engine.obj
@@ -18,4 +20,18 @@ echo Linking
 echo Removing .objs
 del *.obj
 echo Finished
+
+
+echo Packaging Client
+
+mkdir %OUTPATH%
+mkdir %OUTPATH%\gfx
+mkdir %OUTPATH%\sfx
+
+copy  merc.exe %OUTPATH%
+copy "..\..\Resources\Packaged Graphics\*.dat" %OUTPATH%
+copy "..\..\Resources\Packaged Graphics\*.idx" %OUTPATH%
+copy "..\..\Resources\Sound\sfx\*.*" %OUTPATH%\sfx
+
+
 pause

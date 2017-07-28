@@ -2,8 +2,8 @@
  *
  *  Copyright (C) 1995-1997 Microsoft Corporation.  All Rights Reserved.
  *
- *  File:	d3dtypes.h
- *  Content:	Direct3D types include file
+ *  File:  d3dtypes.h
+ *  Content:  Direct3D types include file
  *
  ***************************************************************************/
 
@@ -63,8 +63,8 @@ typedef LONG D3DFIXED;
 #define D3DRGB(r, g, b) \
     (0xff000000L | ( ((long)((r) * 255)) << 16) | (((long)((g) * 255)) << 8) | (long)((b) * 255))
 #define D3DRGBA(r, g, b, a) \
-    (	(((long)((a) * 255)) << 24) | (((long)((r) * 255)) << 16) \
-    |	(((long)((g) * 255)) << 8) | (long)((b) * 255) \
+    (  (((long)((a) * 255)) << 24) | (((long)((r) * 255)) << 16) \
+    |  (((long)((g) * 255)) << 8) | (long)((b) * 255) \
     )
 
 /*
@@ -107,56 +107,56 @@ typedef DWORD D3DTEXTUREHANDLE, *LPD3DTEXTUREHANDLE;
 typedef DWORD D3DMATRIXHANDLE, *LPD3DMATRIXHANDLE;
 
 typedef struct _D3DCOLORVALUE {
-	 union {
-	D3DVALUE r;
-	D3DVALUE dvR;
-	 } a;
-	 union {
-	D3DVALUE g;
-	D3DVALUE dvG;
-	 } b;
-	 union {
-	D3DVALUE b;
-	D3DVALUE dvB;
-	 } c;
-	 union {
-	D3DVALUE a;
-	D3DVALUE dvA;
-	 } d;
+   union {
+  D3DVALUE r;
+  D3DVALUE dvR;
+   } a;
+   union {
+  D3DVALUE g;
+  D3DVALUE dvG;
+   } b;
+   union {
+  D3DVALUE b;
+  D3DVALUE dvB;
+   } c;
+   union {
+  D3DVALUE a;
+  D3DVALUE dvA;
+   } d;
 } D3DCOLORVALUE, *LPD3DCOLORVALUE;
 
 typedef struct _D3DRECT {
     union {
-	LONG x1;
-	LONG lX1;
-	 } a;
-	 union {
-	LONG y1;
-	LONG lY1;
-	 } b;
-	 union {
-	LONG x2;
-	LONG lX2;
-	 } c;
-	 union {
-	LONG y2;
-	LONG lY2;
-	 } d;
+  LONG x1;
+  LONG lX1;
+   } a;
+   union {
+  LONG y1;
+  LONG lY1;
+   } b;
+   union {
+  LONG x2;
+  LONG lX2;
+   } c;
+   union {
+  LONG y2;
+  LONG lY2;
+   } d;
 } D3DRECT, *LPD3DRECT;
 
 typedef struct _D3DVECTOR {
     union {
-	D3DVALUE x;
-	D3DVALUE dvX;
-	 } a;
-	 union {
-	D3DVALUE y;
-	D3DVALUE dvY;
-	 } b;
-	 union {
-	D3DVALUE z;
-	D3DVALUE dvZ;
-	 } c;
+  D3DVALUE x;
+  D3DVALUE dvX;
+   } a;
+   union {
+  D3DVALUE y;
+  D3DVALUE dvY;
+   } b;
+   union {
+  D3DVALUE z;
+  D3DVALUE dvZ;
+   } c;
 #if (defined __cplusplus) && (defined D3D_OVERLOADS)
 
 public:
@@ -256,17 +256,17 @@ public:
 typedef struct _D3DHVERTEX {
     DWORD           dwFlags;        /* Homogeneous clipping flags */
     union {
-	D3DVALUE    hx;
-	D3DVALUE    dvHX;
-	 } a;
-	 union {
-	D3DVALUE    hy;
-	D3DVALUE    dvHY;
-	 } b;
-	 union {
-	D3DVALUE    hz;
-	D3DVALUE    dvHZ;
-	 } c;
+  D3DVALUE    hx;
+  D3DVALUE    dvHX;
+   } a;
+   union {
+  D3DVALUE    hy;
+  D3DVALUE    dvHY;
+   } b;
+   union {
+  D3DVALUE    hz;
+  D3DVALUE    dvHZ;
+   } c;
 } D3DHVERTEX, *LPD3DHVERTEX;
 
 /*
@@ -274,43 +274,43 @@ typedef struct _D3DHVERTEX {
  */
 typedef struct _D3DTLVERTEX {
     union {
-	D3DVALUE    sx;             /* Screen coordinates */
-	D3DVALUE    dvSX;
-	 } a;
-	 union {
-	D3DVALUE    sy;
-	D3DVALUE    dvSY;
-	 } b;
-	 union {
-	D3DVALUE    sz;
-	D3DVALUE    dvSZ;
-	 } c;
-	 union {
-	D3DVALUE    rhw;	    /* Reciprocal of homogeneous w */
-	D3DVALUE    dvRHW;
-	 } d;
-	 union {
-	D3DCOLOR    color;          /* Vertex color */
-	D3DCOLOR    dcColor;
-	 } e;
-	 union {
-	D3DCOLOR    specular;       /* Specular component of vertex */
-	D3DCOLOR    dcSpecular;
-	 } f;
-	 union {
-	D3DVALUE    tu;             /* Texture coordinates */
-	D3DVALUE    dvTU;
-	 } g;
-	 union {
-	D3DVALUE    tv;
-	D3DVALUE    dvTV;
-	 } h;
+  D3DVALUE    sx;             /* Screen coordinates */
+  D3DVALUE    dvSX;
+   } a;
+   union {
+  D3DVALUE    sy;
+  D3DVALUE    dvSY;
+   } b;
+   union {
+  D3DVALUE    sz;
+  D3DVALUE    dvSZ;
+   } c;
+   union {
+  D3DVALUE    rhw;      /* Reciprocal of homogeneous w */
+  D3DVALUE    dvRHW;
+   } d;
+   union {
+  D3DCOLOR    color;          /* Vertex color */
+  D3DCOLOR    dcColor;
+   } e;
+   union {
+  D3DCOLOR    specular;       /* Specular component of vertex */
+  D3DCOLOR    dcSpecular;
+   } f;
+   union {
+  D3DVALUE    tu;             /* Texture coordinates */
+  D3DVALUE    dvTU;
+   } g;
+   union {
+  D3DVALUE    tv;
+  D3DVALUE    dvTV;
+   } h;
 #if (defined __cplusplus) && (defined D3D_OVERLOADS)
-	 _D3DTLVERTEX() { }
-	 _D3DTLVERTEX(const D3DVECTOR& v, float _rhw,
-					  D3DCOLOR _color, D3DCOLOR _specular,
-					  float _tu, float _tv)
-		  { sx = v.x; sy = v.y; sz = v.z; rhw = _rhw;
+   _D3DTLVERTEX() { }
+   _D3DTLVERTEX(const D3DVECTOR& v, float _rhw,
+            D3DCOLOR _color, D3DCOLOR _specular,
+            float _tu, float _tv)
+      { sx = v.x; sy = v.y; sz = v.z; rhw = _rhw;
           color = _color; specular = _specular;
           tu = _tu; tv = _tv;
         }
@@ -322,43 +322,43 @@ typedef struct _D3DTLVERTEX {
  */
 typedef struct _D3DLVERTEX {
     union {
-	D3DVALUE     x;             /* Homogeneous coordinates */
-	D3DVALUE     dvX;
-	 } a;
-	 union {
-	D3DVALUE     y;
-	D3DVALUE     dvY;
-	 } b;
-	 union {
-	D3DVALUE     z;
-	D3DVALUE     dvZ;
-	 } c;
-	 DWORD            dwReserved;
-	 union {
-	D3DCOLOR     color;         /* Vertex color */
-	D3DCOLOR     dcColor;
-	 } d;
-	 union {
-	D3DCOLOR     specular;      /* Specular component of vertex */
-	D3DCOLOR     dcSpecular;
-	 } e;
-	 union {
-	D3DVALUE     tu;            /* Texture coordinates */
-	D3DVALUE     dvTU;
-	 } f;
-	 union {
-	D3DVALUE     tv;
-	D3DVALUE     dvTV;
-	 } g;
+  D3DVALUE     x;             /* Homogeneous coordinates */
+  D3DVALUE     dvX;
+   } a;
+   union {
+  D3DVALUE     y;
+  D3DVALUE     dvY;
+   } b;
+   union {
+  D3DVALUE     z;
+  D3DVALUE     dvZ;
+   } c;
+   DWORD            dwReserved;
+   union {
+  D3DCOLOR     color;         /* Vertex color */
+  D3DCOLOR     dcColor;
+   } d;
+   union {
+  D3DCOLOR     specular;      /* Specular component of vertex */
+  D3DCOLOR     dcSpecular;
+   } e;
+   union {
+  D3DVALUE     tu;            /* Texture coordinates */
+  D3DVALUE     dvTU;
+   } f;
+   union {
+  D3DVALUE     tv;
+  D3DVALUE     dvTV;
+   } g;
 #if (defined __cplusplus) && (defined D3D_OVERLOADS)
-	 _D3DLVERTEX() { }
-	 _D3DLVERTEX(const D3DVECTOR& v,
-					 D3DCOLOR _color, D3DCOLOR _specular,
-					 float _tu, float _tv)
-		  { x = v.x; y = v.y; z = v.z; dwReserved = 0;
-			 color = _color; specular = _specular;
-			 tu = _tu; tv = _tv;
-		  }
+   _D3DLVERTEX() { }
+   _D3DLVERTEX(const D3DVECTOR& v,
+           D3DCOLOR _color, D3DCOLOR _specular,
+           float _tu, float _tv)
+      { x = v.x; y = v.y; z = v.z; dwReserved = 0;
+       color = _color; specular = _specular;
+       tu = _tu; tv = _tv;
+      }
 #endif
 } D3DLVERTEX, *LPD3DLVERTEX;
 
@@ -368,43 +368,43 @@ typedef struct _D3DLVERTEX {
 
 typedef struct _D3DVERTEX {
     union {
-	D3DVALUE     x;             /* Homogeneous coordinates */
-	D3DVALUE     dvX;
-	 } a;
-	 union {
-	D3DVALUE     y;
-	D3DVALUE     dvY;
-	 } b;
-	 union {
-	D3DVALUE     z;
-	D3DVALUE     dvZ;
-	 } c;
-	 union {
-	D3DVALUE     nx;            /* Normal */
-	D3DVALUE     dvNX;
-	 } d;
-	 union {
-	D3DVALUE     ny;
-	D3DVALUE     dvNY;
-	 } e;
-	 union {
-	D3DVALUE     nz;
-	D3DVALUE     dvNZ;
-	 } f;
-	 union {
-	D3DVALUE     tu;            /* Texture coordinates */
-	D3DVALUE     dvTU;
-	 } g;
-	 union {
-	D3DVALUE     tv;
-	D3DVALUE     dvTV;
-	 } h;
+  D3DVALUE     x;             /* Homogeneous coordinates */
+  D3DVALUE     dvX;
+   } a;
+   union {
+  D3DVALUE     y;
+  D3DVALUE     dvY;
+   } b;
+   union {
+  D3DVALUE     z;
+  D3DVALUE     dvZ;
+   } c;
+   union {
+  D3DVALUE     nx;            /* Normal */
+  D3DVALUE     dvNX;
+   } d;
+   union {
+  D3DVALUE     ny;
+  D3DVALUE     dvNY;
+   } e;
+   union {
+  D3DVALUE     nz;
+  D3DVALUE     dvNZ;
+   } f;
+   union {
+  D3DVALUE     tu;            /* Texture coordinates */
+  D3DVALUE     dvTU;
+   } g;
+   union {
+  D3DVALUE     tv;
+  D3DVALUE     dvTV;
+   } h;
 #if (defined __cplusplus) && (defined D3D_OVERLOADS)
-	 _D3DVERTEX() { }
-	 _D3DVERTEX(const D3DVECTOR& v, const D3DVECTOR& n, float _tu, float _tv)
-		  { x = v.x; y = v.y; z = v.z;
-			 nx = n.x; ny = n.y; nz = n.z;
-			 tu = _tu; tv = _tv;
+   _D3DVERTEX() { }
+   _D3DVERTEX(const D3DVECTOR& v, const D3DVECTOR& n, float _tu, float _tv)
+      { x = v.x; y = v.y; z = v.z;
+       nx = n.x; ny = n.y; nz = n.z;
+       tu = _tu; tv = _tv;
         }
 #endif
 } D3DVERTEX, *LPD3DVERTEX;
@@ -433,7 +433,7 @@ typedef struct _D3DMATRIX {
                 D3DVALUE _m10, D3DVALUE _m11, D3DVALUE _m12, D3DVALUE _m13,
                 D3DVALUE _m20, D3DVALUE _m21, D3DVALUE _m22, D3DVALUE _m23,
                 D3DVALUE _m30, D3DVALUE _m31, D3DVALUE _m32, D3DVALUE _m33
-        ) 
+        )
         {
                 m[0][0] = _m00; m[0][1] = _m01; m[0][2] = _m02; m[0][3] = _m03;
                 m[1][0] = _m10; m[1][1] = _m11; m[1][2] = _m12; m[1][3] = _m13;
@@ -449,111 +449,111 @@ typedef struct _D3DMATRIX {
 typedef struct _D3DVIEWPORT {
     DWORD       dwSize;
     DWORD       dwX;
-    DWORD       dwY;		/* Top left */
+    DWORD       dwY;    /* Top left */
     DWORD       dwWidth;
-    DWORD       dwHeight;	/* Dimensions */
-    D3DVALUE    dvScaleX;	/* Scale homogeneous to screen */
-    D3DVALUE    dvScaleY;	/* Scale homogeneous to screen */
-    D3DVALUE    dvMaxX;		/* Min/max homogeneous x coord */
-    D3DVALUE    dvMaxY;		/* Min/max homogeneous y coord */
+    DWORD       dwHeight;  /* Dimensions */
+    D3DVALUE    dvScaleX;  /* Scale homogeneous to screen */
+    D3DVALUE    dvScaleY;  /* Scale homogeneous to screen */
+    D3DVALUE    dvMaxX;    /* Min/max homogeneous x coord */
+    D3DVALUE    dvMaxY;    /* Min/max homogeneous y coord */
     D3DVALUE    dvMinZ;
-    D3DVALUE    dvMaxZ;		/* Min/max homogeneous z coord */
+    D3DVALUE    dvMaxZ;    /* Min/max homogeneous z coord */
 } D3DVIEWPORT, *LPD3DVIEWPORT;
 
 typedef struct _D3DVIEWPORT2 {
     DWORD       dwSize;
     DWORD       dwX;
-    DWORD       dwY;		/* Viewport Top left */
+    DWORD       dwY;    /* Viewport Top left */
     DWORD       dwWidth;
-    DWORD       dwHeight;	/* Viewport Dimensions */
-    D3DVALUE    dvClipX;		/* Top left of clip volume */
-    D3DVALUE    dvClipY;	
-    D3DVALUE    dvClipWidth;	/* Clip Volume Dimensions */
+    DWORD       dwHeight;  /* Viewport Dimensions */
+    D3DVALUE    dvClipX;    /* Top left of clip volume */
+    D3DVALUE    dvClipY;
+    D3DVALUE    dvClipWidth;  /* Clip Volume Dimensions */
     D3DVALUE    dvClipHeight;
-    D3DVALUE    dvMinZ;			/* Min/max of clip Volume */
-    D3DVALUE    dvMaxZ;		
+    D3DVALUE    dvMinZ;      /* Min/max of clip Volume */
+    D3DVALUE    dvMaxZ;
 } D3DVIEWPORT2, *LPD3DVIEWPORT2;
 
 /*
  * Values for clip fields.
  */
-#define D3DCLIP_LEFT				0x00000001L
-#define D3DCLIP_RIGHT				0x00000002L
-#define D3DCLIP_TOP				0x00000004L
-#define D3DCLIP_BOTTOM				0x00000008L
-#define D3DCLIP_FRONT				0x00000010L
-#define D3DCLIP_BACK				0x00000020L
-#define D3DCLIP_GEN0				0x00000040L
-#define D3DCLIP_GEN1				0x00000080L
-#define D3DCLIP_GEN2				0x00000100L
-#define D3DCLIP_GEN3				0x00000200L
-#define D3DCLIP_GEN4				0x00000400L
-#define D3DCLIP_GEN5				0x00000800L
+#define D3DCLIP_LEFT        0x00000001L
+#define D3DCLIP_RIGHT        0x00000002L
+#define D3DCLIP_TOP        0x00000004L
+#define D3DCLIP_BOTTOM        0x00000008L
+#define D3DCLIP_FRONT        0x00000010L
+#define D3DCLIP_BACK        0x00000020L
+#define D3DCLIP_GEN0        0x00000040L
+#define D3DCLIP_GEN1        0x00000080L
+#define D3DCLIP_GEN2        0x00000100L
+#define D3DCLIP_GEN3        0x00000200L
+#define D3DCLIP_GEN4        0x00000400L
+#define D3DCLIP_GEN5        0x00000800L
 
 /*
  * Values for d3d status.
  */
-#define D3DSTATUS_CLIPUNIONLEFT			D3DCLIP_LEFT
-#define D3DSTATUS_CLIPUNIONRIGHT		D3DCLIP_RIGHT
-#define D3DSTATUS_CLIPUNIONTOP			D3DCLIP_TOP
-#define D3DSTATUS_CLIPUNIONBOTTOM		D3DCLIP_BOTTOM
-#define D3DSTATUS_CLIPUNIONFRONT		D3DCLIP_FRONT
-#define D3DSTATUS_CLIPUNIONBACK			D3DCLIP_BACK
-#define D3DSTATUS_CLIPUNIONGEN0			D3DCLIP_GEN0
-#define D3DSTATUS_CLIPUNIONGEN1			D3DCLIP_GEN1
-#define D3DSTATUS_CLIPUNIONGEN2			D3DCLIP_GEN2
-#define D3DSTATUS_CLIPUNIONGEN3			D3DCLIP_GEN3
-#define D3DSTATUS_CLIPUNIONGEN4			D3DCLIP_GEN4
-#define D3DSTATUS_CLIPUNIONGEN5			D3DCLIP_GEN5
+#define D3DSTATUS_CLIPUNIONLEFT      D3DCLIP_LEFT
+#define D3DSTATUS_CLIPUNIONRIGHT    D3DCLIP_RIGHT
+#define D3DSTATUS_CLIPUNIONTOP      D3DCLIP_TOP
+#define D3DSTATUS_CLIPUNIONBOTTOM    D3DCLIP_BOTTOM
+#define D3DSTATUS_CLIPUNIONFRONT    D3DCLIP_FRONT
+#define D3DSTATUS_CLIPUNIONBACK      D3DCLIP_BACK
+#define D3DSTATUS_CLIPUNIONGEN0      D3DCLIP_GEN0
+#define D3DSTATUS_CLIPUNIONGEN1      D3DCLIP_GEN1
+#define D3DSTATUS_CLIPUNIONGEN2      D3DCLIP_GEN2
+#define D3DSTATUS_CLIPUNIONGEN3      D3DCLIP_GEN3
+#define D3DSTATUS_CLIPUNIONGEN4      D3DCLIP_GEN4
+#define D3DSTATUS_CLIPUNIONGEN5      D3DCLIP_GEN5
 
-#define D3DSTATUS_CLIPINTERSECTIONLEFT		0x00001000L
-#define D3DSTATUS_CLIPINTERSECTIONRIGHT		0x00002000L
-#define D3DSTATUS_CLIPINTERSECTIONTOP		0x00004000L
-#define D3DSTATUS_CLIPINTERSECTIONBOTTOM	0x00008000L
-#define D3DSTATUS_CLIPINTERSECTIONFRONT		0x00010000L
-#define D3DSTATUS_CLIPINTERSECTIONBACK		0x00020000L
-#define D3DSTATUS_CLIPINTERSECTIONGEN0		0x00040000L
-#define D3DSTATUS_CLIPINTERSECTIONGEN1		0x00080000L
-#define D3DSTATUS_CLIPINTERSECTIONGEN2		0x00100000L
-#define D3DSTATUS_CLIPINTERSECTIONGEN3		0x00200000L
-#define D3DSTATUS_CLIPINTERSECTIONGEN4		0x00400000L
-#define D3DSTATUS_CLIPINTERSECTIONGEN5		0x00800000L
-#define D3DSTATUS_ZNOTVISIBLE				0x01000000L
+#define D3DSTATUS_CLIPINTERSECTIONLEFT    0x00001000L
+#define D3DSTATUS_CLIPINTERSECTIONRIGHT    0x00002000L
+#define D3DSTATUS_CLIPINTERSECTIONTOP    0x00004000L
+#define D3DSTATUS_CLIPINTERSECTIONBOTTOM  0x00008000L
+#define D3DSTATUS_CLIPINTERSECTIONFRONT    0x00010000L
+#define D3DSTATUS_CLIPINTERSECTIONBACK    0x00020000L
+#define D3DSTATUS_CLIPINTERSECTIONGEN0    0x00040000L
+#define D3DSTATUS_CLIPINTERSECTIONGEN1    0x00080000L
+#define D3DSTATUS_CLIPINTERSECTIONGEN2    0x00100000L
+#define D3DSTATUS_CLIPINTERSECTIONGEN3    0x00200000L
+#define D3DSTATUS_CLIPINTERSECTIONGEN4    0x00400000L
+#define D3DSTATUS_CLIPINTERSECTIONGEN5    0x00800000L
+#define D3DSTATUS_ZNOTVISIBLE        0x01000000L
 /* Do not use 0x80000000 for any status flags in future as it is reserved */
 
-#define D3DSTATUS_CLIPUNIONALL	(		\
-	    D3DSTATUS_CLIPUNIONLEFT	|	\
-	    D3DSTATUS_CLIPUNIONRIGHT	|	\
-	    D3DSTATUS_CLIPUNIONTOP	|	\
-	    D3DSTATUS_CLIPUNIONBOTTOM	|	\
-	    D3DSTATUS_CLIPUNIONFRONT	|	\
-	    D3DSTATUS_CLIPUNIONBACK	|	\
-	    D3DSTATUS_CLIPUNIONGEN0	|	\
-	    D3DSTATUS_CLIPUNIONGEN1	|	\
-	    D3DSTATUS_CLIPUNIONGEN2	|	\
-	    D3DSTATUS_CLIPUNIONGEN3	|	\
-	    D3DSTATUS_CLIPUNIONGEN4	|	\
-	    D3DSTATUS_CLIPUNIONGEN5		\
-	    )
+#define D3DSTATUS_CLIPUNIONALL  (    \
+      D3DSTATUS_CLIPUNIONLEFT  |  \
+      D3DSTATUS_CLIPUNIONRIGHT  |  \
+      D3DSTATUS_CLIPUNIONTOP  |  \
+      D3DSTATUS_CLIPUNIONBOTTOM  |  \
+      D3DSTATUS_CLIPUNIONFRONT  |  \
+      D3DSTATUS_CLIPUNIONBACK  |  \
+      D3DSTATUS_CLIPUNIONGEN0  |  \
+      D3DSTATUS_CLIPUNIONGEN1  |  \
+      D3DSTATUS_CLIPUNIONGEN2  |  \
+      D3DSTATUS_CLIPUNIONGEN3  |  \
+      D3DSTATUS_CLIPUNIONGEN4  |  \
+      D3DSTATUS_CLIPUNIONGEN5    \
+      )
 
-#define D3DSTATUS_CLIPINTERSECTIONALL	(		\
-	    D3DSTATUS_CLIPINTERSECTIONLEFT	|	\
-	    D3DSTATUS_CLIPINTERSECTIONRIGHT	|	\
-	    D3DSTATUS_CLIPINTERSECTIONTOP	|	\
-	    D3DSTATUS_CLIPINTERSECTIONBOTTOM	|	\
-	    D3DSTATUS_CLIPINTERSECTIONFRONT	|	\
-	    D3DSTATUS_CLIPINTERSECTIONBACK	|	\
-	    D3DSTATUS_CLIPINTERSECTIONGEN0	|	\
-	    D3DSTATUS_CLIPINTERSECTIONGEN1	|	\
-	    D3DSTATUS_CLIPINTERSECTIONGEN2	|	\
-	    D3DSTATUS_CLIPINTERSECTIONGEN3	|	\
-	    D3DSTATUS_CLIPINTERSECTIONGEN4	|	\
-	    D3DSTATUS_CLIPINTERSECTIONGEN5		\
-	    )
+#define D3DSTATUS_CLIPINTERSECTIONALL  (    \
+      D3DSTATUS_CLIPINTERSECTIONLEFT  |  \
+      D3DSTATUS_CLIPINTERSECTIONRIGHT  |  \
+      D3DSTATUS_CLIPINTERSECTIONTOP  |  \
+      D3DSTATUS_CLIPINTERSECTIONBOTTOM  |  \
+      D3DSTATUS_CLIPINTERSECTIONFRONT  |  \
+      D3DSTATUS_CLIPINTERSECTIONBACK  |  \
+      D3DSTATUS_CLIPINTERSECTIONGEN0  |  \
+      D3DSTATUS_CLIPINTERSECTIONGEN1  |  \
+      D3DSTATUS_CLIPINTERSECTIONGEN2  |  \
+      D3DSTATUS_CLIPINTERSECTIONGEN3  |  \
+      D3DSTATUS_CLIPINTERSECTIONGEN4  |  \
+      D3DSTATUS_CLIPINTERSECTIONGEN5    \
+      )
 
-#define D3DSTATUS_DEFAULT	(			\
-	    D3DSTATUS_CLIPINTERSECTIONALL	|	\
-	    D3DSTATUS_ZNOTVISIBLE)
+#define D3DSTATUS_DEFAULT  (      \
+      D3DSTATUS_CLIPINTERSECTIONALL  |  \
+      D3DSTATUS_ZNOTVISIBLE)
 
 
 /*
@@ -564,9 +564,9 @@ typedef struct _D3DVIEWPORT2 {
 
 typedef struct _D3DTRANSFORMDATA {
     DWORD           dwSize;
-    LPVOID	    lpIn;           /* Input vertices */
+    LPVOID      lpIn;           /* Input vertices */
     DWORD           dwInSize;       /* Stride of input vertices */
-    LPVOID	    lpOut;          /* Output vertices */
+    LPVOID      lpOut;          /* Output vertices */
     DWORD           dwOutSize;      /* Stride of output vertices */
     LPD3DHVERTEX    lpHOut;         /* Output homogeneous vertices */
     DWORD           dwClip;         /* Clipping hint */
@@ -579,7 +579,7 @@ typedef struct _D3DTRANSFORMDATA {
  * Structure defining position and direction properties for lighting.
  */
 typedef struct _D3DLIGHTINGELEMENT {
-    D3DVECTOR dvPosition;     	    /* Lightable point in model space */
+    D3DVECTOR dvPosition;           /* Lightable point in model space */
     D3DVECTOR dvNormal;             /* Normalised unit vector */
 } D3DLIGHTINGELEMENT, *LPD3DLIGHTINGELEMENT;
 
@@ -587,29 +587,29 @@ typedef struct _D3DLIGHTINGELEMENT {
  * Structure defining material properties for lighting.
  */
 typedef struct _D3DMATERIAL {
-    DWORD       	dwSize;
+    DWORD         dwSize;
     union {
-	D3DCOLORVALUE   diffuse;        /* Diffuse color RGBA */
-	D3DCOLORVALUE   dcvDiffuse;
-	 } a;
-	 union {
-	D3DCOLORVALUE   ambient;        /* Ambient color RGB */
-	D3DCOLORVALUE   dcvAmbient;
-	 } b;
-	 union {
-	D3DCOLORVALUE   specular;       /* Specular 'shininess' */
-	D3DCOLORVALUE   dcvSpecular;
-	 } c;
-	 union {
-	D3DCOLORVALUE	emissive;       /* Emissive color RGB */
-	D3DCOLORVALUE	dcvEmissive;
-	 } d;
-	 union {
-	D3DVALUE    	power;          /* Sharpness if specular highlight */
-	D3DVALUE    	dvPower;
-	 } e;
-	 D3DTEXTUREHANDLE    hTexture;   	/* Handle to texture map */
-	 DWORD       	dwRampSize;
+  D3DCOLORVALUE   diffuse;        /* Diffuse color RGBA */
+  D3DCOLORVALUE   dcvDiffuse;
+   } a;
+   union {
+  D3DCOLORVALUE   ambient;        /* Ambient color RGB */
+  D3DCOLORVALUE   dcvAmbient;
+   } b;
+   union {
+  D3DCOLORVALUE   specular;       /* Specular 'shininess' */
+  D3DCOLORVALUE   dcvSpecular;
+   } c;
+   union {
+  D3DCOLORVALUE  emissive;       /* Emissive color RGB */
+  D3DCOLORVALUE  dcvEmissive;
+   } d;
+   union {
+  D3DVALUE      power;          /* Sharpness if specular highlight */
+  D3DVALUE      dvPower;
+   } e;
+   D3DTEXTUREHANDLE    hTexture;     /* Handle to texture map */
+   DWORD         dwRampSize;
 } D3DMATERIAL, *LPD3DMATERIAL;
 
 typedef enum _D3DLIGHTTYPE {
@@ -625,9 +625,9 @@ typedef enum _D3DLIGHTTYPE {
  */
 typedef struct _D3DLIGHT {
     DWORD           dwSize;
-    D3DLIGHTTYPE    dltType;           	/* Type of light source */
-    D3DCOLORVALUE   dcvColor;		/* Color of light */
-    D3DVECTOR       dvPosition;		/* Position in world space */
+    D3DLIGHTTYPE    dltType;             /* Type of light source */
+    D3DCOLORVALUE   dcvColor;    /* Color of light */
+    D3DVECTOR       dvPosition;    /* Position in world space */
     D3DVECTOR       dvDirection;        /* Direction in world space */
     D3DVALUE        dvRange;            /* Cutoff range */
     D3DVALUE        dvFalloff;          /* Falloff */
@@ -643,34 +643,34 @@ typedef struct _D3DLIGHT {
  */
 
 /* flags bits */
-#define D3DLIGHT_ACTIVE			0x00000001
-#define D3DLIGHT_NO_SPECULAR	0x00000002
+#define D3DLIGHT_ACTIVE      0x00000001
+#define D3DLIGHT_NO_SPECULAR  0x00000002
 
 /* maximum valid light range */
-#define D3DLIGHT_RANGE_MAX		((float)sqrt(FLT_MAX))
+#define D3DLIGHT_RANGE_MAX    ((float)sqrt(FLT_MAX))
 
 typedef struct _D3DLIGHT2 {
     DWORD           dwSize;
-    D3DLIGHTTYPE    dltType;		/* Type of light source */
-    D3DCOLORVALUE   dcvColor;		/* Color of light */
-    D3DVECTOR       dvPosition;		/* Position in world space */
-    D3DVECTOR       dvDirection;	/* Direction in world space */
-    D3DVALUE        dvRange;		/* Cutoff range */
-    D3DVALUE        dvFalloff;		/* Falloff */
-    D3DVALUE        dvAttenuation0;	/* Constant attenuation */
-    D3DVALUE        dvAttenuation1;	/* Linear attenuation */
-    D3DVALUE        dvAttenuation2;	/* Quadratic attenuation */
-    D3DVALUE        dvTheta;		/* Inner angle of spotlight cone */
-    D3DVALUE        dvPhi;			/* Outer angle of spotlight cone */
-	DWORD			dwFlags;
+    D3DLIGHTTYPE    dltType;    /* Type of light source */
+    D3DCOLORVALUE   dcvColor;    /* Color of light */
+    D3DVECTOR       dvPosition;    /* Position in world space */
+    D3DVECTOR       dvDirection;  /* Direction in world space */
+    D3DVALUE        dvRange;    /* Cutoff range */
+    D3DVALUE        dvFalloff;    /* Falloff */
+    D3DVALUE        dvAttenuation0;  /* Constant attenuation */
+    D3DVALUE        dvAttenuation1;  /* Linear attenuation */
+    D3DVALUE        dvAttenuation2;  /* Quadratic attenuation */
+    D3DVALUE        dvTheta;    /* Inner angle of spotlight cone */
+    D3DVALUE        dvPhi;      /* Outer angle of spotlight cone */
+  DWORD      dwFlags;
 } D3DLIGHT2, *LPD3DLIGHT2;
 
 typedef struct _D3DLIGHTDATA {
     DWORD                dwSize;
-    LPD3DLIGHTINGELEMENT lpIn;		/* Input positions and normals */
-    DWORD                dwInSize;	/* Stride of input elements */
-    LPD3DTLVERTEX        lpOut;		/* Output colors */
-    DWORD                dwOutSize;	/* Stride of output colors */
+    LPD3DLIGHTINGELEMENT lpIn;    /* Input positions and normals */
+    DWORD                dwInSize;  /* Stride of input elements */
+    LPD3DTLVERTEX        lpOut;    /* Output colors */
+    DWORD                dwOutSize;  /* Stride of output colors */
 } D3DLIGHTDATA, *LPD3DLIGHTDATA;
 
 /*
@@ -700,20 +700,20 @@ typedef DWORD D3DCOLORMODEL;
  * Supported op codes for execute instructions.
  */
 typedef enum _D3DOPCODE {
-    D3DOP_POINT             	= 1,
-    D3DOP_LINE              	= 2,
-    D3DOP_TRIANGLE		= 3,
-    D3DOP_MATRIXLOAD       	= 4,
-    D3DOP_MATRIXMULTIPLY   	= 5,
-    D3DOP_STATETRANSFORM      	= 6,
-    D3DOP_STATELIGHT      	= 7,
-    D3DOP_STATERENDER      	= 8,
-    D3DOP_PROCESSVERTICES    	= 9,
-    D3DOP_TEXTURELOAD      	= 10,
-    D3DOP_EXIT              	= 11,
-    D3DOP_BRANCHFORWARD		= 12,
-    D3DOP_SPAN			= 13,
-    D3DOP_SETSTATUS		= 14,
+    D3DOP_POINT               = 1,
+    D3DOP_LINE                = 2,
+    D3DOP_TRIANGLE    = 3,
+    D3DOP_MATRIXLOAD         = 4,
+    D3DOP_MATRIXMULTIPLY     = 5,
+    D3DOP_STATETRANSFORM        = 6,
+    D3DOP_STATELIGHT        = 7,
+    D3DOP_STATERENDER        = 8,
+    D3DOP_PROCESSVERTICES      = 9,
+    D3DOP_TEXTURELOAD        = 10,
+    D3DOP_EXIT                = 11,
+    D3DOP_BRANCHFORWARD    = 12,
+    D3DOP_SPAN      = 13,
+    D3DOP_SETSTATUS    = 14,
     D3DOP_FORCE_DWORD           = 0x7fffffff, /* force 32-bit size enum */
 } D3DOPCODE;
 
@@ -754,15 +754,15 @@ typedef enum _D3DSHADEMODE {
 } D3DSHADEMODE;
 
 typedef enum _D3DFILLMODE {
-    D3DFILL_POINT	       = 1,
-    D3DFILL_WIREFRAME	       = 2,
-    D3DFILL_SOLID	       = 3,
+    D3DFILL_POINT         = 1,
+    D3DFILL_WIREFRAME         = 2,
+    D3DFILL_SOLID         = 3,
     D3DFILL_FORCE_DWORD        = 0x7fffffff, /* force 32-bit size enum */
 } D3DFILLMODE;
 
 typedef struct _D3DLINEPATTERN {
-    WORD	wRepeatFactor;
-    WORD	wLinePattern;
+    WORD  wRepeatFactor;
+    WORD  wLinePattern;
 } D3DLINEPATTERN;
 
 typedef enum _D3DTEXTUREFILTER {
@@ -805,9 +805,9 @@ typedef enum _D3DTEXTUREBLEND {
 } D3DTEXTUREBLEND;
 
 typedef enum _D3DTEXTUREADDRESS {
-    D3DTADDRESS_WRAP	       = 1,
-    D3DTADDRESS_MIRROR	       = 2,
-    D3DTADDRESS_CLAMP	       = 3,
+    D3DTADDRESS_WRAP         = 1,
+    D3DTADDRESS_MIRROR         = 2,
+    D3DTADDRESS_CLAMP         = 3,
     D3DTADDRESS_BORDER         = 4,
     D3DTADDRESS_FORCE_DWORD    = 0x7fffffff, /* force 32-bit size enum */
 } D3DTEXTUREADDRESS;
@@ -868,7 +868,7 @@ typedef enum _D3DPRIMITIVETYPE {
 /*
  * Amount to add to a state to generate the override for that state.
  */
-#define D3DSTATE_OVERRIDE_BIAS		256
+#define D3DSTATE_OVERRIDE_BIAS    256
 
 /*
  * A state which sets the override flag for the specified state type.
@@ -883,12 +883,12 @@ typedef enum _D3DTRANSFORMSTATETYPE {
 } D3DTRANSFORMSTATETYPE;
 
 typedef enum _D3DLIGHTSTATETYPE {
-    D3DLIGHTSTATE_MATERIAL	      = 1,
-    D3DLIGHTSTATE_AMBIENT	      = 2,
-    D3DLIGHTSTATE_COLORMODEL	      = 3,
-    D3DLIGHTSTATE_FOGMODE	      = 4,
-    D3DLIGHTSTATE_FOGSTART	      = 5,
-    D3DLIGHTSTATE_FOGEND	      = 6,
+    D3DLIGHTSTATE_MATERIAL        = 1,
+    D3DLIGHTSTATE_AMBIENT        = 2,
+    D3DLIGHTSTATE_COLORMODEL        = 3,
+    D3DLIGHTSTATE_FOGMODE        = 4,
+    D3DLIGHTSTATE_FOGSTART        = 5,
+    D3DLIGHTSTATE_FOGEND        = 6,
     D3DLIGHTSTATE_FOGDENSITY          = 7,
     D3DLIGHTSTATE_FORCE_DWORD         = 0x7fffffff, /* force 32-bit size enum */
 } D3DLIGHTSTATETYPE;
@@ -896,12 +896,12 @@ typedef enum _D3DLIGHTSTATETYPE {
 typedef enum _D3DRENDERSTATETYPE {
     D3DRENDERSTATE_TEXTUREHANDLE      = 1,    /* Texture handle */
     D3DRENDERSTATE_ANTIALIAS          = 2,    /* D3DANTIALIASMODE */
-    D3DRENDERSTATE_TEXTUREADDRESS     = 3,    /* D3DTEXTUREADDRESS	*/
+    D3DRENDERSTATE_TEXTUREADDRESS     = 3,    /* D3DTEXTUREADDRESS  */
     D3DRENDERSTATE_TEXTUREPERSPECTIVE = 4,    /* TRUE for perspective correction */
-    D3DRENDERSTATE_WRAPU	      = 5,    /* TRUE for wrapping in u */
-    D3DRENDERSTATE_WRAPV	      = 6,    /* TRUE for wrapping in v */
+    D3DRENDERSTATE_WRAPU        = 5,    /* TRUE for wrapping in u */
+    D3DRENDERSTATE_WRAPV        = 6,    /* TRUE for wrapping in v */
     D3DRENDERSTATE_ZENABLE            = 7,    /* TRUE to enable z test */
-    D3DRENDERSTATE_FILLMODE           = 8,    /* D3DFILL_MODE		 */
+    D3DRENDERSTATE_FILLMODE           = 8,    /* D3DFILL_MODE     */
     D3DRENDERSTATE_SHADEMODE          = 9,    /* D3DSHADEMODE */
     D3DRENDERSTATE_LINEPATTERN        = 10,   /* D3DLINEPATTERN */
     D3DRENDERSTATE_MONOENABLE         = 11,   /* TRUE to enable mono rasterization */
@@ -924,14 +924,14 @@ typedef enum _D3DRENDERSTATETYPE {
     D3DRENDERSTATE_FOGENABLE          = 28,   /* TRUE to enable fog */
     D3DRENDERSTATE_SPECULARENABLE     = 29,   /* TRUE to enable specular */
     D3DRENDERSTATE_ZVISIBLE           = 30,   /* TRUE to enable z checking */
-    D3DRENDERSTATE_SUBPIXEL	      = 31,   /* TRUE to enable subpixel correction */
+    D3DRENDERSTATE_SUBPIXEL        = 31,   /* TRUE to enable subpixel correction */
     D3DRENDERSTATE_SUBPIXELX          = 32,   /* TRUE to enable correction in X only */
     D3DRENDERSTATE_STIPPLEDALPHA      = 33,   /* TRUE to enable stippled alpha */
     D3DRENDERSTATE_FOGCOLOR           = 34,   /* D3DCOLOR */
     D3DRENDERSTATE_FOGTABLEMODE       = 35,   /* D3DFOGMODE */
-    D3DRENDERSTATE_FOGTABLESTART      = 36,   /* Fog table start	*/
-    D3DRENDERSTATE_FOGTABLEEND        = 37,   /* Fog table end		*/
-    D3DRENDERSTATE_FOGTABLEDENSITY    = 38,   /* Fog table density	*/
+    D3DRENDERSTATE_FOGTABLESTART      = 36,   /* Fog table start  */
+    D3DRENDERSTATE_FOGTABLEEND        = 37,   /* Fog table end    */
+    D3DRENDERSTATE_FOGTABLEDENSITY    = 38,   /* Fog table density  */
     D3DRENDERSTATE_STIPPLEENABLE      = 39,   /* TRUE to enable stippling */
     D3DRENDERSTATE_EDGEANTIALIAS      = 40,   /* TRUE to enable edge antialiasing */
     D3DRENDERSTATE_COLORKEYENABLE     = 41,   /* TRUE to enable source colorkeyed textures */
@@ -942,8 +942,8 @@ typedef enum _D3DRENDERSTATETYPE {
     D3DRENDERSTATE_ZBIAS              = 47,   /* LONG Z bias */
     D3DRENDERSTATE_RANGEFOGENABLE     = 48,   /* Enables range-based fog */
     D3DRENDERSTATE_ANISOTROPY         = 49,   /* Max. anisotropy. 1 = no anisotropy */
-	D3DRENDERSTATE_FLUSHBATCH		  = 50,   /* Explicit flush for DP batching (DX5 Only) */
-    D3DRENDERSTATE_STIPPLEPATTERN00   = 64,   /* Stipple pattern 01...	*/
+  D3DRENDERSTATE_FLUSHBATCH      = 50,   /* Explicit flush for DP batching (DX5 Only) */
+    D3DRENDERSTATE_STIPPLEPATTERN00   = 64,   /* Stipple pattern 01...  */
     D3DRENDERSTATE_STIPPLEPATTERN01   = 65,
     D3DRENDERSTATE_STIPPLEPATTERN02   = 66,
     D3DRENDERSTATE_STIPPLEPATTERN03   = 67,
@@ -985,14 +985,14 @@ typedef enum _D3DRENDERSTATETYPE {
 
 typedef struct _D3DSTATE {
     union {
-	D3DTRANSFORMSTATETYPE	dtstTransformStateType;
-	D3DLIGHTSTATETYPE	dlstLightStateType;
-	D3DRENDERSTATETYPE	drstRenderStateType;
-	 } a;
-	 union {
-	DWORD			dwArg[1];
-	D3DVALUE		dvArg[1];
-	 } b;
+  D3DTRANSFORMSTATETYPE  dtstTransformStateType;
+  D3DLIGHTSTATETYPE  dlstLightStateType;
+  D3DRENDERSTATETYPE  drstRenderStateType;
+   } a;
+   union {
+  DWORD      dwArg[1];
+  D3DVALUE    dvArg[1];
+   } b;
 } D3DSTATE, *LPD3DSTATE;
 
 /*
@@ -1019,25 +1019,25 @@ typedef struct _D3DMATRIXMULTIPLY {
  */
 typedef struct _D3DPROCESSVERTICES {
     DWORD        dwFlags;    /* Do we transform or light or just copy? */
-    WORD         wStart;     /* Index to first vertex in source	*/
+    WORD         wStart;     /* Index to first vertex in source  */
     WORD         wDest;      /* Index to first vertex in local buffer */
     DWORD        dwCount;    /* Number of vertices to be processed */
-    DWORD	 dwReserved; /* Must be zero */
+    DWORD   dwReserved; /* Must be zero */
 } D3DPROCESSVERTICES, *LPD3DPROCESSVERTICES;
 
-#define D3DPROCESSVERTICES_TRANSFORMLIGHT	0x00000000L
-#define D3DPROCESSVERTICES_TRANSFORM		0x00000001L
-#define D3DPROCESSVERTICES_COPY			0x00000002L
-#define D3DPROCESSVERTICES_OPMASK		0x00000007L
+#define D3DPROCESSVERTICES_TRANSFORMLIGHT  0x00000000L
+#define D3DPROCESSVERTICES_TRANSFORM    0x00000001L
+#define D3DPROCESSVERTICES_COPY      0x00000002L
+#define D3DPROCESSVERTICES_OPMASK    0x00000007L
 
-#define D3DPROCESSVERTICES_UPDATEEXTENTS	0x00000008L
-#define D3DPROCESSVERTICES_NOCOLOR		0x00000010L
+#define D3DPROCESSVERTICES_UPDATEEXTENTS  0x00000008L
+#define D3DPROCESSVERTICES_NOCOLOR    0x00000010L
 
 
 /*
  * Triangle flags
  */
- 
+
 /*
  * Tri strip and fan flags.
  * START loads all three vertices
@@ -1046,21 +1046,21 @@ typedef struct _D3DPROCESSVERTICES {
  * whole strip or fan to be culled in one hit.
  * e.g. for a quad len = 1
  */
-#define D3DTRIFLAG_START			0x00000000L
-#define D3DTRIFLAG_STARTFLAT(len) (len)		/* 0 < len < 30 */
-#define D3DTRIFLAG_ODD				0x0000001eL
-#define D3DTRIFLAG_EVEN				0x0000001fL
+#define D3DTRIFLAG_START      0x00000000L
+#define D3DTRIFLAG_STARTFLAT(len) (len)    /* 0 < len < 30 */
+#define D3DTRIFLAG_ODD        0x0000001eL
+#define D3DTRIFLAG_EVEN        0x0000001fL
 
 /*
  * Triangle edge flags
  * enable edges for wireframe or antialiasing
  */
-#define D3DTRIFLAG_EDGEENABLE1 			0x00000100L /* v0-v1 edge */
-#define D3DTRIFLAG_EDGEENABLE2 			0x00000200L /* v1-v2 edge */
-#define D3DTRIFLAG_EDGEENABLE3 			0x00000400L /* v2-v0 edge */
+#define D3DTRIFLAG_EDGEENABLE1       0x00000100L /* v0-v1 edge */
+#define D3DTRIFLAG_EDGEENABLE2       0x00000200L /* v1-v2 edge */
+#define D3DTRIFLAG_EDGEENABLE3       0x00000400L /* v2-v0 edge */
 #define D3DTRIFLAG_EDGEENABLETRIANGLE \
         (D3DTRIFLAG_EDGEENABLE1 | D3DTRIFLAG_EDGEENABLE2 | D3DTRIFLAG_EDGEENABLE3)
-	
+
 /*
  * Primitive structures and related defines.  Vertex offsets are to types
  * D3DVERTEX, D3DLVERTEX, or D3DTLVERTEX.
@@ -1071,18 +1071,18 @@ typedef struct _D3DPROCESSVERTICES {
  */
 typedef struct _D3DTRIANGLE {
     union {
-	WORD    v1;            /* Vertex indices */
-	WORD    wV1;
-	 } a;
-	 union {
-	WORD    v2;
-	WORD    wV2;
-	 } b;
-	 union {
-	WORD    v3;
-	WORD    wV3;
-	 } c;
-    WORD    	wFlags;       /* Edge (and other) flags */
+  WORD    v1;            /* Vertex indices */
+  WORD    wV1;
+   } a;
+   union {
+  WORD    v2;
+  WORD    wV2;
+   } b;
+   union {
+  WORD    v3;
+  WORD    wV3;
+   } c;
+    WORD      wFlags;       /* Edge (and other) flags */
 } D3DTRIANGLE, *LPD3DTRIANGLE;
 
 /*
@@ -1091,12 +1091,12 @@ typedef struct _D3DTRIANGLE {
  */
 typedef struct _D3DLINE {
     union {
-	WORD    v1;            /* Vertex indices */
-	WORD    wV1;
-	 } a;
-	 union {
-	WORD    v2;
-	WORD    wV2;
+  WORD    v1;            /* Vertex indices */
+  WORD    wV1;
+   } a;
+   union {
+  WORD    v2;
+  WORD    wV2;
     } b;
 } D3DLINE, *LPD3DLINE;
 
@@ -1106,16 +1106,16 @@ typedef struct _D3DLINE {
  * If the y value changes, a new span is started.
  */
 typedef struct _D3DSPAN {
-    WORD	wCount;	/* Number of spans */
-    WORD	wFirst;	/* Index to first vertex */
+    WORD  wCount;  /* Number of spans */
+    WORD  wFirst;  /* Index to first vertex */
 } D3DSPAN, *LPD3DSPAN;
 
 /*
  * Point structure
  */
 typedef struct _D3DPOINT {
-    WORD	wCount;		/* number of points	    */
-    WORD	wFirst;		/* index to first vertex    */
+    WORD  wCount;    /* number of points      */
+    WORD  wFirst;    /* index to first vertex    */
 } D3DPOINT, *LPD3DPOINT;
 
 
@@ -1125,10 +1125,10 @@ typedef struct _D3DPOINT {
  * if the result equals 'value', the branch is taken.
  */
 typedef struct _D3DBRANCH {
-    DWORD	dwMask;		/* Bitmask against D3D status */
-    DWORD	dwValue;
-    BOOL	bNegate;    	/* TRUE to negate comparison */
-    DWORD	dwOffset;	/* How far to branch forward (0 for exit)*/
+    DWORD  dwMask;    /* Bitmask against D3D status */
+    DWORD  dwValue;
+    BOOL  bNegate;      /* TRUE to negate comparison */
+    DWORD  dwOffset;  /* How far to branch forward (0 for exit)*/
 } D3DBRANCH, *LPD3DBRANCH;
 
 /*
@@ -1137,21 +1137,21 @@ typedef struct _D3DBRANCH {
  * and is modified by all execute calls.
  */
 typedef struct _D3DSTATUS {
-    DWORD       dwFlags;	/* Do we set extents or status */
-    DWORD	dwStatus;	/* D3D status */
-    D3DRECT	drExtent;
+    DWORD       dwFlags;  /* Do we set extents or status */
+    DWORD  dwStatus;  /* D3D status */
+    D3DRECT  drExtent;
 } D3DSTATUS, *LPD3DSTATUS;
 
-#define D3DSETSTATUS_STATUS		0x00000001L
-#define D3DSETSTATUS_EXTENTS		0x00000002L
-#define D3DSETSTATUS_ALL	(D3DSETSTATUS_STATUS | D3DSETSTATUS_EXTENTS)
+#define D3DSETSTATUS_STATUS    0x00000001L
+#define D3DSETSTATUS_EXTENTS    0x00000002L
+#define D3DSETSTATUS_ALL  (D3DSETSTATUS_STATUS | D3DSETSTATUS_EXTENTS)
 
 typedef struct _D3DCLIPSTATUS {
-	DWORD dwFlags; /* Do we set 2d extents, 3D extents or status */
-	DWORD dwStatus; /* Clip status */
-	float minx, maxx; /* X extents */
-	float miny, maxy; /* Y extents */
-	float minz, maxz; /* Z extents */
+  DWORD dwFlags; /* Do we set 2d extents, 3D extents or status */
+  DWORD dwStatus; /* Clip status */
+  float minx, maxx; /* X extents */
+  float miny, maxy; /* Y extents */
+  float minz, maxz; /* Z extents */
 } D3DCLIPSTATUS, *LPD3DCLIPSTATUS;
 
 #define D3DCLIPSTATUS_STATUS        0x00000001L
@@ -1172,7 +1172,7 @@ typedef struct _D3DSTATS {
 
 /*
  * Execute options.
- * When calling using D3DEXECUTE_UNCLIPPED all the primitives 
+ * When calling using D3DEXECUTE_UNCLIPPED all the primitives
  * inside the buffer must be contained within the viewport.
  */
 #define D3DEXECUTE_CLIPPED       0x00000001l
@@ -1185,16 +1185,16 @@ typedef struct _D3DEXECUTEDATA {
     DWORD       dwInstructionOffset;
     DWORD       dwInstructionLength;
     DWORD       dwHVertexOffset;
-    D3DSTATUS   dsStatus;	/* Status after execute */
+    D3DSTATUS   dsStatus;  /* Status after execute */
 } D3DEXECUTEDATA, *LPD3DEXECUTEDATA;
 
 /*
  * Palette flags.
  * This are or'ed with the peFlags in the PALETTEENTRYs passed to DirectDraw.
  */
-#define D3DPAL_FREE	0x00	/* Renderer may use this entry freely */
-#define D3DPAL_READONLY	0x40	/* Renderer may not set this entry */
-#define D3DPAL_RESERVED 0x80	/* Renderer may not use this entry */
+#define D3DPAL_FREE  0x00  /* Renderer may use this entry freely */
+#define D3DPAL_READONLY  0x40  /* Renderer may not set this entry */
+#define D3DPAL_RESERVED 0x80  /* Renderer may not use this entry */
 
 #pragma pack()
 

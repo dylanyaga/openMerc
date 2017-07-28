@@ -36,5 +36,6 @@ move  merc.exe %OUTPATH%
 copy "..\..\Resources\Packaged Graphics\*.dat" %OUTPATH%
 copy "..\..\Resources\Packaged Graphics\*.idx" %OUTPATH%
 copy "..\..\Resources\Sound\sfx\*.*" %OUTPATH%\sfx
+copy "..\..\Resources\DLLs\NVIDIA\*.dll" %OUTPATH%
 echo Finished
 pause

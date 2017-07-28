@@ -27,24 +27,24 @@
 
 struct xbutton
 {
-   char name[8];
-   int skill_nr;
+        char name[8];
+        int skill_nr;
 //   int skill_strength;
 };
 
 
 struct pdata
 {
-  char cname[80];
-  char ref[80];
-  char desc[160];
+        char cname[80];
+        char ref[80];
+        char desc[160];
 
-  char changed;
+        char changed;
 
-  int hide;
-  int show_names;
-  int show_proz;
-  struct xbutton xbutton[12];
+        int hide;
+        int show_names;
+        int show_proz;
+        struct xbutton xbutton[12];
 };
 
 extern struct pdata pdata;
@@ -82,31 +82,31 @@ void cmds(int cmd,int x,int y);
 
 struct key
 {
-  unsigned int usnr;
-  unsigned int pass1,pass2;
-  char name[40];
-  int race;
+        unsigned int usnr;
+        unsigned int pass1,pass2;
+        char name[40];
+        int race;
 };
 
 struct look
 {
-  unsigned char autoflag;
-  unsigned short worn[20];
-  unsigned short sprite;
-  unsigned int points;
-  char name[40];
-  unsigned int hp;
-  unsigned int end;
-  unsigned int mana;
-  unsigned int a_hp;
-  unsigned int a_end;
-   unsigned int a_mana;
-  unsigned short nr;
-  unsigned short id;
-  unsigned char extended;
-  unsigned short item[62];
-  unsigned int price[62];
-   unsigned int pl_price;
+        unsigned char autoflag;
+        unsigned short worn[20];
+        unsigned short sprite;
+        unsigned int points;
+        char name[40];
+        unsigned int hp;
+        unsigned int end;
+        unsigned int mana;
+        unsigned int a_hp;
+        unsigned int a_end;
+        unsigned int a_mana;
+        unsigned short nr;
+        unsigned short id;
+        unsigned char extended;
+        unsigned short item[62];
+        unsigned int price[62];
+        unsigned int pl_price;
 };
 
 extern struct look look;
@@ -139,12 +139,12 @@ extern int hightlight_sub;
 
 struct skilltab
 {
-    int nr;
-      char sortkey;
-      char name[40];
-      char desc[200];
+        int nr;
+        char sortkey;
+        char name[40];
+        char desc[200];
 
-      int attrib[3];
+        int attrib[3];
 };
 
 extern struct skilltab *skilltab;

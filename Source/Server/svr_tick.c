@@ -1503,7 +1503,7 @@ int cl_light_seven(int n,int dosend,struct cmap *cmap,struct cmap *smap)
 	char buf[16],p;
 	int m,l=0;
 
-	if (!dosend) {	
+	if (!dosend) {
 		for (m=n; m<n+7 && m<TILEX*TILEY; m++) {
 			if (cmap[m].light!=smap[m].light) l++;
 		}
@@ -1557,7 +1557,7 @@ void plr_change(int nr)
 			buf[0]=SV_SETCHAR_MODE;
 			buf[1]=ch[cn].mode;
 			xsend(nr,buf,2);
-	
+
 			cpl->mode=ch[cn].mode;
 		}
 		for (n=0; n<5; n++) plr_change_stat(nr,cpl->attrib[n],ch[cn].attrib[n],SV_SETCHAR_ATTRIB,n);

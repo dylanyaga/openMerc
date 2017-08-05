@@ -24,7 +24,7 @@ All rights reserved.
 
 int ctick=0;
 
-static char intro_msg1[]={"Welcome to Astonia 2, my friend!\n"};
+static char intro_msg1[]={"Welcome to openMerc, based on the Mercenaries of Astonia engine by Daniel Brockhaus, my friend!\n"};
 static char intro_msg2[]={"May your visit here be... interesting.\n"};
 
 static char intro_msg3[]={"\n"};
@@ -201,7 +201,7 @@ void plr_challenge_login(int nr)
 void plr_challenge(int nr)
 {
         unsigned int tmp;
-	
+
         tmp=*(unsigned long*)(player[nr].inbuf+1);
         player[nr].version=*(unsigned long*)(player[nr].inbuf+5);
         player[nr].race=*(unsigned long*)(player[nr].inbuf+9);
@@ -877,7 +877,7 @@ void cl_list(void)
 		if (clcmd[n]>m) m=clcmd[n];
 	}
 
-	for (n=0; n<256; n++) {		
+	for (n=0; n<256; n++) {
 		if (clcmd[n]>m/16)
 			xlog("cl type %2d: %5d (%.2f%%)",n,clcmd[n],100.0/tot*clcmd[n]);
 	}
@@ -957,7 +957,7 @@ void char_add_net(int cn,unsigned int net)
     int n,m;
 
     for (n=80; n<89; n++)
-        if ((ch[cn].data[n]&0x00ffffff)==(net&0x00ffffff)) break;	
+        if ((ch[cn].data[n]&0x00ffffff)==(net&0x00ffffff)) break;
 
     for (m=n; m>80; m--)
 	ch[cn].data[m]=ch[cn].data[m-1];
@@ -982,7 +982,7 @@ void plr_newlogin(int nr)
         }
 	if ((tmp=cap(0,nr))) {
 		plog(nr,"Reached player cap, returned queue place %d, prio=%d",tmp,player[nr].prio);
-		
+
 		buf[0]=SV_CAP;
 		*(unsigned int*)(buf+1)=tmp;
 		*(unsigned int*)(buf+5)=player[nr].prio;
@@ -1063,7 +1063,7 @@ void plr_newlogin(int nr)
 	}
 
         // do_staff_log(2,"New player %s entered the game!\n",ch[cn].name);
-        do_announce(cn, 0, "A new player has entered the game.\n", ch[cn].name);	
+        do_announce(cn, 0, "A new player has entered the game.\n", ch[cn].name);
 }
 
 
@@ -1122,7 +1122,7 @@ void plr_login(int nr)
 
         if ((tmp=cap(cn,nr))) {
 		chlog(cn,"Reached player cap, returned queue place %d, prio=%d",tmp,player[nr].prio);
-		
+
 		buf[0]=SV_CAP;
 		*(unsigned int*)(buf+1)=tmp;
 		*(unsigned int*)(buf+5)=player[nr].prio;
@@ -1437,7 +1437,7 @@ int cl_light_26(int n,int dosend,struct cmap *cmap,struct cmap *smap)
 	char buf[16],p;
 	int m,l=0;
 
-	if (!dosend) {	
+	if (!dosend) {
 		for (m=n; m<n+27 && m<TILEX*TILEY; m++) {
 			if (cmap[m].light!=smap[m].light) l++;
 		}
@@ -1461,7 +1461,7 @@ int cl_light_one(int n,int dosend,struct cmap *cmap,struct cmap *smap)
 {
 	char buf[16];
 
-	if (!dosend) {	
+	if (!dosend) {
 		return 50*1/3;
 	} else {
 
@@ -1477,7 +1477,7 @@ int cl_light_three(int n,int dosend,struct cmap *cmap,struct cmap *smap)
 	char buf[16],p;
 	int m,l=0;
 
-	if (!dosend) {	
+	if (!dosend) {
 		for (m=n; m<n+3 && m<TILEX*TILEY; m++) {
 			if (cmap[m].light!=smap[m].light) l++;
 		}
@@ -1565,7 +1565,7 @@ void plr_change(int nr)
 		plr_change_power(nr,cpl->hp,ch[cn].hp,SV_SETCHAR_HP);
 		plr_change_power(nr,cpl->end,ch[cn].end,SV_SETCHAR_ENDUR);
 		plr_change_power(nr,cpl->mana,ch[cn].mana,SV_SETCHAR_MANA);
-	
+
 		for (n=0; n<50; n++) plr_change_stat(nr,cpl->skill[n],ch[cn].skill[n],SV_SETCHAR_SKILL,n);
 
 		for (n=0; n<40; n++) {
@@ -1615,7 +1615,7 @@ void plr_change(int nr)
 
 			}
 		}
-	
+
 		for (n=0; n<20; n++) {
 			if (cpl->worn[n]!=(in=ch[cn].worn[n]) || (it[in].flags&IF_UPDATE)) {
 				buf[0]=SV_SETCHAR_WORN;
@@ -1629,12 +1629,12 @@ void plr_change(int nr)
 					*(short int*)(buf+7)=0;
 				}
 				xsend(nr,buf,9);
-	
+
 				cpl->worn[n]=in;
 				it[in].flags&=~IF_UPDATE;
 			}
 		}
-	
+
 		for (n=0; n<20; n++) {
 			if (cpl->spell[n]!=(in=ch[cn].spell[n]) ||
 			    (cpl->active[n]!=it[in].active*16/max(1,it[in].duration)) || (it[in].flags&IF_UPDATE)) {
@@ -1655,7 +1655,7 @@ void plr_change(int nr)
 				xsend(nr,buf,9);
 			}
 		}
-	
+
 		if (cpl->citem!=(in=ch[cn].citem) || (!IS_BUILDING(cn) && !(in&0x80000000) && it[in].flags&IF_UPDATE)) {
 			buf[0]=SV_SETCHAR_OBJ;
 			if (in&0x80000000) {
@@ -1675,7 +1675,7 @@ void plr_change(int nr)
 					if (it[in].active) *(short int*)(buf+1)=it[in].sprite[1];
 					else *(short int*)(buf+1)=it[in].sprite[0];
 					*(short int*)(buf+3)=it[in].placement;
-	
+
 					it[in].flags&=~IF_UPDATE;
 				}
 			} else {
@@ -1683,7 +1683,7 @@ void plr_change(int nr)
 				*(short int*)(buf+3)=0;
 			}
 			xsend(nr,buf,5);
-	
+
 			cpl->citem=in;
 		}
 	}
@@ -1836,7 +1836,7 @@ void plr_change(int nr)
 		// calculate index of difference found
 		n=(tmp-(unsigned char*)(cmap+n))/sizeof(struct cmap)+n;
 
-	//for (f=0; (n=player[nr].changed_field[f])!=-1; f++) {	
+	//for (f=0; (n=player[nr].changed_field[f])!=-1; f++) {
                 if (n>lastn && n-lastn<127) {
 			buf[0]=SV_SETMAP|(n-lastn);
                         buf[1]=0; p=2;
@@ -1850,7 +1850,7 @@ void plr_change(int nr)
                 if (cmap[n].ba_sprite!=smap[n].ba_sprite) {
 			buf[1]|=1;
 			*(unsigned short*)(buf+p)=smap[n].ba_sprite; p+=2;
-			
+
 		}
                 if (cmap[n].flags!=smap[n].flags) {
 			buf[1]|=2;
@@ -1889,9 +1889,9 @@ void plr_change(int nr)
 			buf[1]|=128;
                         *(unsigned char*)(buf+p)=smap[n].ch_proz; p+=1;
                 }
-		
+
 		if (buf[1]) { // we found a change (no change found can happen since it_status & ch_status are not transmitted all the time)
-			xsend(nr,buf,p);	
+			xsend(nr,buf,p);
 			lastn=n;
 		}
                 mcpy(&cmap[n],&smap[n],sizeof(struct cmap));
@@ -2190,7 +2190,7 @@ void plr_getmap_complete(int nr)
 			if (!visible) smap[n].flags|=INVIS;
 
 			// --- End of Flags ----- - more flags set in character part further down
-			
+
 			// --- Begin of Light -----
 			if (light>64) smap[n].light=0;
 			else if (light>52) smap[n].light=1;
@@ -2367,7 +2367,7 @@ void plr_getmap_fast(int nr)
 			else visible=0;
 
 			if (!visible)smap[n].flags|=INVIS;
-			
+
 			if (light>64) smap[n].light=0;
 			else if (light>52) smap[n].light=1;
 			else if (light>40) smap[n].light=2;
@@ -2456,13 +2456,13 @@ void plr_getmap(int nr)
 	if ((!(globs->flags&GF_SPEEDY) || globs->load_avg<6500) && mode!=0) { mode=0; do_announce(0,0,"Left speed savings mode.\n"); }
 
 	if (mode==0) plr_getmap_complete(nr);
-	else plr_getmap_fast(nr);	
+	else plr_getmap_fast(nr);
 }
 
 void stone_gc(int cn,int mode)
 {
 	int co;
-	
+
 	if (!(ch[cn].flags&CF_PLAYER)) return;
 	if (!(co=ch[cn].data[64])) return;
 	if (!IS_ACTIVECHAR(co)) return;
@@ -2552,7 +2552,7 @@ int check_valid(int cn)
 
         if ((ch[cn].flags&CF_STONED) && !(ch[cn].flags&CF_PLAYER)) {
         	int co;
-        	
+
         	if (!(co=ch[cn].data[63]) || !IS_ACTIVECHAR(co)) {
        			ch[cn].flags&=~CF_STONED;
        			chlog(cn,"oops, stoned removed");
@@ -2567,7 +2567,7 @@ void check_expire(int cn)
 	int erase=0,t,week=60*60*24*7,day=60*60*24;
 
 	t=time(NULL);
-	
+
 	if (ch[cn].points_tot==0) {
 		if (ch[cn].login_date+3*day<t) erase=1;
 	} else if (ch[cn].points_tot<10000) {
@@ -2767,4 +2767,3 @@ void player_exit(int nr)
         cn=player[nr].usnr;
         if (cn && cn>0 && cn<MAXCHARS && ch[cn].player==nr) ch[cn].player=0;
 }
-

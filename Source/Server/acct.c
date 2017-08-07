@@ -236,7 +236,7 @@ void copy_character(LIST *head)
         printf("Done. Here is your new, copied monster");
 	printf("<table>");	  // show copied monster for direct access.
 
-        
+
 //                if (ch[n].used==USE_EMPTY) continue;
                 printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
                         "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",
@@ -247,8 +247,8 @@ void copy_character(LIST *head)
                         ch[n].x,ch[n].y,ch[n].points_tot>>10,ch[n].alignment,n,n);
 
         printf("</table>");
-	
-	
+
+
 }
 
 void view_character(LIST *head)
@@ -671,7 +671,7 @@ void view_object(LIST *head)
                 it[in].power);
         printf("<tr><td>Sprite Overr.:</td><td><input type=text name=spr_ovr value=\"%d\" size=10 maxlength=10></td></tr>",
                 it[in].sprite_override);
-                
+
        	printf("<tr><td>Min. Rank:</td><td><input type=text name=min_rank value=\"%d\" size=10 maxlength=10></td></tr>",
                 it[in].min_rank);
 
@@ -1133,7 +1133,7 @@ void update_object(LIST *head)
         tmp=find_val(head,"spr_ovr");
         if (tmp) it[in].sprite_override=atoi(tmp);
         else { printf("SPR_OVR not specified."); return; }
-        
+
         tmp=find_val(head,"min_rank");
         if (tmp) it[in].min_rank=atoi(tmp);
         else { printf("MIN_RANK not specified."); return; }
@@ -1168,7 +1168,7 @@ void list_characters(LIST *head)	// excludes grolms, gargs, icegargs. decides by
 
         for (n=0; n<MAXTCHARS; n++) {
                 if (ch[n].used==USE_EMPTY) continue;
-	    if (ch[n].sprite==12240 || ch[n].sprite==18384 || ch[n].sprite==21456) continue; 
+	    if (ch[n].sprite==12240 || ch[n].sprite==18384 || ch[n].sprite==21456) continue;
                 printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
                         "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",
                         n,n,
@@ -1301,12 +1301,12 @@ int main(int argc, char *args[])
         printf("</td><td align=center>");
         printf("<a href=\"http://www.astonia.com/\"><img src=\"/gfx/logo.gif\" width=100 height=60 border=0></a>");
         printf("</td></tr></table>");
-        printf("<img src=/gfx/barsmall.gif border=0 align=left alt=---- width=100%% height=5><br>");
+    	printf("<hr width=80%% color=\"#808000\"><br>\n");
         printf("<table width=100%%><tr><td>\n");
 
         load();
-        
-        #ifdef RESET_CHAR_KLUDGE	
+
+        #ifdef RESET_CHAR_KLUDGE
         n=atoi(args[1]);
         globs->reset_char=n;
 	unload();
@@ -1366,7 +1366,7 @@ int main(int argc, char *args[])
 
         printf("</td></tr></table>");
 
-        printf("<img src=/gfx/barsmall.gif border=0 align=left alt=---- width=100%% height=5><br>");
+        printf("<hr width=80%% color=\"#808000\"><br>\n");
         printf("<table width=\"100%%\"><tr>");
         if (step>11 && step<20) printf("<td align=center><a href=/cgi-imp/acct.cgi?step=11>Back to main page</a></td>");
         else if (step>21 && step<30) printf("<td align=center><a href=/cgi-imp/acct.cgi?step=21>Back to main page</a></td>");
@@ -1374,7 +1374,7 @@ int main(int argc, char *args[])
         printf("<td align=right><table><tr><td>");
 
         printf("</td></tr></table></td></tr></table>");
-        printf("<img src=/gfx/barsmall.gif border=0 align=left alt=---- width=100%% height=5><br>");
+        printf("<hr width=80%% color=\"#808000\"><br>\n");
         printf("<font size=-1>All material on this server is copyright <a href=mailto:joker@astonia.com>D.Brockhaus</a></font></center>");
         printf("</body></html>");
 

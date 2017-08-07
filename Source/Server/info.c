@@ -132,10 +132,10 @@ static char *_rank[24]={
 "Lieutenant General",
 "General",
 "Field Marshal",
-"Knight of Astonia",
-"Baron of Astonia",
-"Earl of Astonia",
-"Warlord of Astonia"
+"Knight of openMerc",
+"Baron of openMerc",
+"Earl of openMerc",
+"Warlord of openMerc"
 };
 
 static int points2rank(int v)
@@ -208,6 +208,14 @@ static void who(void)
 	}
 	if (shown==0) printf("<tr><td colspan=4>No players active</td></tr>\n");
 	printf("</table><br>\n");
+	printf("<ul>\n");
+	printf("<li><a href=\"/cgi-bin/info.cgi?top\">Top Players</a></li>");
+	printf("<li><a href=\"/cgi-bin/info.cgi?gods\">Gods</a></li>");
+	printf("<li><a href=\"/cgi-bin/info.cgi?staff\">Staff</a></li>");
+	printf("<li><a href=\"/cgi-bin/info.cgi?xtop\">Top Experience Players</a></li>");
+	printf("<li><a href=\"/cgi-bin/info.cgi?dtop\">Top Deaths Players</a></li>");
+    printf("</ul>\n");
+
 }
 
 static void gods(void)
@@ -275,7 +283,7 @@ static void top(void)
 		if (ch[n].used==USE_EMPTY) continue;
 		if (!(ch[n].flags&(CF_PLAYER))) continue;
 		if (ch[n].flags&(CF_GOD|CF_NOLIST)) continue;
-		
+
 		for (m=0; m<25; m++) {
 			if (ch[n].points_tot>b[m]) {
 				if (m<24) {
@@ -322,7 +330,7 @@ static void xtop(int srank)
 		if (!(ch[n].flags&(CF_PLAYER))) continue;
 		if (ch[n].flags&(CF_GOD|CF_NOLIST)) continue;
                 if (srank && points2rank(ch[n].points_tot)!=srank) continue;
-		
+
 		for (m=0; m<25; m++) {
 			if (ppm[n]>b[m]) {
 				if (m<24) {
@@ -364,7 +372,7 @@ static void dtop(int srank)
 		if (!(ch[n].flags&(CF_PLAYER))) continue;
 		if (ch[n].flags&(CF_GOD|CF_NOLIST)) continue;
                 if (srank && points2rank(ch[n].points_tot)!=srank) continue;
-		
+
 		for (m=0; m<25; m++) {
 			if (ch[n].data[14]+ch[n].data[44]<b[m]) {
 				if (m<24) {
@@ -394,18 +402,18 @@ static void char_info(int cn)
 {
 	int n;
 	char *gender,*Gender;
-	
+
 	if (!(ch[cn].flags&CF_PLAYER)) {
 		printf("Access denied!");
 		return;
 	}
-	
+
 	if (ch[cn].kindred&KIN_MALE) { gender="he"; Gender="He"; }
 	else { gender="she"; Gender="She"; }
-	
+
 	printf("%s <b>%s</b><br><br>",rank(ch[cn].points_tot),ch[cn].name);
 	printf("%s<br><br>",ch[cn].description);
-	
+
 	if (!(ch[cn].flags&CF_GOD)) {
 		printf("%s died %d times, was saved by the gods %d times and\n",
 			ch[cn].name,
@@ -413,20 +421,20 @@ static void char_info(int cn)
 			ch[cn].data[44]);
 		printf("solved %d parts of the Labyrinth.\n",
 			ch[cn].data[20]);
-			
+
 		if (ch[cn].data[25]>ch[cn].data[24]+ch[cn].data[23]) {
 			printf("%s is said to be very brave.\n",Gender);
 		} else if (ch[cn].data[25]+ch[cn].data[24]>ch[cn].data[23]) {
 			printf("%s is said to be brave.\n",Gender);
 		} else printf("%s is said to be cautious.\n",Gender);
-		
+
 		n=(ch[cn].gold+ch[cn].data[13])/100;
-		
+
 		if (n>1000000) printf("Rumor has it %s is extremely rich.\n",ch[cn].name);
 		else if (n>100000) printf("Rumor has it %s is very rich.\n",ch[cn].name);
 		else if (n>10000) printf("Rumor has it %s is rich.\n",ch[cn].name);
 		else if (n>1000) printf("Rumor has it %s is fairly rich.\n",ch[cn].name);
-		
+
 		if (ch[cn].kindred&KIN_PURPLE) {
 			printf("%s is a follower of the Purple One and killed %d fellow players.\n",
 				Gender,ch[cn].data[29]);
@@ -451,9 +459,9 @@ static void info(int cn)
 	int cap;
         time_t t;
         double proz1,proz2;
-	
+
 	if (cn) { char_info(cn); return; }
-	
+
 	t=time(NULL);
 
 	printf("<b>Statistics</b><br><br>\n");
@@ -480,7 +488,7 @@ static void info(int cn)
 	printf("<tr><td colspan=3><hr></td></tr>");
 
 	/*cap=globs->cap*100/proz1;
-	
+
         printf("<tr><td>Suggested CAP: </td><td> %d</td></tr>",cap);
 	printf("<tr><td colspan=3><hr></td></tr>");*/
 
@@ -534,7 +542,7 @@ static void hog(void)
 	printf("<b>Top CPU Usage</b><br><br>\n");
 	for (n=1; n<MAXCHARS; n++) {
 		if (ch[n].used==USE_EMPTY) continue;
-		
+
 		for (m=0; m<25; m++) {
 			if (ch[n].data[98]>b[m]) {
 				if (m<24) {
@@ -591,7 +599,7 @@ static char *query;
 int main(int argc,char *args[])
 {
 	int cn=0,srank=0;
-	
+
 	query=getenv("QUERY_STRING");
 	if (query && !strncmp(query,"cn=",3)) cn=atoi(query+3);
 	if (query && !strncmp(query,"rank=",5)) srank=atoi(query+5);
@@ -606,7 +614,7 @@ int main(int argc,char *args[])
 	printf(
 "    <table width=\"100%%\">"
 "        <tr>"
-"            <td align=\"center\"><a href=\"http://www.astonia.com/\"><img src=\"/gfx/logo.gif\" width=\"100\" height=\"60\" border=\"0\"></a></td>"
+"            <td align=\"center\"><a href=\"https://github.com/dylanyaga/openMerc/\"><img src=\"/gfx/logo.gif\" width=\"100\" height=\"60\" border=\"0\"></a></td>"
 "            <td align=\"center\">"
 "                <a href=\"/\">Home</a>"
 "                <a href=\"/manual.html\">Manual</a>"
@@ -614,41 +622,45 @@ int main(int argc,char *args[])
 "                <a href=\"/download.html\">Download</a>"
 "                <a href=\"/contact.html\">Contact</a>"
 "                <a href=\"/cgi-bin/info.cgi\">Server&nbsp;Status</a>"
-"                <a href=\"/cgi-bin/who.cgi\">Who's&nbsp;Online</a>"
+"                <a href=\"/cgi-bin/info.cgi?who\">Who's&nbsp;Online</a>"
 "                <a href=\"/bugs.html\">Bugs</a>"
 "                <a href=\"/changes.html\">Changes</a>"
 "                <a href=\"/creators.html\">Creators</a>"
 "                <a href=\"/links.html\">Links</a>"
 "                <a href=\"/privacy.html\">Privacy</a>"
 "            </td>"
-"            <td align=\"center\"><a href=\"http://www.astonia.com/\"><img src=\"/gfx/logo.gif\" width=\"100\" height=\"60\" border=\"0\"></a></td>"
+"            <td align=\"center\"><a href=\"https://github.com/dylanyaga/openMerc/\"><img src=\"/gfx/logo.gif\" width=\"100\" height=\"60\" border=\"0\"></a></td>"
 "        </tr>"
 "    </table>");
 	printf("</td></tr></table>");
-	printf("<img src=/gfx/barsmall.gif border=0 align=left alt=---- width=100%% height=5><br>");
+	printf("<hr width=80%% color=\"#808000\"><br>\n");
 	printf("<table width=60%%><tr><td>\n");
-	
+
 	if (load()) { printf("<b>Cannot access server data. Exiting... (%s)</b></td></tr></table>",strerror(errno)); exit(0); }
 
-	if (args[0]) {
-		if (strcmp(args[0],"who.cgi")==0) who();
-		else if (strcmp(args[0],"top.cgi")==0) top();
-		else if (strcmp(args[0],"info.cgi")==0) info(cn);
-		else if (strcmp(args[0],"hog.cgi")==0) hog();
-		else if (strcmp(args[0],"gods.cgi")==0) gods();
-		else if (strcmp(args[0],"staff.cgi")==0) staff();
-		else if (strcmp(args[0],"effects.cgi")==0) effects();
-                else if (strcmp(args[0],"xtop.cgi")==0) xtop(srank);
-                else if (strcmp(args[0],"dtop.cgi")==0) dtop(srank);
-		else printf("Internal error... (%s)\n",args[0]);
-	} else printf("Internal error...");
+	if (!args[1])
+	{
+		info(cn);
+	}
+	if (args[1])
+	{
+		if (strcmp(args[1],"who")==0) who();
+		else if (strcmp(args[1],"top")==0) top();
+		else if (strcmp(args[1],"hog")==0) hog();
+		else if (strcmp(args[1],"gods")==0) gods();
+		else if (strcmp(args[1],"staff")==0) staff();
+		else if (strcmp(args[1],"effects")==0) effects();
+		else if (strcmp(args[1],"xtop")==0) xtop(srank);
+		else if (strcmp(args[1],"dtop")==0) dtop(srank);
+		else printf("Internal error... (%s)\n",args[1]);
+	}
 
 	unload();
 
 	printf("</td></tr></table><br>");
-	
+
 	printf(
-	"<img src=\"/gfx/barsmall.gif\" border=0 align=\"left\" alt=\"----\" width=\"100%%\" height=5><br>"
+	"<hr width=80%% color=\"#808000\"><br>\n"
 	"<table width=\"100%%\" cellpadding=0 cellspacing=0 border=0><tr>"
 	"<td width=\"33%%\" align=center><a href=/devel.html>Back to main page</a></td>"
 	"<td width=\"33%%\" align=center>&nbsp;</td>"

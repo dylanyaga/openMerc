@@ -20,14 +20,15 @@ lab9.h
 SERVERDIR=/home/merc
 CGIIMP=/usr/lib/cgi-imp
 CGIBIN=/usr/lib/cgi-bin
-
+GFX=/var/www/html/gfx/
 structure:
 	sudo mkdir -p $(SERVERDIR)
 	sudo mkdir -p $(SERVERDIR)/.dat
 	sudo cp .dat/*.* $(SERVERDIR)/.dat/
 	sudo chmod -R a+rwx $(SERVERDIR)/.dat/
 	sudo mkdir -p $(CGIIMP)
-	sudo cp gfx/*.* /var/www/html/gfx/
+	sudo mkdir -p $(GFX)
+	sudo cp gfx/*.* $(GFX)
 
 server:	$(OBJS) structure
 	$(CC) $(LDFLAGS) -o server $(OBJS) $(ENDFLAGS)

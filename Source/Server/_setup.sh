@@ -1,11 +1,7 @@
 #!/bin/bash
-serverFolder=/home/merc
 currentFolder=$(pwd)
 
 #Create folders to store data, if necessary
-if [ ! -d "$serverFolder" ]; then
-    sudo mkdir $serverFolder
-fi
 if [ ! -d ".obj" ]; then
     mkdir .obj
 fi

@@ -1,4 +1,4 @@
-all: server cgi/info.cgi respawn password cgi/acct.cgi 
+all: server respawn password cgi/info.cgi cgi/acct.cgi
 
 CC=gcc
 DEBUG=-g
@@ -12,27 +12,46 @@ OBJS=.obj/server.o .obj/svr_disk.o .obj/svr_tick.o .obj/svr_act.o \
 .obj/driver_etc.o .obj/driver_generic.o .obj/populate.o \
 .obj/helper.o .obj/skill.o .obj/skill_driver.o .obj/talk.o \
 .obj/area.o .obj/path.o .obj/stunrun.o .obj/cityattack.o \
-.obj/npc_malte.o .obj/lab9.o .obj/rdtsc.o .obj/ccp_driver.o 
+.obj/npc_malte.o .obj/lab9.o .obj/rdtsc.o .obj/ccp_driver.o
 
 SHEADER=client.h data.h funcs.h gendefs.h globals.h server.h driver.h \
 lab9.h
 
-server:	$(OBJS) 
+SERVERDIR=/home/merc
+CGIIMP=/usr/lib/cgi-imp
+CGIBIN=/usr/lib/cgi-bin
+
+structure:
+	mkdir -p $(SERVERDIR)
+	mkdir -p $(SERVERDIR)/.dat
+	cp .dat/*.* $(SERVERDIR)/.dat/
+	chmod -R a+rwx $(SERVERDIR)/.dat/
+	mkdir -p $(CGIIMP)
+	cp gfx/*.* /var/www/html/gfx/
+
+server:	$(OBJS) structure
 	$(CC) $(LDFLAGS) -o server $(OBJS) $(ENDFLAGS)
+	cp server $(SERVERDIR)/server
+	cp badnames.txt $(SERVERDIR)/badnames.txt
+	cp badwords.txt $(SERVERDIR)/badwords.txt
 
 cgi/info.cgi: info.c gendefs.h data.h
 	$(CC) $(CFLAGS) -o info.cgi info.c
-	cp info.cgi cgi/info.cgi
+	cp info.cgi $(CGIBIN)/info.cgi
+	chmod a+rx $(CGIBIN)/info.cgi
 
 cgi/acct.cgi: acct.c gendefs.h data.h .obj/skill.o
 	$(CC) $(CFLAGS) -Icgilib -o acct.cgi acct.c .obj/skill.o cgilib/cgi-lib.a
-	cp acct.cgi cgi/acct.cgi
+	cp acct.cgi $(CGIIMP)/acct.cgi
+	chmod a+rx $(CGIIMP)/acct.cgi
 
 respawn: respawn.c $(SHEADER)
 	$(CC) $(CFLAGS) $(LDFLAGS) -o respawn respawn.c $(ENDFLAGS)
+	cp respawn $(SERVERDIR)/respawn
 
 password: password.c $(SHEADER)
 	$(CC) $(CFLAGS) $(LDFLAGS) -o password password.c $(ENDFLAGS)
+	cp password $(SERVERDIR)/password
 
 .obj/server.o:		server.c $(SHEADER)
 	$(CC) $(CFLAGS) -o .obj/server.o -c server.c
@@ -73,25 +92,25 @@ password: password.c $(SHEADER)
 .obj/area.o:		area.c $(SHEADER)
 	$(CC) $(CFLAGS) -o .obj/area.o -c area.c
 
-.obj/driver_generic.o:	driver_generic.c $(SHEADER) 
+.obj/driver_generic.o:	driver_generic.c $(SHEADER)
 	$(CC) $(CFLAGS) -o .obj/driver_generic.o -c driver_generic.c
 
-.obj/driver_etc.o:	driver_etc.c $(SHEADER) 
+.obj/driver_etc.o:	driver_etc.c $(SHEADER)
 	$(CC) $(CFLAGS) -o .obj/driver_etc.o -c driver_etc.c
 
-.obj/skill.o:		skill.c $(SHEADER) 
+.obj/skill.o:		skill.c $(SHEADER)
 	$(CC) $(CFLAGS) -o .obj/skill.o -c skill.c
 
 .obj/look_driver.o:	look_driver.c $(SHEADER)
 	$(CC) $(CFLAGS) -o .obj/look_driver.o -c look_driver.c
 
-.obj/skill_driver.o:	skill_driver.c $(SHEADER) 
+.obj/skill_driver.o:	skill_driver.c $(SHEADER)
 	$(CC) $(CFLAGS) -o .obj/skill_driver.o -c skill_driver.c
 
 .obj/use_driver.o:	use_driver.c $(SHEADER)
 	$(CC) $(CFLAGS) -o .obj/use_driver.o -c use_driver.c
 
-.obj/svr_god.o:		svr_god.c $(SHEADER) 
+.obj/svr_god.o:		svr_god.c $(SHEADER)
 	$(CC) $(CFLAGS) -o .obj/svr_god.o -c svr_god.c
 
 .obj/svr_do.o:		svr_do.c $(SHEADER)
@@ -116,7 +135,7 @@ password: password.c $(SHEADER)
 	$(CC) $(CFLAGS) -o .obj/rdtsc.o -c rdtsc.S
 
 clean:
-	- rm server acct.cgi info.cgi .obj/*.o *~
+	- sudo rm server password respawn $(CGIIMP)/acct.cgi $(CGIBIN)/info.cgi .obj/*.o
 
 dist:
 	rm -f merc2.tgz

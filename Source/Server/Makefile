@@ -24,34 +24,34 @@ CGIBIN=/usr/lib/cgi-bin
 structure:
 	sudo mkdir -p $(SERVERDIR)
 	sudo mkdir -p $(SERVERDIR)/.dat
-	sudo cp.dat/*.* $(SERVERDIR)/.dat/
+	sudo cp .dat/*.* $(SERVERDIR)/.dat/
 	sudo chmod -R a+rwx $(SERVERDIR)/.dat/
 	sudo mkdir -p $(CGIIMP)
-	sudo cpgfx/*.* /var/www/html/gfx/
+	sudo cp gfx/*.* /var/www/html/gfx/
 
 server:	$(OBJS) structure
 	$(CC) $(LDFLAGS) -o server $(OBJS) $(ENDFLAGS)
-	sudo cpserver $(SERVERDIR)/server
-	sudo cpbadnames.txt $(SERVERDIR)/badnames.txt
-	sudo cpbadwords.txt $(SERVERDIR)/badwords.txt
+	sudo cp server $(SERVERDIR)/server
+	sudo cp badnames.txt $(SERVERDIR)/badnames.txt
+	sudo cp badwords.txt $(SERVERDIR)/badwords.txt
 
 cgi/info.cgi: info.c gendefs.h data.h
 	$(CC) $(CFLAGS) -o info.cgi info.c
-	sudo cpinfo.cgi $(CGIBIN)/info.cgi
+	sudo cp info.cgi $(CGIBIN)/info.cgi
 	sudo chmod a+rx $(CGIBIN)/info.cgi
 
 cgi/acct.cgi: acct.c gendefs.h data.h .obj/skill.o
 	$(CC) $(CFLAGS) -Icgilib -o acct.cgi acct.c .obj/skill.o cgilib/cgi-lib.a
-	sudo cpacct.cgi $(CGIIMP)/acct.cgi
+	sudo cp acct.cgi $(CGIIMP)/acct.cgi
 	sudo chmod a+rx $(CGIIMP)/acct.cgi
 
 respawn: respawn.c $(SHEADER)
 	$(CC) $(CFLAGS) $(LDFLAGS) -o respawn respawn.c $(ENDFLAGS)
-	sudo cprespawn $(SERVERDIR)/respawn
+	sudo cp respawn $(SERVERDIR)/respawn
 
 password: password.c $(SHEADER)
 	$(CC) $(CFLAGS) $(LDFLAGS) -o password password.c $(ENDFLAGS)
-	sudo cppassword $(SERVERDIR)/password
+	sudo cp password $(SERVERDIR)/password
 
 .obj/server.o:		server.c $(SHEADER)
 	$(CC) $(CFLAGS) -o .obj/server.o -c server.c

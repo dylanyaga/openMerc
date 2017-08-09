@@ -1,6 +1,5 @@
 
 # Server Setup
-========================================
 Using Ubuntu 16.04.1 LTS 32-Bit
 
 ## Initial Setup:

@@ -1,7 +1,7 @@
 #define MNAME  "openMerc"
 #define MHELP  "https://github.com/dylanyaga/openMerc/blob/master/HELP.md"
 #define MNEWS  "https://github.com/dylanyaga/openMerc/blob/master/NEWS.md"
-#define MHOST  "xxx.xxx.x.xxx"
+#define MHOST  "127.0.0.1"
 
 //#define DOCONVERT  // enable sprite packer
 

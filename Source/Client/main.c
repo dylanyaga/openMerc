@@ -525,7 +525,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
         parse_cmd(lpCmdLine);
 
         mutex=CreateMutex(NULL,0,"MOAB");
-        if (mutex==NULL || GetLastError()==ERROR_ALREADY_EXISTS && strcmp(host_addr,"192.168.42.1")) {
+        if (mutex==NULL || GetLastError()==ERROR_ALREADY_EXISTS && strcmp(host_addr,"127.0.0.1")) {
                 MessageBox(0,"Another instance of "MNAME " is already running.","Error",MB_OK|MB_ICONSTOP);
                 return 0;
         }

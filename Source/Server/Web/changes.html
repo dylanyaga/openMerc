@@ -11,7 +11,7 @@
 				<table width="100%">
 					<tr>
 						<td align="center"><a href="https://github.com/dylanyaga/openMerc/"><img src="gfx/logo.gif" width="100" height="60" border="0"></a></td>
-                        <td align="center">
+						<td align="center">
 							<a href="index.html">Home</a>
 							<a href="manual.html">Manual</a>
 							<a href="terms.html">Terms</a>
@@ -32,9 +32,505 @@
 			</tr>
 		</table>
 		<hr width=80% color="#808000"><br>
+		<br>
 
-		<hr width=80% color="#808000"><br>
-		<font size=-1>All material on this server is based on the Mercenaries of Astonia engine by Daniel Brockhaus.</font>
+		<h2>Changes-List for openMerc v2.13.13</h2>
+
+		<table width="550" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+					2.13.13:
+					<ul>
+						<li>New stuff:</li>
+						<ul compact>
+							<li>New Area: Staffers Corner</li>
+							<li>New Area: Astonian Inn</li>
+							<li>New Area: Memorial Park</li>
+							<li>Small addition to Thieves House</li>
+							<li>Three new drinks (beer! at last!)</li>
+							<li>Arena scrolls</li>
+							<li>Garbage cans</li>
+							<li>Strong Grolms/Gargoyles/Ice Gargoyles in pentagram quest dropping Soulstones when killed</li>
+							<li>Soulstones can be combined or used to enhance items. They're not finished, but there is enough there to make them worthwhile. Experiment a bit...</li>
+						</ul>
+						<li>Fixes:
+							<ul compact>
+								<li>Um, several, probably, but I don't remember.</li>
+							</ul>
+					</ul>
+					2.13.12:
+					<ul>
+						<li>New stuff:
+							<ul compact>
+								<li>Added command #time (or /time).</li>
+								<li>Re-introduced unique weapons of the Purple One.</li>
+							</ul>
+							<li>Fixes:</li>
+							<ul compact>
+								<li>Ghost Companion of a player solving the end-of-labyrinth-challenge himself is now teleported out as well.</li>
+								<li>Fixed bug which made monsters respawn multiple times.</li>
+							</ul>
+					</ul>
+					2.13.11:
+					<ul>
+						<li>New stuff:
+							<ul compact>
+								<li>Made ghost companions able to solve the end-of-labyrinth-challenge for their masters.</li>
+								<li>Added logic to prevent players from swearing.</li>
+								<li>Made new pathfinder the default.</li>
+								<li>Made pentagram quest depend on number of players online.</li>
+							</ul>
+							<li>Fixes:</li>
+							<ul compact>
+								<li>Some Imp command is no longer broken.</li>
+							</ul>
+					</ul>
+					2.13.10:
+					<ul>
+						<li>New stuff:</li>
+						<ul compact>
+							<li>Made ghost companions see their master regardless of light/distance.</li>
+							<li>Added logic to prevent players from spamming (might need some finetuning).</li>
+							<li>Made exploration poles give the player an indication if he's reached it too early when looked at.</li>
+						</ul>
+						<li>Fixes:</li>
+						<ul compact>
+							<li>Ghost companions should no longer be able to attack players in NOFIGHT zones.</li>
+							<li>Ghost companions should no longer be able to attack non-purple players outside the arena.</li>
+							<li>Final lab room clears itself after 2 minutes.</li>
+							<li>Fixed division by zero error when a total newbie reached a pole.</li>
+							<li>Fixed NPC looting bug which made some NPCs loot the same grave again and again.</li>
+						</ul>
+					</ul>
+					2.13.09:
+					<ul>
+						<li>New stuff:</li>
+						<ul compact>
+							<li>Exp from poles is now random and rank based - you won't get as much exp as before for a pole you couldn't have reached alone.</li>
+							<li>Turned NPC grave looting on and added support for taking and using potions to it.</li>
+							<li>Added a final room to all labs in which the player who wishes to solve must defeat that labs most common enemy alone.</li>
+						</ul>
+						<li>Fixes:</li>
+						<ul compact>
+							<li>Finally found the bug which caused those mysterious crashes every few weeks. YAY!</li>
+						</ul>
+					</ul>
+					2.13.08:
+					<ul>
+						<li>New stuff:</li>
+						<ul compact>
+							<li>Introduced code which allows NPCs to loot graves and use the equipment in them.</li>
+							<li>A few new god commands.</li>
+						</ul>
+						<li>Fixes:</li>
+						<ul compact>
+							<li>None.</li>
+						</ul>
+						</li>
+					</ul>
+					2.13.07:
+					<ul>
+						<li>New stuff:</li>
+						<ul compact>
+							<li>Once again rank limits for player versus player fighting: 3 ranks for normal players, 5 ranks for officers, no limit for nobility. No attacks from one of these three classes against a member of a different class.</li>
+							<li>Pentagram quest respawns faster.</li>
+							<li>Random number of pentagrammas needed for a solve.</li>
+						</ul>
+						<li>Fixes:</li>
+						<ul compact>
+							<li>Some spelling errors, some god commands.</li>
+						</ul>
+					</ul>
+					2.13.06:
+					<ul>
+						<li>New stuff:</li>
+						<ul compact>
+							<li>Added Armor of Defence (Soulhunter)</li>
+							<li>Added Rainbow Belt (Soulhunter)</li>
+							<li>Some NPC logic improvements (Soulhunter &amp; Ishtar)</li>
+						</ul>
+						<li>Fixes:</li>
+						<ul compact>
+							<li>Fixed "item under cursor vanishes and changes into something completely different"-bug (Ishtar)</li>
+						</ul>
+					</ul>
+					2.13.04:
+					<ul>
+						<li>New stuff:</li>
+						<ul compact>
+							<li>Command abbreviations: All <code>#</code> commands can now be abbreviated, usually to 2 characters, such as <code>#WA</code> for <code>#WAVE</code> or <code>#T</code> for <code>#TELL</code>.</li>
+						</ul>
+					</ul>
+					2.13.03:
+					<ul>
+						<li>Fixes:
+							<ul compact>
+								<li>Seyan'Du Shrine bug fixed. Thanks, Warlock!</li>
+								<li>Ghost Companions can no longer be created in the Gatekeeper's room!</li>
+								<li>Pickaxe has been verified to indeed be an axe.</li>
+								<li>Ghost Companions are now less chatty at creation, depending on their rank and on whether they were launched at an enemy or just created.</li>
+								<li>Gold coins lying on the ground now have a description.</li>
+							</ul>
+							<li>New stuff:</li>
+							<ul compact>
+								<li>Identified items now stay identified. <code>#LOOK</code> tells all.</li>
+								<li>New skill <b>Warcry</b> for Arch Templars: Demotivates your enemies and temporarily stops them in their tracks.</li>
+								<li>New skill <b>Concentrate</b> for Arch Harakim: Significantly reduces spell costs.</li>
+								<li>Your own Ghost Companion now shows up in <code>#WHO</code></li>
+							</ul>
+					</ul>
+					2.13.00:
+					<ul>
+						<li>Fixes:</li>
+						<ul compact>
+							<li>Librarians now ask for the right volumes</li>
+						</ul>
+						<li>New stuff:
+							<ul compact>
+								<li>New server! Your lag should be much better.</li>
+								<li>GCs now know to be QUIET (it's a toggle, say it again to hear them chatter)</li>
+							</ul>
+					</ul>
+					2.12.11:
+					<ul>
+						<li>Fixes:</li>
+						<ul compact>
+							<li>Better winged boots: Thanks to Resrunu!</li>
+							<li>NPC's GCs don't disappear after one second</li>
+							<li>NPCs know not to curse too-immune targets</li>
+							<li>Monsters don't spell 'stoned' players</li>
+						</ul>
+						<li>New stuff:
+							<ul compact>
+								<li>Lab 9 (Riddle Gorge) released</li>
+								<li>Basement in Thief's House</li>
+								<li>Spiders infest Kwai Clan House</li>
+								<li>GC now has some resistance</li>
+								<li>GCs notify their master of spells running out</li>
+								<li>Purple PK attacks limited to +/- 3 ranks</li>
+								<li><code>#LAG 0</code> shows the previous value</li>
+								<li>Becoming Purple requires typing <code>#PURPLE</code> after killing priest</li>
+							</ul>
+					</ul>
+					2.12.10:
+					<ul>
+						<li>Sense Magic now recognizes special items in the graves of your victims.</li>
+						<li>Ghost Companions no longer try to commit suicide.</li>
+						<li><code>#GTELL</code> for talking to group members.</li>
+						<li>Grave searching only for the authorized. Followers of the Purple One may search each others' graves, but for Followers of Skua, only the owners control access and may grant it with #ALLOW.</li>
+					</ul>
+					<br> 2.12.09:
+					<ul>
+						<li>Ghost Companions reintroduced.</li>
+						<li>Quality of Seyan'Du swords adjusted.</li>
+					</ul>
+					<br> 2.12.08:
+					<ul>
+						<li>Speed setting bug fixed</li>
+						<li><code>#SEEN</code> &lt;player name&gt; tells you, roughly, when player was last online</li>
+						<li>Guard or Priest of Purple One announce player rank increases</li>
+						<li><code>#SPELLIGNORE</code> prevents you from attacking a NPC that curses you</li>
+						<li><code>#WHO</code> shows the number of players online (can we top 21?)</li>
+						<li><code>#TELL</code> and some staff commands now take shortened player names. 'Elr' is (so far) enough to reach Elrac.</li>
+						<li>Some rooms are now no-fight zones. No attacks possible.</li>
+						<li><code>#AFK</code> now takes an optional message telling WHY you're away.</li>
+						<li>(Staff only) <code>#INFO</code> now displays more information</li>
+					</ul>
+					<br> 2.12.07:
+					<ul>
+						<li>Speed setting is saved when you #QUIT.</li>
+						<li>Gold and silver nuggets can now be stepped on.</li>
+						<li>Players in the Lizard Temple show location in #WHO.</li>
+						<li>Ice Egg and Ice cloak melt more slowly while in backpack.</li>
+						<li>Syleia now knows the word 'egg'.</li>
+						<li>Emerald armor now sold in Lab 13.</li>
+						<li>NPCs no longer answer invisible people.</li>
+						<li>In Staff #WHO, K's for experience mean 1000, M 1000000.</li>
+						<li>Made room for more NPCs and items (for future expansion).</li>
+					</ul>
+					<br> 2.12.06:
+					<ul>
+						<li>added new area Gargoyle's Nest (done by Sharra!).</li>
+						<li>bugfix in #who.</li>
+					</ul>
+					<br> 2.12.05:
+					<ul>
+						<li>bugfix in merchant logic.</li>
+						<li>reduced strength of Ice Gargoyles.</li>
+					</ul>
+					<br> 2.12.04:
+					<ul>
+						<li>some improvements to #who.</li>
+						<li>some improvements to #follow.</li>
+						<li>#withdraw and #deposit now take &lt;gold&gt; &lt;silver&gt;.</li>
+						<li>#balance and #depot show Earth time costs.</li>
+						<li>some internal changes.</li>
+					</ul>
+					<br> 2.12.03:
+					<ul>
+						<li>reduced strength of Immunity.</li>
+						<li>made #who display more than 17 players.</li>
+						<li>made NPCs aware of deathtraps.</li>
+					</ul>
+					<br> 2.12.02:
+					<ul>
+						<li>ghost-voice bugfix.</li>
+						<li>replaced Bash by Immunity.</li>
+						<li>added gamma correction to client.</li>
+					</ul>
+					<br> 2.12.00:
+					<ul>
+						<li>repair/identify are easier now on common items.</li>
+						<li>spell-scrolls now lose value when used.</li>
+						<li>hopefully final value for all items set.</li>
+						<li>added ice gargolye part to the pentagram quest.</li>
+						<li>reduced number of points needed to buy potions from the cityguards.</li>
+						<li>better logic for random distribution of items to NPCS.</li>
+						<li>new shop logic: added minimum/maximum prices, better distribution among bartering values.</li>
+						<li>regeneration is now faster for low rank characters.</li>
+						<li>added new area: underground II.</li>
+						<li>some tweaks to NPC-decision whether to attack or not.</li>
+						<li>added warning sign to door to gargoyle part of pentagram quest.</li>
+						<li>made recall faster.</li>
+						<li>added some ghosts to the former gorn clan house.</li>
+						<li>added alternatives to becoming seyan'du (for more info, visit lab13 ;-)).</li>
+						<li>removed another possible abuse in the arena.</li>
+					</ul>
+					<br> 2.11.00:
+					<ul>
+						<li>strong spells cast on a weak character will be weakened.</li>
+						<li>activating a pentagram creates 3 enemies.</li>
+						<li>better logic for disk flush.</li>
+						<li>even more extensive logging of player actions.</li>
+						<li>NPCs will now say the current time if asked.</li>
+						<li>random distribution of useful items to NPCs.</li>
+						<li>temple guards will now warn players with more than one unique weapon.</li>
+						<li>luck decrease for players with more than one unique weapon.</li>
+						<li>better logic for sorcerer grolm.</li>
+						<li>increased strength of gatekeeper in lab13.</li>
+						<li>better graphics for Harakim.</li>
+						<li>added some belt.</li>
+						<li>added some traps.</li>
+						<li>improved fighting logic for NPCs: they turn around now if attacked from the back.</li>
+						<li>reduced effects of unique weapons.</li>
+						<li>some minor bug and spelling errors removed.</li>
+						<li>added new area: Black Stronghold.</li>
+					</ul>
+					<br> 2.10.00:
+					<ul>
+						<li>complete rewrite of pathfinder.</li>
+						<li>lots of bugfixes.</li>
+						<li>reduced memory usage of server.</li>
+						<li>keys are no longer storable in depot.</li>
+						<li>improved luck handling, gives better messages now.</li>
+					</ul>
+					<br> 2.09.07:
+					<ul>
+						<li>fixed bug in pathfinder.</li>
+						<li>added arena (almost done).</li>
+						<li>another change to dispel (hopefully the final one): will now remove curse first, then all other spells, one at a time.</li>
+						<li>added area effect to blast.</li>
+						<li>improved spell logic.</li>
+					</ul>
+					<br> 2.09.06:
+					<ul>
+						<li>fixed bug in #depot and shops.</li>
+						<li>changed dispel to remove curse only.</li>
+						<li>changed "saved by the hand of god".</li>
+						<li>fixed some bugs in shrine of seyan'du placement.</li>
+					</ul>
+					<br> 2.09.05:
+					<ul>
+						<li>fixed bug with former clan weapons.</li>
+						<li>fixed bug with seyan'du shrines.</li>
+						<li>added mana shrines to all labs.</li>
+						<li>prevented ways to cheat in lab13</li>
+					</ul>
+					<br> 2.09.04:
+					<ul>
+						<li>fixed bug in lab7 water logic which caused a crash.</li>
+						<li>changed the labyrinth logic to prevent some abuses.</li>
+						<li>added labyrinth part 13.</li>
+						<li>added sword of seyan'du.</li>
+						<li>added 16 shrines of seyan'du/kwai.</li>
+						<li>added logic for personal sword for seyan'du.</li>
+						<li>added more ranks.</li>
+						<li>update race change logic.</li>
+					</ul>
+					<br> 2.09.03:
+					<ul>
+						<li>added some ways to reward good (positive) luck.</li>
+						<li>fixed bug in name change command.</li>
+						<li>fixed bug in area display.</li>
+						<li>increased basic walking speed of low rank characters.</li>
+						<li>fixed bug in lizard temple logic.</li>
+						<li>increased strength of pentagram quest grolms.</li>
+						<li>fixed bug in undead part of the labyrinth which made a key NPC unkillable by harakims.</li>
+						<li>fixed bug with shrine: no longer possible to walk through it.</li>
+						<li>fixed another bug with shrine: will not vanish if a player donates an item.</li>
+						<li>added part 7 of the labyrinth.</li>
+					</ul>
+					<br> 2.09.02:
+					<ul>
+						<li>fixed bug with lag scrolls vanishing instantly.</li>
+						<li>fixed another bug in #gornwar.</li>
+						<li>added a door and a note to lab6 to make the solution more obvious.</li>
+						<li>increased the strength of the undead king in lab6 to prevent brute force solutions.</li>
+						<li>fixed bug in pentagram and spider respawn.</li>
+						<li>lag scrolls will vanish during teleports now.</li>
+					</ul>
+					<br> 2.09.01:
+					<ul>
+						<li>fixed bug in client which prevented players from loading/saving their characters in directories different than the main game directory..</li>
+						<li>fixed bug in #gornwar, added listing to #gornwar and #kwaiwar.</li>
+						<li>added #emote (or #me).</li>
+						<li>fixed some bugs in new pathfinder.</li>
+						<li>prevented drop item clan trap trick.</li>
+						<li>fixed bug in pentagram quest exp display.</li>
+						<li>fixed bug in NPC logic: NPCs will no longer say empty texts.</li>
+						<li>fixed bug in requirements for crystal/titanium sword.</li>
+						<li>added block so spiders can no longer enter the city.</li>
+						<li>fixed bug so spiders won't attack robbers anymore.</li>
+						<li>fixed bug in guardian which prevented loss of endurance when walking</li>
+						<li>moved hole at steven's house.</li>
+						<li>kills in the arena no longer give exps.</li>
+						<li>#gold command no longer destroys current item.</li>
+						<li>new special armor will not deteriorate anymore till the repair bug is fixed.</li>
+						<li>fixed bug in idle detection.</li>
+						<li>some work on strange forest (still not done, though).</li>
+						<li>added lab6.</li>
+					</ul>
+					<br> 2.09.00:
+					<ul>
+						<li>added two new monster gfx.</li>
+						<li>several bugfixes.</li>
+						<li>added area: Strange Forest (only partially done).</li>
+						<li>several optimizations to pathfinder algorithm (mostly untested).</li>
+					</ul>
+					<br> 2.08.01:
+					<ul>
+						<li>removed Ghost Companion to prevent further abuse.</li>
+						<li>changed Stun and Curse into area spells, they will now affect all enemies fighting the caster.</li>
+						<li>made Curse stronger.</li>
+						<li>removed Heal from Gargoyles.</li>
+						<li>remove HP/End./Mana effect from Rattling Eyes/Potion.</li>
+						<li>reduced exps for pentagram quest.</li>
+					</ul>
+					<br> 2.08.00:
+					<ul>
+						<li>fixed bug in player vs player logic which prevented some fights wrongly.</li>
+						<li>added logic to prevent double logins.</li>
+						<li>fixed bug (removed wall) in pentagram quest which made a door unusable.</li>
+						<li>fixed bug in ghost companion description.</li>
+						<li>removed mana and heal potions from all shops.</li>
+						<li>increased the strength of heal.</li>
+						<li>increased the strength of blast.</li>
+						<li>slight increase to enhance/protect/bless.</li>
+						<li>alt-click on a free tile will now remove the magic selection .</li>
+						<li>no mana regeneration without meditate</li>
+						<li>removed meditate from templars.</li>
+						<li>reduced the race max of meditate for mercenaries.</li>
+						<li>increased the effects of regenerate, rest and meditate.</li>
+						<li>added shrine to temples which restores mana.</li>
+						<li>added bash (templar only skill).</li>
+						<li>added surround hit (templar only skill - needs better name).</li>
+						<li>added warning message to F12.</li>
+						<li>increased visibility of yellow font.</li>
+						<li>added even more statistics to website.</li>
+						<li>fixed bug with clan doors.</li>
+						<li>changed race start skills and city quests to support the new skills.</li>
+						<li>fixed bug in spellcasters gorge which made the spellcasters attack their own ghost companions.</li>
+						<li>fixed bug in magic maze which duplicated the graves of players.</li>
+						<li>increased the strength of mana/healing potions.</li>
+						<li>replaced the graphic effects for magic.</li>
+					</ul>
+					<br> 2.07.03:
+					<ul>
+						<li>fixed bug in clan war handling.</li>
+						<li>removed wait and follow from clan NPCs.</li>
+					</ul>
+					<br> 2.07.02:
+					<ul>
+						<li>fixed bug in clan interest calculation.</li>
+						<li>fixed bug in new connection handling.</li>
+					</ul>
+					<br> 2.07.01:
+					<ul>
+						<li>fixed bug in lag control (#lag).</li>
+						<li>added clan support (two clans for now).</li>
+						<li>added clan doors.</li>
+						<li>added clan pentagrams.</li>
+						<li>added clan traps.</li>
+						<li>added clan unique weapons.</li>
+						<li>added Purple One unique weapons.</li>
+						<li>players will get more exps if they kill someone stronger than they are and vice versa.</li>
+						<li>added rank limits to pentagram quest.</li>
+						<li>added rank limits to group.</li>
+						<li>unique weapons only usable by believers of the weapon's god.</li>
+					</ul>
+					<br> 2.07.00:
+					<ul>
+						<li>added lag control (#lag).</li>
+						<li>kicked players will get a scroll of teleport to their last location.</li>
+						<li>added pentagram quest.</li>
+					</ul>
+					<br> 2.06.04:
+					<ul>
+						<li>final support for deposit boxes (#depot in banks).</li>
+						<li>added quest to get silver small ruby ring.</li>
+						<li>added quest to get rattling fighters eye.</li>
+						<li>added quest to get amulet from dungeon of doors.</li>
+						<li>added dungeon of doors.</li>
+						<li>merchants sort their inventory.</li>
+						<li>merchants remove the cheapest items first.</li>
+						<li>follower command attack now regarded as offensive.</li>
+						<li>removed fee from bank (#deposit).</li>
+						<li>newbies now get basic items (breast armor and weapon).</li>
+						<li>another strength change of the randoms.</li>
+					</ul>
+					<br> 2.06.03:
+					<ul>
+						<li>added floating prices for items.</li>
+						<li>preliminary support for deposit boxes.</li>
+						<li>strength change of the randoms.</li>
+					</ul>
+					<br> 2.06.02:
+					<ul>
+						<li>removed an easy way to get free exps.</li>
+					</ul>
+					<br> 2.06.01:
+					<ul>
+						<li>bugfix: you can no longer open graves from a distance.</li>
+						<li>bugfix: wall differences in mine always visible.</li>
+						<li>golems are a bit stronger.</li>
+						<li>gargoyles are a lot stronger.</li>
+						<li>supporting beams age faster.</li>
+						<li>silver rings no longer repair-able.</li>
+						<li>some tweaks to NPC fight logic.</li>
+						<li>basic support for followers (follow, move, wait, attack).</li>
+						<li>added another monster.</li>
+						<li>added labyrinth part V.</li>
+					</ul>
+					<br> 2.06.00:
+					<ul>
+						<li>added color to automap.</li>
+						<li>added autohide: the walls in the background will always be visible.</li>
+						<li>added two inventory slots for rings.</li>
+						<li>added a bunch of rings.</li>
+						<li>two new monsters with very nice graphics.</li>
+						<li>fixed very minor bug in follow.</li>
+						<li>changed ghost companion to follow the caster.</li>
+						<li>added scroll of "teleport to tavern" (sold in the Blue Ogre).</li>
+						<li>some tweaking to male seyan'du graphics, female counterpart to follow.</li>
+						<li>added a second bank close to the temple.</li>
+						<li>relocated tavern of the Blue Ogre.</li>
+						<li>added a huge mine (follow the new street).</li>
+						<li>added supporting beams and pick-axes for mine.</li>
+					</ul><br>
+
+					<hr width=80% color="#808000"><br>
+					<font size=-1>All material on this server is based on the Mercenaries of Astonia engine by Daniel Brockhaus.</font>
 	</center>
 </body>
+
 </html>

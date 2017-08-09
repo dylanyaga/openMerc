@@ -1375,7 +1375,7 @@ int main(int argc, char *args[])
 
         printf("</td></tr></table></td></tr></table>");
         printf("<hr width=80%% color=\"#808000\"><br>\n");
-        printf("<font size=-1>All material on this server is copyright <a href=mailto:joker@astonia.com>D.Brockhaus</a></font></center>");
+        printf("<font size=-1>All material on this server is based on the Mercenaries of Astonia engine by Daniel Brockhaus.</font></center>");
         printf("</body></html>");
 
 

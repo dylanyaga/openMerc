@@ -664,8 +664,7 @@ int main(int argc,char *args[])
 	"<table width=\"100%%\" cellpadding=0 cellspacing=0 border=0><tr>"
 	"<td width=\"33%%\" align=center><a href=/devel.html>Back to main page</a></td>"
 	"<td width=\"33%%\" align=center>&nbsp;</td>"
-	"<td width=\"33%%\" align=center><font size=-1>All material on this server is copyright "
-	"<a href=mailto:joker@astonia.com>D.Brockhaus</a></font></td>"
+	"<td width=\"33%%\" align=center>All material on this server is based on the Mercenaries of Astonia engine by Daniel Brockhaus.</font></td>"
 	"</tr></table>"
 	"</center><br><br>"
 	"</body></html>");

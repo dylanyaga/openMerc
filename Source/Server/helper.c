@@ -220,15 +220,15 @@ int can_go(int _fx,int _fy,int tx,int ty)
 {
         int tmp;
 	unsigned long long prof;
-	
+
 	prof=prof_start();
 
         if (visi!=_visi) { visi=_visi; ox=oy=0; }
         if (ox!=_fx || oy!=_fy) can_map_go(_fx,_fy,15);
         tmp=check_vis(tx,ty);
-	
+
 	prof_stop(17,prof);
-	
+
         return tmp;
 }
 
@@ -531,8 +531,8 @@ int create_special_item(int temp)
                 case    76:     spr=855; break;
                 case    94:     spr=860; break;
                 case    95:     spr=865; break;
-                case    981:    spr=16775; break;
-                case    982:    spr=16780; break;
+                case    981:    spr=16860; break; // DY - Fix Special Emerald Helm
+                case    982:    spr=16865; break; // DY - Special Emerald Armor
                 default:        spr=it[in].sprite[0]; break;
         }
 
@@ -814,7 +814,7 @@ void use_labtransfer2(int cn,int co)
 	chlog(cn,"Solved Labkeeper Room");
 
 	if ((cc=ch[cn].data[64]) && IS_SANENPC(cc) && IS_COMPANION(cc)) 	// transfer GC as well
-		god_transfer_char(cc,512,512);	
+		god_transfer_char(cc,512,512);
 }
 
 //----------------------
@@ -900,7 +900,7 @@ void show_time(int cn)
 	minute=(globs->mdtime/60)%60;
 	day=globs->mdday%28+1;
 	month=globs->mdday/28+1;
-	year=globs->mdyear;	
+	year=globs->mdyear;
 
 	do_char_log(cn,1,"It's %d:%02d on the %d%s%s%s%s%s%s%s of the %d%s%s%s%s month of the year %d.\n",
 		hour,minute,
@@ -971,7 +971,7 @@ void effectlist(int cn)
 		}
 		scprintf(buf,"\n");
 		do_char_log(cn,0,buf);
-	}	
+	}
 }
 
 #define	CAP		(globs->cap)
@@ -996,11 +996,11 @@ int cap(int cn,int nr)
 
 	if (cn && (ch[cn].flags&(CF_GOD))) return 0;    		// always allow gods to come in all the time
 
-	if (cn) {	
+	if (cn) {
 		for (n=1; n<MAXCHARS; n++) {				// find body for possible grave retrieval
 			if (!ch[n].used) continue;
 			if (!(ch[n].flags&CF_BODY)) continue;
-	
+
 			if (ch[n].data[CHD_CORPSEOWNER]==cn) return 0;	// always allow corpse retrieval
 		}
 	}
@@ -1034,13 +1034,13 @@ int soultransform(int cn,int in,int in2,int temp)
 {
 	god_take_from_char(in,cn);
 	god_take_from_char(in2,cn);
-	
+
 	it[in].used=USE_EMPTY;
 	it[in2].used=USE_EMPTY;
-	
+
 	in=god_create_item(temp);
 	god_give_char(in,cn);
-	
+
 	return in;
 }
 
@@ -1068,16 +1068,16 @@ void souldestroy(int cn,int in)
 void soultrans_equipment(int cn,int in,int in2)
 {
 	int stren,rank,ran;
-	
+
 	rank=it[in].data[0];
-	
+
 	while (rank) {
 		stren=RANDOM(rank+1);
 		rank-=stren;
-		
+
 		if (it[in].flags&IF_WEAPON) ran=RANDOM(27);
 		else ran=RANDOM(26);
-		
+
 		switch(ran) {
 			case 0:		it[in2].hp[2]+=stren*25; it[in2].hp[0]+=stren*5; break;
 			case 1:		it[in2].mana[2]+=stren*25; it[in2].mana[0]+=stren*5; break;
@@ -1087,7 +1087,7 @@ void soultrans_equipment(int cn,int in,int in2)
 			case 4:
 			case 5:
 			case 6:		over_add(it[in2].attrib[ran-2][2],stren*3); it[in2].attrib[ran-2][0]+=stren/2; break;
-			
+
 			case 7:		over_add(it[in2].skill[SK_DAGGER][2],stren*5); it[in2].skill[SK_DAGGER][0]+=stren; break;
 			case 8:		over_add(it[in2].skill[SK_SWORD][2],stren*5); it[in2].skill[SK_SWORD][0]+=stren; break;
 			case 9:		over_add(it[in2].skill[SK_TWOHAND][2],stren*5); it[in2].skill[SK_TWOHAND][0]+=stren; break;
@@ -1111,55 +1111,55 @@ void soultrans_equipment(int cn,int in,int in2)
 			default:	xlog("should never happen in soultrans_equipment()"); break;
 		}
 	}
-	
+
 	it[in2].temp=0;
 	it[in2].flags|=IF_UPDATE|IF_IDENTIFIED|IF_NOREPAIR|IF_SOULSTONE;
-	
+
 	it[in2].min_rank=max(it[in].data[0],it[in2].min_rank);
 
 	if (!it[in2].max_damage) it[in2].max_damage=60000;
-	
+
 	souldestroy(cn,in);
-	
+
 	sprintf(it[in2].description,"A %s enhanced by a rank %d soulstone.",it[in2].name,it[in].data[0]);
 }
 
 int use_soulstone(int cn,int in)
 {
 	int in2,rank;
-	
+
 	if (!IS_SANECHAR(cn)) return 0;
 	if (!IS_SANEITEM(in)) return 0;
-	
+
 	if (!(in2=ch[cn].citem)) {
 		do_char_log(cn,1,"Try using something with the soulstone. That is, click on the stone with an item under your cursor.\n");
 		return 0;
 	}
-	
+
 	if (!IS_SANEITEM(in2)) return 0;
-	
+
 	if (it[in2].driver==68) {
 		it[in].data[1]+=RANDOM(it[in2].data[1]+1)	;
 		rank=points2rank(it[in].data[1]);
 		it[in].data[0]=rank;
 		sprintf(it[in].description,"Level %d soulstone, holding %d exp.",rank,it[in].data[1]);
-		
+
 		if (rank>20) do_char_log(cn,1,"That's as high as they go.\n");
-		
+
 		souldestroy(cn,in2);
-		
+
 		return 1;
 	}
-	
+
 	switch(it[in2].temp) {
 		case 18:	in=soultransform(cn,in,in2,101); it[in].hp[0]+=10; return 1;	// red flower
 		case 46:	in=soultransform(cn,in,in2,102); it[in].mana[0]+=10; return 1;	// purple flower
 		case 91:	in=soulrepair(cn,in,in2); it[in].max_age[1]*=4; return 1;	// torch
 		case 100:	in=soultransform(cn,in,in2,102); return 1;			// flask
-		
+
 		case 101:	souldestroy(cn,in); it[in].hp[0]+=10; return 1;			// healing potion
 		case 102:	souldestroy(cn,in); it[in].mana[0]+=10; return 1;		// mana potion
-				
+
 		case 27:
 		case 28:
 		case 29:
@@ -1268,10 +1268,10 @@ void test_filesend(int nr,int size)
 	trans=min(1024,trans);
 
 	plog(nr,"trans=%d, allow=%d, sent=%d",trans,(SIZE*player[nr].rtick),sent);
-	
+
 	buf[0]=SV_IGNORE;
 	*(unsigned int*)(buf+1)=trans;
 	xsend(nr,buf,trans);
 	sent+=trans;
-	
+
 }*/

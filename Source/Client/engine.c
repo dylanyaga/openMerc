@@ -185,10 +185,10 @@ static char *rank[24]={
         "Lieutenant General",
         "General",
         "Field Marshal",
-        "Knight",
-        "Baron",
-        "Earl",
-        "Warlord"
+        "Knight of openMerc",
+        "Baron of openMerc",
+        "Earl of openMerc",
+        "Warlord of openMerc"
 };
 
 int stat_raised[108]={0,0,0,0,0,0,0,0,0,0,0,0,0,};

@@ -124,10 +124,10 @@ static char *_rank[24]={
         "Lieutenant General",
         "General",
         "Field Marshal",
-        "Knight",
-        "Baron",
-        "Earl",
-        "Warlord"
+        "Knight of openMerc",
+        "Baron of openMerc",
+        "Earl of openMerc",
+        "Warlord of openMerc"
 };
 
 static int points2rank(int v)

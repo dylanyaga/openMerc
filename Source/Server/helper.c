@@ -473,8 +473,8 @@ char *rank_name[RANKS] = {
 
 "Major",                "Lieutenant Colonel",   "Colonel",		// 12 13 14
 "Brigadier General",    "Major General",        "Lieutenant General",	// 15 16 17
-"General",              "Field Marshal",        "Knight of Astonia",	// 18 19 20
-"Baron of Astonia",     "Earl of Astonia",      "Warlord of Astonia"	// 21 22 23
+"General",              "Field Marshal",        "Knight of openMerc",	// 18 19 20
+"Baron of openMerc",     "Earl of openMerc",      "Warlord of openMerc"	// 21 22 23
 };
 
 char *who_rank_name[RANKS] = {

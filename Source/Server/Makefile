@@ -27,7 +27,7 @@ structure:
 	sudo cp .dat/*.* $(SERVERDIR)/.dat/
 	sudo chmod -R a+rwx $(SERVERDIR)/.dat/
 	sudo mkdir -p $(CGIIMP)
-	sudo cp -R Web/*.* $(WEB)
+	sudo cp -R Web/* $(WEB)
 
 server:	$(OBJS) structure
 	$(CC) $(LDFLAGS) -o server $(OBJS) $(ENDFLAGS)

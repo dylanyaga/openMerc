@@ -77,6 +77,6 @@ usage of data for players:
 * `99:`     used by populate
 
 ## Text:
-* `(0-2 are clobbered by login)
+* (`0-2` are clobbered by login)
 * `0:`      afk message
 * `3:`      mark message

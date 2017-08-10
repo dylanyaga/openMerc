@@ -1,10 +1,10 @@
 /*************************************************************************
 
-This file is part of 'Mercenaries of Astonia v2'
-Copyright (c) 1997-2001 Daniel Brockhaus (joker@astonia.com)
-All rights reserved.
+   This file is part of 'Mercenaries of Astonia v2'
+   Copyright (c) 1997-2001 Daniel Brockhaus (joker@astonia.com)
+   All rights reserved.
 
-**************************************************************************/
+ **************************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -106,7 +106,6 @@ void do_area_say1(int cn, int xs, int ys, char *msg)
                                 do_log(cc, 3, msg_invis); // talker invis
                         }
                 } else { // listener is NPC: Store in list for second pass
-                        // DB: note: this should be changed for staff/god NPCs
                         if (!invis && cnt<ARRAYSIZE(npcs)) { // NPCs pretend not to hear invis people
                                 if (j < 169) { // don't address mobs outside radius 6
                                         npcs[cnt++] = cc;
@@ -116,7 +115,7 @@ void do_area_say1(int cn, int xs, int ys, char *msg)
         }
         for (j=0; j<cnt; j++)
                 if (do_char_can_see(npcs[j],cn)) npc_hear(npcs[j],cn,msg);
-               prof_stop(3,prof);
+        prof_stop(3,prof);
 }
 
 void do_area_sound(int cn,int co,int xs,int ys,int nr)
@@ -352,9 +351,9 @@ void do_caution(int source, int author, char *format,...)
                 if ((ch[source].flags & (CF_INVISIBLE|CF_NOWHO)) && // privacy wanted
                     invis_level(source) > invis_level(n)) continue; // and source outranks listener
                 if ((source != 0) && (invis_level(source) <= invis_level(n))) {
-			do_log(n, 0, buf_named);
-		} else {
-			do_log(n, 0, buf_anon);
+                        do_log(n, 0, buf_named);
+                } else {
+                        do_log(n, 0, buf_anon);
                 }
         }
         va_end(args);
@@ -371,7 +370,7 @@ void do_imp_log(int font,char *format,...)
 
         for (n=1; n<MAXCHARS; n++) {
                 if (ch[n].player && (ch[n].flags&(CF_IMP|CF_USURP)))
-			do_log(n,font,buf);
+                        do_log(n,font,buf);
         }
         va_end(args);
 }
@@ -482,7 +481,7 @@ void do_tell(int cn,char *con,char *text)
         else sprintf(buf,"%s tells you: \"%.200s\"\n",ch[cn].name,text);
         do_char_log(co,3,"%s",buf);
 
-	if (ch[co].flags&CF_CCP) ccp_tell(co,cn,text);
+        if (ch[co].flags&CF_CCP) ccp_tell(co,cn,text);
 
         do_char_log(cn,1,"Told %s: \"%.200s\"\n",ch[co].name,text);
 
@@ -588,12 +587,12 @@ void do_stell(int cn,char *text)
 
 void do_nostaff(int cn)
 {
-	    ch[cn].flags^=CF_NOSTAFF;
+        ch[cn].flags^=CF_NOSTAFF;
 
-	    if (ch[cn].flags&CF_NOSTAFF) do_char_log(cn,1,"You will no longer hear people using #stell.\n");
-	    else do_char_log(cn,1,"You will hear people using #stell.\n");
+        if (ch[cn].flags&CF_NOSTAFF) do_char_log(cn,1,"You will no longer hear people using #stell.\n");
+        else do_char_log(cn,1,"You will hear people using #stell.\n");
 
-	    if (ch[cn].flags&(CF_PLAYER)) chlog(cn,"Set nostaff to %s",(ch[cn].flags&CF_NOSTAFF) ? "on" : "off");
+        if (ch[cn].flags&(CF_PLAYER)) chlog(cn,"Set nostaff to %s",(ch[cn].flags&CF_NOSTAFF) ? "on" : "off");
 }
 
 /* Group tell */
@@ -631,122 +630,122 @@ void do_gtell(int cn, char *text)
 
 void do_help(int cn,char *topic)
 {
-	//             "!        .         .         .         .        !"
-	do_char_log(cn,1,"The following commands are available:\n");
-	do_char_log(cn,1," \n");
-	do_char_log(cn,1,"#afk <message>         away from keyboard.\n");
-	do_char_log(cn,1,"#allow <player>        to access your grave.\n");
-	do_char_log(cn,1,"#bow                   you'll bow.\n");
-	do_char_log(cn,1,"#fightback             toggle auto-figtback.\n");
-	do_char_log(cn,1,"#follow <player>|self  you'll follow player.\n");
-	do_char_log(cn,1,"#gold <amount>         get X gold coins.\n");
-	do_char_log(cn,1,"#group <player>        group with player.\n");
-	do_char_log(cn,1,"#gtell <message        tell to your group.\n");
-	do_char_log(cn,1,"#ignore <player>       ignore that player.\n");
-	do_char_log(cn,1,"#iignore <player>      ignore normal talk too.\n");
-	do_char_log(cn,1,"#lag <seconds>         lag control.\n");
-	do_char_log(cn,1,"#noshout               you won't hear shouts.\n");
-	do_char_log(cn,1,"#notell                you won't hear tells.\n");
-	do_char_log(cn,1,"#seen <player>         when last seen here?.\n");
-	do_char_log(cn,1,"#shout <text>          to all players.\n");
-	do_char_log(cn,1,"#skua                  leave purple.\n");
-	do_char_log(cn,1,"#sort <order>          sort inventory.\n");
-	do_char_log(cn,1,"#spellignore           don't attack if spelled.\n");
-	do_char_log(cn,1,"#tell <player> <text>  tells player text.\n");
-	do_char_log(cn,1,"#wave                  you'll wave.\n");
-	do_char_log(cn,1,"#who                   see who's online.\n");
-	do_char_log(cn,1," \n");
+        //             "!        .         .         .         .        !"
+        do_char_log(cn,1,"The following commands are available:\n");
+        do_char_log(cn,1," \n");
+        do_char_log(cn,1,"#afk <message>         away from keyboard.\n");
+        do_char_log(cn,1,"#allow <player>        to access your grave.\n");
+        do_char_log(cn,1,"#bow                   you'll bow.\n");
+        do_char_log(cn,1,"#fightback             toggle auto-figtback.\n");
+        do_char_log(cn,1,"#follow <player>|self  you'll follow player.\n");
+        do_char_log(cn,1,"#gold <amount>         get X gold coins.\n");
+        do_char_log(cn,1,"#group <player>        group with player.\n");
+        do_char_log(cn,1,"#gtell <message        tell to your group.\n");
+        do_char_log(cn,1,"#ignore <player>       ignore that player.\n");
+        do_char_log(cn,1,"#iignore <player>      ignore normal talk too.\n");
+        do_char_log(cn,1,"#lag <seconds>         lag control.\n");
+        do_char_log(cn,1,"#noshout               you won't hear shouts.\n");
+        do_char_log(cn,1,"#notell                you won't hear tells.\n");
+        do_char_log(cn,1,"#seen <player>         when last seen here?.\n");
+        do_char_log(cn,1,"#shout <text>          to all players.\n");
+        do_char_log(cn,1,"#skua                  leave purple.\n");
+        do_char_log(cn,1,"#sort <order>          sort inventory.\n");
+        do_char_log(cn,1,"#spellignore           don't attack if spelled.\n");
+        do_char_log(cn,1,"#tell <player> <text>  tells player text.\n");
+        do_char_log(cn,1,"#wave                  you'll wave.\n");
+        do_char_log(cn,1,"#who                   see who's online.\n");
+        do_char_log(cn,1," \n");
 
-	if (ch[cn].flags&(CF_POH_LEADER)) {
-		do_char_log(cn,1,"#poh <player>          add player to POH.\n");
-		do_char_log(cn,1,"#pol <player>          make plr POH leader.\n");
-	}
+        if (ch[cn].flags&(CF_POH_LEADER)) {
+                do_char_log(cn,1,"#poh <player>          add player to POH.\n");
+                do_char_log(cn,1,"#pol <player>          make plr POH leader.\n");
+        }
 
-	do_char_log(cn,1,"Most of the commands are toggles. That is, use the same command again to turn off the effect. You can replace the '#' with '/'.\n");
-	do_char_log(cn,1," \n");
+        do_char_log(cn,1,"Most of the commands are toggles. That is, use the same command again to turn off the effect. You can replace the '#' with '/'.\n");
+        do_char_log(cn,1," \n");
 
-	if (ch[cn].flags&(CF_STAFF|CF_IMP|CF_USURP)) {
-		do_char_log(cn,2,"Staff Commands:\n");
-		do_char_log(cn,2," \n");
-		do_char_log(cn,2,"#announce <message>    broadcast IMPORTANT msg.\n");
-		do_char_log(cn,2,"#caution <text>        warn the population.\n");
-		do_char_log(cn,2,"#info <player>         identify player.\n");
-		do_char_log(cn,2,"#look <player>         look at player.\n");
-		do_char_log(cn,2,"#stell <text>          tell all staff members.\n");
-		do_char_log(cn,2," \n");
-	}
+        if (ch[cn].flags&(CF_STAFF|CF_IMP|CF_USURP)) {
+                do_char_log(cn,2,"Staff Commands:\n");
+                do_char_log(cn,2," \n");
+                do_char_log(cn,2,"#announce <message>    broadcast IMPORTANT msg.\n");
+                do_char_log(cn,2,"#caution <text>        warn the population.\n");
+                do_char_log(cn,2,"#info <player>         identify player.\n");
+                do_char_log(cn,2,"#look <player>         look at player.\n");
+                do_char_log(cn,2,"#stell <text>          tell all staff members.\n");
+                do_char_log(cn,2," \n");
+        }
 
-	if (ch[cn].flags&(CF_IMP|CF_USURP)) {
-		do_char_log(cn,3,"Imp Commands:\n");
-		do_char_log(cn,3," \n");
-		do_char_log(cn,3,"#addban <player>       add plr to ban list.\n");
-		do_char_log(cn,3,"#delban <lineno>       del plr from ban list.\n");
-		do_char_log(cn,3,"#enemy <NPC><char>     make NPC fight char.\n");
-		do_char_log(cn,3,"#enter                 fake enter the game.\n");
-		do_char_log(cn,3,"#exit                  return from #USURP.\n");
-		do_char_log(cn,3,"#force <char><text>    make him act.\n");
-		//do_char_log(cn,3,"#gargoyle              turn self into a garg.\n");
-		do_char_log(cn,3,"#goto <char>           go to char.\n");
-		do_char_log(cn,3,"#goto <x> <y>          goto x,y.\n");
-		do_char_log(cn,3,"#goto n|e|s|w <nnn>    goto <nnn> in dir.\n");
-		//do_char_log(cn,3,"#grolm                 turn self into a grolm.\n");
-		do_char_log(cn,3,"#itell <text>          tell all imps.\n");
-		do_char_log(cn,3,"#kick <player>         kick player out.\n");
-		do_char_log(cn,3,"#leave                 fake leave the game.\n");
-		do_char_log(cn,3,"#listban               show ban list.\n");
-		do_char_log(cn,3,"#look <player>         look at player.\n");
-		do_char_log(cn,3,"#luck <player> <val>   set players luck.\n");
-		do_char_log(cn,3,"#mark <player> <text>  mark a player with notes.\n");
-		do_char_log(cn,3,"#name <name> <N.Name>  change chars(npcs) names.\n");
-		do_char_log(cn,3,"#nodesc <player>       remove description.\n");
-		do_char_log(cn,3,"#nolist <player>       exempt from top 10.\n");
-		do_char_log(cn,3,"#nostaff               you won't hear #stell.\n");
-		do_char_log(cn,3,"#nowho <player>        not listed in who.\n");
-		do_char_log(cn,3,"#npclist <search>      display list of NPCs.\n");
-		do_char_log(cn,3,"#raise <player> <exp>  give player exps.\n");
-		do_char_log(cn,3,"#respawn <temp-id>     make npcs id respawn.\n");
-		do_char_log(cn,3,"#shutup <player>       make unable to talk.\n");
-		do_char_log(cn,3,"#slap <player>         slap in face.\n");
-		do_char_log(cn,3,"#sprite <player>       change a player's sprite.\n");
-		//do_char_log(cn,3,"#summon <name> [<rank> [<which>]]\n");
-		do_char_log(cn,3,"#thrall <name> [<rank>] clone slave.\n");
-		do_char_log(cn,3,"#usurp <ID>            turn self into ID.\n");
-		do_char_log(cn,3,"#write <text>          make scrolls with text.\n");
-		do_char_log(cn,3," \n");
-	}
-	if (ch[cn].flags&(CF_GOD)) {
-		do_char_log(cn,3,"God Commands:\n");
-		do_char_log(cn,3," \n");
-		//do_char_log(cn,3,"#build <template>       build mode.\n");
-		do_char_log(cn,3,"#create <item template> creating items.\n");
-		//do_char_log(cn,3,"#creator <player>       make player a Creator.\n");
-		do_char_log(cn,3,"#ggold <amount>         give money to a player.\n");
-		do_char_log(cn,3,"#god <player>           make player a God.\n");
-		do_char_log(cn,3,"#imp <player> <amount>  make player an Imp.\n");
-		do_char_log(cn,3,"#mailpass <player>      send passwd to admin.\n");
-		do_char_log(cn,3,"#password <name>        change a plr's passwd.\n");
-		do_char_log(cn,3,"#perase <player>        total player erase.\n");
-		do_char_log(cn,3,"#pol <player>           make player POH leader.\n");
-		//do_char_log(cn,3,"#race <player> <temp>   new race for a player(avoid).\n");
-		do_char_log(cn,3,"#send <player> <target> teleport player to target.\n");
-		do_char_log(cn,3,"#staff <player>         make a player staffer.\n");
-		do_char_log(cn,3,"#summon <name> [<rank> [<which>]]\n");
-		do_char_log(cn,3,"#tavern                 log off quickly.\n");
-		do_char_log(cn,3," \n");
-	}
-	if (ch[cn].flags&(CF_GREATERGOD)) {
-		do_char_log(cn,3,"Greater God Commands:\n");
-		do_char_log(cn,3," \n");
-		do_char_log(cn,3,"#build <template>       build mode.\n");
+        if (ch[cn].flags&(CF_IMP|CF_USURP)) {
+                do_char_log(cn,3,"Imp Commands:\n");
+                do_char_log(cn,3," \n");
+                do_char_log(cn,3,"#addban <player>       add plr to ban list.\n");
+                do_char_log(cn,3,"#delban <lineno>       del plr from ban list.\n");
+                do_char_log(cn,3,"#enemy <NPC><char>     make NPC fight char.\n");
+                do_char_log(cn,3,"#enter                 fake enter the game.\n");
+                do_char_log(cn,3,"#exit                  return from #USURP.\n");
+                do_char_log(cn,3,"#force <char><text>    make him act.\n");
+                //do_char_log(cn,3,"#gargoyle              turn self into a garg.\n");
+                do_char_log(cn,3,"#goto <char>           go to char.\n");
+                do_char_log(cn,3,"#goto <x> <y>          goto x,y.\n");
+                do_char_log(cn,3,"#goto n|e|s|w <nnn>    goto <nnn> in dir.\n");
+                //do_char_log(cn,3,"#grolm                 turn self into a grolm.\n");
+                do_char_log(cn,3,"#itell <text>          tell all imps.\n");
+                do_char_log(cn,3,"#kick <player>         kick player out.\n");
+                do_char_log(cn,3,"#leave                 fake leave the game.\n");
+                do_char_log(cn,3,"#listban               show ban list.\n");
+                do_char_log(cn,3,"#look <player>         look at player.\n");
+                do_char_log(cn,3,"#luck <player> <val>   set players luck.\n");
+                do_char_log(cn,3,"#mark <player> <text>  mark a player with notes.\n");
+                do_char_log(cn,3,"#name <name> <N.Name>  change chars(npcs) names.\n");
+                do_char_log(cn,3,"#nodesc <player>       remove description.\n");
+                do_char_log(cn,3,"#nolist <player>       exempt from top 10.\n");
+                do_char_log(cn,3,"#nostaff               you won't hear #stell.\n");
+                do_char_log(cn,3,"#nowho <player>        not listed in who.\n");
+                do_char_log(cn,3,"#npclist <search>      display list of NPCs.\n");
+                do_char_log(cn,3,"#raise <player> <exp>  give player exps.\n");
+                do_char_log(cn,3,"#respawn <temp-id>     make npcs id respawn.\n");
+                do_char_log(cn,3,"#shutup <player>       make unable to talk.\n");
+                do_char_log(cn,3,"#slap <player>         slap in face.\n");
+                do_char_log(cn,3,"#sprite <player>       change a player's sprite.\n");
+                //do_char_log(cn,3,"#summon <name> [<rank> [<which>]]\n");
+                do_char_log(cn,3,"#thrall <name> [<rank>] clone slave.\n");
+                do_char_log(cn,3,"#usurp <ID>            turn self into ID.\n");
+                do_char_log(cn,3,"#write <text>          make scrolls with text.\n");
+                do_char_log(cn,3," \n");
+        }
+        if (ch[cn].flags&(CF_GOD)) {
+                do_char_log(cn,3,"God Commands:\n");
+                do_char_log(cn,3," \n");
+                //do_char_log(cn,3,"#build <template>       build mode.\n");
+                do_char_log(cn,3,"#create <item template> creating items.\n");
+                //do_char_log(cn,3,"#creator <player>       make player a Creator.\n");
+                do_char_log(cn,3,"#ggold <amount>         give money to a player.\n");
+                do_char_log(cn,3,"#god <player>           make player a God.\n");
+                do_char_log(cn,3,"#imp <player> <amount>  make player an Imp.\n");
+                do_char_log(cn,3,"#mailpass <player>      send passwd to admin.\n");
+                do_char_log(cn,3,"#password <name>        change a plr's passwd.\n");
+                do_char_log(cn,3,"#perase <player>        total player erase.\n");
+                do_char_log(cn,3,"#pol <player>           make player POH leader.\n");
+                //do_char_log(cn,3,"#race <player> <temp>   new race for a player(avoid).\n");
+                do_char_log(cn,3,"#send <player> <target> teleport player to target.\n");
+                do_char_log(cn,3,"#staff <player>         make a player staffer.\n");
+                do_char_log(cn,3,"#summon <name> [<rank> [<which>]]\n");
+                do_char_log(cn,3,"#tavern                 log off quickly.\n");
+                do_char_log(cn,3," \n");
+        }
+        if (ch[cn].flags&(CF_GREATERGOD)) {
+                do_char_log(cn,3,"Greater God Commands:\n");
+                do_char_log(cn,3," \n");
+                do_char_log(cn,3,"#build <template>       build mode.\n");
                 do_char_log(cn,3,"#creator <player>       make player a Creator.\n");
                 do_char_log(cn,3,"#greatergod <player>    make player a G-God.\n");
                 do_char_log(cn,3,"#lookinv <player>       look for items.\n");
-		do_char_log(cn,3,"#lookdepot <player>     look for items.\n");
-		do_char_log(cn,3,"#lookequip <player>     look for items.\n");
-		do_char_log(cn,3,"#steal <player> <item>  Steal item from player.\n");
+                do_char_log(cn,3,"#lookdepot <player>     look for items.\n");
+                do_char_log(cn,3,"#lookequip <player>     look for items.\n");
+                do_char_log(cn,3,"#steal <player> <item>  Steal item from player.\n");
 
-		do_char_log(cn,3," \n");
-	}
+                do_char_log(cn,3," \n");
+        }
 }
 
 void do_afk(int cn, char *msg)
@@ -776,7 +775,7 @@ void do_mark(int cn,int co,char *msg)
 
         if (!msg) {
                 do_char_log(cn,1,"Removed mark \"%s\" from %s\n",
-                        ch[co].text[3],ch[co].name);
+                            ch[co].text[3],ch[co].name);
                 ch[co].text[3][0]=0;
                 return;
         } else {
@@ -813,27 +812,27 @@ void do_group(int cn,char *name)
         if (name[0]==0) {
                 do_char_log(cn,1,"Your group consists of:\n");
                 do_char_log(cn,1,"%-15.15s %d/%dH, %d/%dE, %d/%dM\n",
-                        ch[cn].name,
-                        (ch[cn].a_hp+500)/1000,
-                        ch[cn].hp[5],
-                        (ch[cn].a_end+500)/1000,
-                        ch[cn].end[5],
-                        (ch[cn].a_mana+500)/1000,
-                        ch[cn].mana[5]);
+                            ch[cn].name,
+                            (ch[cn].a_hp+500)/1000,
+                            ch[cn].hp[5],
+                            (ch[cn].a_end+500)/1000,
+                            ch[cn].end[5],
+                            (ch[cn].a_mana+500)/1000,
+                            ch[cn].mana[5]);
                 for (n=1; n<10; n++) {
                         if ((co=ch[cn].data[n])==0) continue;
                         if (isgroup(co,cn)) {
                                 do_char_log(cn,1,"%-15.15s %d/%dH, %d/%dE, %d/%dM\n",
-                                ch[co].name,
-                                (ch[co].a_hp+500)/1000,
-                                ch[co].hp[5],
-                                (ch[co].a_end+500)/1000,
-                                ch[co].end[5],
-                                (ch[co].a_mana+500)/1000,
-                                ch[co].mana[5]);
+                                            ch[co].name,
+                                            (ch[co].a_hp+500)/1000,
+                                            ch[co].hp[5],
+                                            (ch[co].a_end+500)/1000,
+                                            ch[co].end[5],
+                                            (ch[co].a_mana+500)/1000,
+                                            ch[co].mana[5]);
                         } else {
                                 do_char_log(cn,1,"%-15.15s (not acknowledged)\n",
-                                        ch[co].name);
+                                            ch[co].name);
                         }
                 }
         } else {
@@ -870,15 +869,15 @@ void do_group(int cn,char *name)
                 }
 
                 switch(max(points2rank(ch[cn].points_tot),points2rank(ch[co].points_tot))) {
-			case 21:	allow=4; break;
-			case 22:	allow=5; break;
-			case 23:	allow=6; break;
-			default:	allow=3; break;
-		}
+                case 21:    allow=4; break;
+                case 22:    allow=5; break;
+                case 23:    allow=6; break;
+                default:    allow=3; break;
+                }
 
                 if (abs(tmp=rankdiff(cn,co))>allow) {
                         do_char_log(cn,0,"Sorry, you cannot group with %s; he is %d ranks %s you. Maximum distance is %d.\n",
-                                ch[co].name,abs(tmp),tmp>0 ? "above" : "below",allow);
+                                    ch[co].name,abs(tmp),tmp>0 ? "above" : "below",allow);
                         return;
                 }
 
@@ -913,7 +912,7 @@ void do_ignore(int cn,char *name,int flag)
                 for (n=tmp; n<tmp+10; n++) {
                         if ((co=ch[cn].data[n])==0) continue;
                         do_char_log(cn,1,"%15.15s\n",
-                        ch[co].name);
+                                    ch[co].name);
                 }
         } else {
                 co=do_lookup_char(name);
@@ -932,7 +931,7 @@ void do_ignore(int cn,char *name,int flag)
                                 return;
                         }
                 }
-		if (!(ch[co].flags&(CF_PLAYER))) {
+                if (!(ch[co].flags&(CF_PLAYER))) {
                         do_char_log(cn,0,"Sorry, %s is not a player.\n",name);
                         return;
                 }
@@ -1012,7 +1011,7 @@ void do_deposit(int cn,int g,int s)
         ch[cn].gold-=v;
         ch[cn].data[13]+=v;
 
-	do_update_char(cn);
+        do_update_char(cn);
 
         do_char_log(cn,1,"You deposited %dG %dS; your new balance is %dG %dS.\n",
                     v/100,v%100,ch[cn].data[13]/100,ch[cn].data[13]%100);
@@ -1040,7 +1039,7 @@ void do_withdraw(int cn,int g,int s)
         ch[cn].gold+=v;
         ch[cn].data[13]-=v;
 
-	do_update_char(cn);
+        do_update_char(cn);
 
         do_char_log(cn,1,"You withdraw %dG %dS; your new balance is %dG %dS.\n",
                     v/100,v%100,ch[cn].data[13]/100,ch[cn].data[13]%100);
@@ -1072,7 +1071,7 @@ void do_balance(int cn)
 
         if (tmp)
                 do_char_log(cn,1,"The rent for your depot is %dG %dS per Astonian day or %dG %dS per Earth day.\n",
-                        tmp/100,tmp%100,(tmp*18)/100,(tmp*18)%100);
+                            tmp/100,tmp%100,(tmp*18)/100,(tmp*18)%100);
 
         if (ch[cn].depot_sold) {
                 do_char_log(cn,1,"The bank sold %d items from your depot to cover the costs.\n",ch[cn].depot_sold);
@@ -1081,7 +1080,7 @@ void do_balance(int cn)
 
         if (ch[cn].depot_cost) {
                 do_char_log(cn,1,"%dG %dS were deducted from your bank account as rent for your depot.\n",
-                        ch[cn].depot_cost/100,ch[cn].depot_cost%100);
+                            ch[cn].depot_cost/100,ch[cn].depot_cost%100);
                 ch[cn].depot_cost=0;
         }
 }
@@ -1103,35 +1102,35 @@ int qsort_proc(const void *a,const void *b)
 
         for (o=order; *o; o++) {
                 switch(*o) {
-                        case 'w':       if ((it[in].flags&IF_WEAPON) && !(it[in2].flags&IF_WEAPON)) return -1;
-                                        if (!(it[in].flags&IF_WEAPON) && (it[in2].flags&IF_WEAPON)) return 1;
-                                        break;
+                case 'w':       if ((it[in].flags&IF_WEAPON) && !(it[in2].flags&IF_WEAPON)) return -1;
+                        if (!(it[in].flags&IF_WEAPON) && (it[in2].flags&IF_WEAPON)) return 1;
+                        break;
 
-                        case 'a':       if ((it[in].flags&IF_ARMOR) && !(it[in2].flags&IF_ARMOR)) return -1;
-                                        if (!(it[in].flags&IF_ARMOR) && (it[in2].flags&IF_ARMOR)) return 1;
-                                        break;
+                case 'a':       if ((it[in].flags&IF_ARMOR) && !(it[in2].flags&IF_ARMOR)) return -1;
+                        if (!(it[in].flags&IF_ARMOR) && (it[in2].flags&IF_ARMOR)) return 1;
+                        break;
 
-                        case 'p':       if ((it[in].flags&IF_USEDESTROY) && !(it[in2].flags&IF_USEDESTROY)) return -1;
-                                        if (!(it[in].flags&IF_USEDESTROY) && (it[in2].flags&IF_USEDESTROY)) return 1;
-                                        break;
+                case 'p':       if ((it[in].flags&IF_USEDESTROY) && !(it[in2].flags&IF_USEDESTROY)) return -1;
+                        if (!(it[in].flags&IF_USEDESTROY) && (it[in2].flags&IF_USEDESTROY)) return 1;
+                        break;
 
-                        case 'h':       if (it[in].hp[0]>it[in2].hp[0]) return -1;
-                                        if (it[in].hp[0]<it[in2].hp[0]) return 1;
-                                        break;
+                case 'h':       if (it[in].hp[0]>it[in2].hp[0]) return -1;
+                        if (it[in].hp[0]<it[in2].hp[0]) return 1;
+                        break;
 
-                        case 'e':       if (it[in].end[0]>it[in2].end[0]) return -1;
-                                        if (it[in].end[0]<it[in2].end[0]) return 1;
-                                        break;
+                case 'e':       if (it[in].end[0]>it[in2].end[0]) return -1;
+                        if (it[in].end[0]<it[in2].end[0]) return 1;
+                        break;
 
-                        case 'm':       if (it[in].mana[0]>it[in2].mana[0]) return -1;
-                                        if (it[in].mana[0]<it[in2].mana[0]) return 1;
-                                        break;
+                case 'm':       if (it[in].mana[0]>it[in2].mana[0]) return -1;
+                        if (it[in].mana[0]<it[in2].mana[0]) return 1;
+                        break;
 
-                        case 'v':       if (it[in].value>it[in2].value) return -1;
-                                        if (it[in].value<it[in2].value) return 1;
-                                        break;
+                case 'v':       if (it[in].value>it[in2].value) return -1;
+                        if (it[in].value<it[in2].value) return 1;
+                        break;
 
-                        default:        break;
+                default:        break;
 
                 }
         }
@@ -1148,16 +1147,16 @@ int qsort_proc(const void *a,const void *b)
 
 void do_sort(int cn,char *arg)
 {
-	if (IS_BUILDING(cn)) {
-		do_char_log(cn,1,"Not in build-mode, dude.");
-		return;
-	}
+        if (IS_BUILDING(cn)) {
+                do_char_log(cn,1,"Not in build-mode, dude.");
+                return;
+        }
 
         order=arg;
 
         qsort(ch[cn].item,40,sizeof(int),qsort_proc);
 
-	do_update_char(cn);
+        do_update_char(cn);
 
 }
 
@@ -1198,7 +1197,7 @@ void do_god_give(int cn,int co)
                 return;
         }
         do_char_log(cn,1,"%s given to %s.\n", it[in].name, ch[co].name);
-	chlog(cn,"IMP: Gave %s (t=%d) to %s (%d)",it[in].name,in,ch[co].name,co);
+        chlog(cn,"IMP: Gave %s (t=%d) to %s (%d)",it[in].name,in,ch[co].name,co);
         ch[cn].citem=0;
 }
 
@@ -1221,7 +1220,7 @@ void do_gold(int cn,int val)
         ch[cn].gold-=val;
         ch[cn].citem=0x80000000|val;
 
-	do_update_char(cn);
+        do_update_char(cn);
 
         do_char_log(cn,1,"You take %dG from your purse.\n",val/100);
 }
@@ -1235,7 +1234,7 @@ void do_emote(int cn,char *text)
         if (ch[cn].flags&CF_SHUTUP) {
                 do_char_log(cn,0,"You feel guilty.\n");
                 chlog(cn,"emote: feels guilty (%s)",text);
-	} else if (ch[cn].flags&CF_INVISIBLE) { // JC: 091200: added anonymous emote
+        } else if (ch[cn].flags&CF_INVISIBLE) { // JC: 091200: added anonymous emote
                 do_area_log(0,0,ch[cn].x,ch[cn].y,2,"Somebody %s.\n",text);
                 chlog(cn,"emote(inv): %s",text);
 
@@ -1267,7 +1266,7 @@ void do_create_note(int cn, char *text)
                                 ch[cn].item[m]=tmp; // item is in inventory
                         }
 
-			do_update_char(cn);
+                        do_update_char(cn);
                         return;
                 }
         }
@@ -1308,9 +1307,9 @@ void do_become_purple(int cn)
                 ch[cn].temple_x=558;
                 ch[cn].temple_y=542;
 
-		do_update_char(cn);
+                do_update_char(cn);
 
-		chlog(cn,"Converted to purple.");
+                chlog(cn,"Converted to purple.");
 
                 fx_add_effect(5,0,ch[cn].x,ch[cn].y,0);
         } else {
@@ -1320,20 +1319,20 @@ void do_become_purple(int cn)
 
 void do_stat(int cn)
 {
-       do_char_log(cn,2,"items: %d/%d\n",globs->item_cnt,MAXITEM);
-       do_char_log(cn,2,"chars: %d/%d\n",globs->character_cnt,MAXCHARS);
-       do_char_log(cn,2,"effes: %d/%d\n",globs->effect_cnt,MAXEFFECT);
+        do_char_log(cn,2,"items: %d/%d\n",globs->item_cnt,MAXITEM);
+        do_char_log(cn,2,"chars: %d/%d\n",globs->character_cnt,MAXCHARS);
+        do_char_log(cn,2,"effes: %d/%d\n",globs->effect_cnt,MAXEFFECT);
 
-       do_char_log(cn,2,"newmoon=%d\n",globs->newmoon);
-       do_char_log(cn,2,"fullmoon=%d\n",globs->fullmoon);
-       do_char_log(cn,2,"mdday=%d (%%28=%d)\n",globs->mdday,globs->mdday%28);
+        do_char_log(cn,2,"newmoon=%d\n",globs->newmoon);
+        do_char_log(cn,2,"fullmoon=%d\n",globs->fullmoon);
+        do_char_log(cn,2,"mdday=%d (%%28=%d)\n",globs->mdday,globs->mdday%28);
 
-       do_char_log(cn,2,"mayhem=%s, looting=%s, close=%s, cap=%s, speedy=%s\n",
-		globs->flags&GF_MAYHEM ? "yes" : "no",
-		globs->flags&GF_LOOTING ? "yes" : "no",
-		globs->flags&GF_CLOSEENEMY ? "yes" : "no",
-		globs->flags&GF_CAP ? "yes" : "no",
-		globs->flags&GF_SPEEDY ? "yes" : "no");
+        do_char_log(cn,2,"mayhem=%s, looting=%s, close=%s, cap=%s, speedy=%s\n",
+                    globs->flags&GF_MAYHEM ? "yes" : "no",
+                    globs->flags&GF_LOOTING ? "yes" : "no",
+                    globs->flags&GF_CLOSEENEMY ? "yes" : "no",
+                    globs->flags&GF_CAP ? "yes" : "no",
+                    globs->flags&GF_SPEEDY ? "yes" : "no");
 }
 
 void do_enter(int cn)
@@ -1369,7 +1368,7 @@ void do_npclist(int cn,char *name)
                 foundalive++;
 
                 do_char_log(cn,1,"C%4d %-20.20s %.20s\n",
-                        n,ch[n].name,ch[n].description);
+                            n,ch[n].name,ch[n].description);
         }
         for (n=1; n<MAXTCHARS; n++) {
                 if (!ch_temp[n].used) continue;
@@ -1379,7 +1378,7 @@ void do_npclist(int cn,char *name)
                 foundtemp++;
 
                 do_char_log(cn,1,"T%4d %-20.20s %.20s\n",
-                        n,ch_temp[n].name,ch_temp[n].description);
+                            n,ch_temp[n].name,ch_temp[n].description);
         }
 
         if (foundalive || foundtemp) do_char_log(cn,1," \n");
@@ -1397,42 +1396,42 @@ void do_respawn(int cn,int co)
 
 void do_list_net(int cn,int co)
 {
-    int n;
+        int n;
 
-    do_char_log(cn,1,"%s is know to log on from the following addresses:\n",ch[co].name);
+        do_char_log(cn,1,"%s is know to log on from the following addresses:\n",ch[co].name);
 
-    for (n=80; n<90; n++)
-	do_char_log(cn,1,"%d.%d.%d.%d\n",ch[co].data[n]&255,(ch[co].data[n]>>8)&255,(ch[co].data[n]>>16)&255,(ch[co].data[n]>>24)&255);
+        for (n=80; n<90; n++)
+                do_char_log(cn,1,"%d.%d.%d.%d\n",ch[co].data[n]&255,(ch[co].data[n]>>8)&255,(ch[co].data[n]>>16)&255,(ch[co].data[n]>>24)&255);
 }
 
 void do_list_all_flagged(int cn,unsigned long long flag)
 {
-    int n;
+        int n;
 
-    for (n=1; n<MAXCHARS; n++) {
-	if (!ch[n].used || !IS_PLAYER(n) || !(ch[n].flags&flag)) continue;
-	do_char_log(cn,1,"%04d %s\n",n,ch[n].name);
-    }
+        for (n=1; n<MAXCHARS; n++) {
+                if (!ch[n].used || !IS_PLAYER(n) || !(ch[n].flags&flag)) continue;
+                do_char_log(cn,1,"%04d %s\n",n,ch[n].name);
+        }
 }
 
 void do_make_soulstone(int cn,int cexp)
 {
-	int in,rank;
+        int in,rank;
 
-	in=god_create_item(1146);
+        in=god_create_item(1146);
         if (in) {
                 rank=points2rank(cexp);
 
-        	sprintf(it[in].name,"Soulstone");
-        	sprintf(it[in].reference,"soulstone");
-        	sprintf(it[in].description,"Level %d soulstone, holding %d exp.",rank,cexp);
+                sprintf(it[in].name,"Soulstone");
+                sprintf(it[in].reference,"soulstone");
+                sprintf(it[in].description,"Level %d soulstone, holding %d exp.",rank,cexp);
 
-        	it[in].data[0]=rank;
-        	it[in].data[1]=cexp;
-        	it[in].temp=0;
-        	it[in].driver=68;
+                it[in].data[0]=rank;
+                it[in].data[1]=cexp;
+                it[in].temp=0;
+                it[in].driver=68;
 
-        	god_give_char(in,cn);
+                god_give_char(in,cn);
         }
 }
 
@@ -1440,15 +1439,15 @@ void do_become_skua(int cn)
 {
         int days;
 
-	if (!(ch[cn].kindred&KIN_PURPLE)) {
-		do_char_log(cn,0,"Hmm. Nothing happened.\n");
-		return;
-	} else {
-	        days = (globs->ticker - ch[cn].data[CHD_ATTACKTIME]) / (60 * TICKS) / 60 / 24;
-		if (days < 30) {
-			do_char_log(cn,0,"You have %u days of penance left.\n",30-days);
-			return;
-		}
+        if (!(ch[cn].kindred&KIN_PURPLE)) {
+                do_char_log(cn,0,"Hmm. Nothing happened.\n");
+                return;
+        } else {
+                days = (globs->ticker - ch[cn].data[CHD_ATTACKTIME]) / (60 * TICKS) / 60 / 24;
+                if (days < 30) {
+                        do_char_log(cn,0,"You have %u days of penance left.\n",30-days);
+                        return;
+                }
 
                 do_char_log(cn,0," \n");
                 do_char_log(cn,0,"You feel the presence of a god again. You feel protected.  Your desire to kill subsides.\n");
@@ -1458,14 +1457,14 @@ void do_become_skua(int cn)
                 do_char_log(cn,2,"Player killing flag cleared.\n");
                 do_char_log(cn,0," \n");
 
-		ch[cn].kindred&=~KIN_PURPLE;
-		ch[cn].data[CHD_ATTACKTIME] = 0;
+                ch[cn].kindred&=~KIN_PURPLE;
+                ch[cn].data[CHD_ATTACKTIME] = 0;
                 ch[cn].data[CHD_ATTACKVICT] = 0;
-		ch[cn].temple_x=512;
+                ch[cn].temple_x=512;
                 ch[cn].temple_y=512;
                 chlog(cn,"Converted to skua. (%u days elapsed)", days);
                 fx_add_effect(5,0,ch[cn].x,ch[cn].y,0);
-	}
+        }
 }
 
 void do_command(int cn, char *ptr)
@@ -1482,21 +1481,21 @@ void do_command(int cn, char *ptr)
 
         for (n=0; n<10; n++) {
                 m=0;
-		if (*ptr=='\"') {
-			ptr++;
-			while (*ptr && *ptr!='\"' && m<39) arg[n][m++]=*ptr++;
-			if (*ptr=='"') ptr++;
-		} else while (isalnum(*ptr) && m<39) arg[n][m++]=*ptr++;
+                if (*ptr=='\"') {
+                        ptr++;
+                        while (*ptr && *ptr!='\"' && m<39) arg[n][m++]=*ptr++;
+                        if (*ptr=='"') ptr++;
+                } else while (isalnum(*ptr) && m<39) arg[n][m++]=*ptr++;
                 arg[n][m]=0;
                 while (isspace(*ptr)) ptr++;
                 if (!*ptr) break;
                 args[n]=ptr;
         }
 
-	cmd = arg[0];
+        cmd = arg[0];
         strlower(cmd);
 
-	f_gg = (ch[cn].flags & CF_GREATERGOD) != 0;     // greater god
+        f_gg = (ch[cn].flags & CF_GREATERGOD) != 0; // greater god
         f_c = (ch[cn].flags & CF_CREATOR) != 0; // creator
         f_g = (ch[cn].flags & CF_GOD) != 0;     // god
         f_i = (ch[cn].flags & CF_IMP) != 0;     // imp
@@ -1519,16 +1518,16 @@ void do_command(int cn, char *ptr)
                 if (prefix(cmd,"addban") && f_gi)       { god_add_ban(cn,dbatoi(arg[1])); return; };
                 break;
         case 'b':
-                if (prefix(cmd,"bow") && !f_sh)  /*!*/  { ch[cn].misc_action=DR_BOW; return; };
+                if (prefix(cmd,"bow") && !f_sh) /*!*/ { ch[cn].misc_action=DR_BOW; return; };
                 if (prefix(cmd,"balance") && !f_m)      { do_balance(cn); return; }
-		if (prefix(cmd,"black") && f_g)		{ god_set_flag(cn,dbatoi(arg[1]),CF_BLACK); return; }
+                if (prefix(cmd,"black") && f_g)     { god_set_flag(cn,dbatoi(arg[1]),CF_BLACK); return; }
                 if (prefix(cmd,"build") && f_c)         { god_build(cn,atoi(arg[1])); return; }
                 break;
         case 'c':
-		if (prefix(cmd,"cap") && f_g)    	{ set_cap(cn,atoi(arg[1])); return; };
-		if (prefix(cmd,"caution") && f_gius)    { do_caution(cn, cn, "%s\n", args[0]); return; }
+                if (prefix(cmd,"cap") && f_g)       { set_cap(cn,atoi(arg[1])); return; };
+                if (prefix(cmd,"caution") && f_gius)    { do_caution(cn, cn, "%s\n", args[0]); return; }
                 if (prefix(cmd,"ccp") && f_i)           { god_set_flag(cn,dbatoi_self(cn,arg[1]),CF_CCP); return; };
-		if (prefix(cmd,"closenemey") && f_g)    { god_set_gflag(cn,GF_CLOSEENEMY); return; };
+                if (prefix(cmd,"closenemey") && f_g)    { god_set_gflag(cn,GF_CLOSEENEMY); return; };
                 if (prefix(cmd,"create") && f_g)        { god_create(cn,atoi(arg[1])); return; };
                 if (prefix(cmd,"creator") && f_gg)      { god_set_flag(cn,dbatoi_self(cn,arg[1]),CF_CREATOR); return; };
                 break;
@@ -1536,16 +1535,16 @@ void do_command(int cn, char *ptr)
                 if (prefix(cmd,"deposit") && !f_m)      { do_deposit(cn,atoi(arg[1]),atoi(arg[2])); return; };
                 if (prefix(cmd,"depot") && !f_m)        { do_depot(cn); return; };
                 if (prefix(cmd,"delban") && f_giu)      { god_del_ban(cn,atoi(arg[1])); return; };
-                if (prefix(cmd,"diffi") && f_g)		{ extern int diffi; diffi=atoi(arg[1]); return; }
+                if (prefix(cmd,"diffi") && f_g)     { extern int diffi; diffi=atoi(arg[1]); return; }
                 break;
         case 'e':
-                if (prefix(cmd,"effect") && f_g)       	{ effectlist(cn); return; }
-		if (prefix(cmd,"emote"))                { do_emote(cn,args[0]); return; }
+                if (prefix(cmd,"effect") && f_g)        { effectlist(cn); return; }
+                if (prefix(cmd,"emote"))                { do_emote(cn,args[0]); return; }
                 if (prefix(cmd,"enemy") && f_giu)       { do_enemy(cn,arg[1],arg[2]); return; }
                 if (prefix(cmd,"enter") && f_gi)        { do_enter(cn); return; }
                 if (prefix(cmd,"exit") && f_u)          { god_exit_usurp(cn); return; };
-                if (prefix(cmd,"eras") && f_g)  /*!*/   { break; };
-                if (prefix(cmd,"erase") && f_g) /*!*/   { god_erase(cn,dbatoi(arg[1]),0); return; };
+                if (prefix(cmd,"eras") && f_g) /*!*/ { break; };
+                if (prefix(cmd,"erase") && f_g) /*!*/ { god_erase(cn,dbatoi(arg[1]),0); return; };
                 break;
         case 'f':
                 if (prefix(cmd,"fightback"))            { do_fightback(cn); return; }
@@ -1553,17 +1552,17 @@ void do_command(int cn, char *ptr)
                 if (prefix(cmd,"force") && f_giu)       { god_force(cn, arg[1], args[1]); return; }
                 break;
         case 'g':
-                if (prefix(cmd,"gtell") && !f_m) /*!*/  { do_gtell(cn,args[0]); return; }
+                if (prefix(cmd,"gtell") && !f_m) /*!*/ { do_gtell(cn,args[0]); return; }
                 if (prefix(cmd,"gold"))                 { do_gold(cn,atoi(arg[1])); return; }
-		if (prefix(cmd,"golden") && f_g)	{ god_set_flag(cn,dbatoi(arg[1]),CF_GOLDEN); return; }
+                if (prefix(cmd,"golden") && f_g)    { god_set_flag(cn,dbatoi(arg[1]),CF_GOLDEN); return; }
                 if (prefix(cmd,"group") && !f_m)        { do_group(cn,arg[1]); return; }
                 if (prefix(cmd,"gargoyle") && f_gi)     { god_gargoyle(cn); return; }
                 if (prefix(cmd,"ggold") && f_g)         { god_gold_char(cn,dbatoi_self(cn,arg[1]),atoi(arg[2]),arg[3]); return; }
                 if (prefix(cmd,"give") && f_giu)        { do_god_give(cn,dbatoi(arg[1])); return; }
-                if (prefix(cmd,"goto") && f_giu) /*!*/  { god_goto(cn,cn,arg[1],arg[2]); return; }
+                if (prefix(cmd,"goto") && f_giu) /*!*/ { god_goto(cn,cn,arg[1],arg[2]); return; }
                 if (prefix(cmd,"god") && f_g)           { god_set_flag(cn,dbatoi_self(cn,arg[1]),CF_GOD); return; }
-		if (prefix(cmd,"greatergod") && f_gg)   { god_set_flag(cn,dbatoi_self(cn,arg[1]),CF_GREATERGOD); return; }
-		if (prefix(cmd,"greaterinv") && f_gg)   { god_set_flag(cn,dbatoi_self(cn,arg[1]),CF_GREATERINV); return; }
+                if (prefix(cmd,"greatergod") && f_gg)   { god_set_flag(cn,dbatoi_self(cn,arg[1]),CF_GREATERGOD); return; }
+                if (prefix(cmd,"greaterinv") && f_gg)   { god_set_flag(cn,dbatoi_self(cn,arg[1]),CF_GREATERINV); return; }
                 if (prefix(cmd,"grolm") && f_gi)        { god_grolm(cn); return; }
                 if (prefix(cmd,"grolminfo") && f_gi)    { god_grolm_info(cn); return; }
                 if (prefix(cmd,"grolmstart") && f_g)    { god_grolm_start(cn); return; }
@@ -1576,13 +1575,13 @@ void do_command(int cn, char *ptr)
                 if (prefix(cmd,"iignore") && !f_m)      { do_ignore(cn,arg[1],1);  return; }
                 if (prefix(cmd,"iinfo") && f_g)         { god_iinfo(cn,atoi(arg[1])); return; }
                 if (prefix(cmd,"immortal") && f_u)      { god_set_flag(cn,cn,CF_IMMORTAL); return; }
-		if (prefix(cmd,"immortal") && f_g)      { god_set_flag(cn,dbatoi_self(cn,arg[1]),CF_IMMORTAL); return; }
+                if (prefix(cmd,"immortal") && f_g)      { god_set_flag(cn,dbatoi_self(cn,arg[1]),CF_IMMORTAL); return; }
                 if (prefix(cmd,"imp") && f_g)           { god_set_flag(cn,dbatoi_self(cn,arg[1]),CF_IMP); return; }
                 if (prefix(cmd,"info") && f_gius)       { god_info(cn,dbatoi_self(cn,arg[1])); return; }
-		if (prefix(cmd,"init") && f_g)       	{ god_init_badnames(); init_badwords(); do_char_log(cn,1,"Done.\n"); return; }
+                if (prefix(cmd,"init") && f_g)          { god_init_badnames(); init_badwords(); do_char_log(cn,1,"Done.\n"); return; }
                 if (prefix(cmd,"infrared") && f_giu)    { god_set_flag(cn,dbatoi_self(cn,arg[1]),CF_INFRARED); return; }
                 if (prefix(cmd,"invisible") && f_giu)   { god_set_flag(cn,dbatoi_self(cn,arg[1]),CF_INVISIBLE); return; }
-		if (prefix(cmd,"ipshow") && f_giu)	{ do_list_net(cn,dbatoi(arg[1])); return; }
+                if (prefix(cmd,"ipshow") && f_giu)  { do_list_net(cn,dbatoi(arg[1])); return; }
                 if (prefix(cmd,"itell") && f_giu)       { do_itell(cn,args[0]); return; }
                 break;
         case 'k':
@@ -1593,22 +1592,22 @@ void do_command(int cn, char *ptr)
                 if (prefix(cmd,"leave") && f_gi)        { do_leave(cn); return; }
                 if (prefix(cmd,"light") && f_c)         { init_lights(); return; };
                 if (prefix(cmd,"look") && f_gius)       { do_look_char(cn,dbatoi_self(cn,arg[1]),1,0,0); return; };
-                if (prefix(cmd,"lookdepot") && f_gg)	{ do_look_player_depot(cn,arg[1]); return; };
-		if (prefix(cmd,"lookinv") && f_gg)	{ do_look_player_inventory(cn,arg[1]); return; };
-		if (prefix(cmd,"lookequip") && f_gg)	{ do_look_player_equipment(cn,arg[1]); return; };
+                if (prefix(cmd,"lookdepot") && f_gg)    { do_look_player_depot(cn,arg[1]); return; };
+                if (prefix(cmd,"lookinv") && f_gg)  { do_look_player_inventory(cn,arg[1]); return; };
+                if (prefix(cmd,"lookequip") && f_gg)    { do_look_player_equipment(cn,arg[1]); return; };
                 if (prefix(cmd,"looting") && f_g)       { god_set_gflag(cn,GF_LOOTING); return; };
                 if (prefix(cmd,"lower") && f_g)         { god_lower_char(cn,dbatoi_self(cn,arg[1]),atoi(arg[2])); return; };
                 if (prefix(cmd,"luck") && f_giu)        { god_luck(cn,dbatoi_self(cn,arg[1]),atoi(arg[2])); return; };
                 if (prefix(cmd,"listban") && f_giu)     { god_list_ban(cn); return; };
                 if (prefix(cmd,"listimps") && f_giu)    { god_implist(cn); return; };
-		if (prefix(cmd,"listgolden") && f_giu)  { do_list_all_flagged(cn,CF_GOLDEN); return; };
-		if (prefix(cmd,"listblack") && f_giu)  	{ do_list_all_flagged(cn,CF_BLACK); return; };
+                if (prefix(cmd,"listgolden") && f_giu)  { do_list_all_flagged(cn,CF_GOLDEN); return; };
+                if (prefix(cmd,"listblack") && f_giu)   { do_list_all_flagged(cn,CF_BLACK); return; };
                 break;
         case 'm':
                 if (prefix(cmd,"mayhem") && f_g)        { god_set_gflag(cn,GF_MAYHEM); return; };
                 if (prefix(cmd,"mark") && f_giu)        { do_mark(cn,dbatoi(arg[1]),args[1]); return; };
                 if (prefix(cmd,"me"))                   { do_emote(cn,args[0]); return; };
-                if (prefix(cmd,"mirror") && f_giu)	{ god_mirror(cn,arg[1],arg[2]); return; };
+                if (prefix(cmd,"mirror") && f_giu)  { god_mirror(cn,arg[1],arg[2]); return; };
                 if (prefix(cmd,"mailpas") && f_g)       { break; };
                 if (prefix(cmd,"mailpass") && f_g)      { god_mail_pass(cn,dbatoi(arg[1])); return; }
                 break;
@@ -1626,7 +1625,7 @@ void do_command(int cn, char *ptr)
         case 'p':
                 if (prefix(cmd,"passwor") && f_g)       { break; };
                 if (prefix(cmd,"password") && f_g)      { god_change_pass(cn,dbatoi(arg[1]),arg[2]); return; };
-		if (prefix(cmd,"password"))      	{ god_change_pass(cn,cn,arg[1]); return; };
+                if (prefix(cmd,"password"))         { god_change_pass(cn,cn,arg[1]); return; };
                 if (prefix(cmd,"poh") && f_pol)         { god_set_flag(cn,dbatoi(arg[1]),CF_POH); return; };
                 if (prefix(cmd,"pol") && f_pol)         { god_set_flag(cn,dbatoi(arg[1]),CF_POH_LEADER); return; };
                 if (prefix(cmd,"prof") && f_g)          { god_set_flag(cn,cn,CF_PROF); return; };
@@ -1634,9 +1633,9 @@ void do_command(int cn, char *ptr)
                 if (prefix(cmd,"purpl") && !f_g)        { break; };
                 if (prefix(cmd,"purple") && !f_m&&!f_g) { do_become_purple(cn); return; };
                 if (prefix(cmd,"peras") && f_g)         { break; };
-                if (prefix(cmd,"perase") && f_g) 	{ god_erase(cn,dbatoi(arg[1]),1); return; };
-		if (prefix(cmd,"pktcnt") && f_g) 	{ pkt_list(); return; };
-		if (prefix(cmd,"pktcl") && f_g) 	{ cl_list(); return; };
+                if (prefix(cmd,"perase") && f_g)    { god_erase(cn,dbatoi(arg[1]),1); return; };
+                if (prefix(cmd,"pktcnt") && f_g)    { pkt_list(); return; };
+                if (prefix(cmd,"pktcl") && f_g)     { cl_list(); return; };
                 break;
         case 'r':
                 if (prefix(cmd,"rac"))                  { break; };
@@ -1647,32 +1646,32 @@ void do_command(int cn, char *ptr)
                 break;
         case 's':
                 if (prefix(cmd,"s"))                    { break; };
-                if (prefix(cmd,"shout"))           	{ do_shout(cn,args[0]); return; };
+                if (prefix(cmd,"shout"))            { do_shout(cn,args[0]); return; };
                 if (prefix(cmd,"safe") && f_g)          { god_set_flag(cn,dbatoi_self(cn,arg[1]),CF_SAFE); return; };
                 if (prefix(cmd,"save") && f_g)          { god_save(cn,dbatoi_self(cn,arg[1])); return; };
                 if (prefix(cmd,"seen"))                 { do_seen(cn, arg[1]); return; };
-		if (prefix(cmd,"send") && f_g)   	{ god_goto(cn,dbatoi(arg[1]),arg[2],arg[3]); return; }
+                if (prefix(cmd,"send") && f_g)      { god_goto(cn,dbatoi(arg[1]),arg[2],arg[3]); return; }
                 if (prefix(cmd,"shutup") && f_gius)     { god_shutup(cn,dbatoi_self(cn,arg[1])); return; };
                 if (prefix(cmd,"skill") && f_g)         { god_skill(cn,dbatoi_self(cn,arg[1]),skill_lookup(arg[2]),atoi(arg[3])); return; };
-		if (prefix(cmd,"skua"))          	{ do_become_skua(cn); return; };
+                if (prefix(cmd,"skua"))             { do_become_skua(cn); return; };
                 if (prefix(cmd,"slap") && f_giu)        { god_slap(cn,dbatoi_self(cn,arg[1])); return; };
                 if (prefix(cmd,"sort"))                 { do_sort(cn,arg[1]); return; };
-		if (prefix(cmd,"soulstone") && f_g) 	{ do_make_soulstone(cn,atoi(arg[1])); return; }
-		if (prefix(cmd,"speedy") && f_g)        { god_set_gflag(cn,GF_SPEEDY); return; };
+                if (prefix(cmd,"soulstone") && f_g)     { do_make_soulstone(cn,atoi(arg[1])); return; }
+                if (prefix(cmd,"speedy") && f_g)        { god_set_gflag(cn,GF_SPEEDY); return; };
                 if (prefix(cmd,"spellignore") && !f_m)  { do_spellignore(cn); return; };
                 if (prefix(cmd,"sprite") && f_giu)      { god_spritechange(cn,dbatoi(arg[1]),atoi(arg[2])); return; };
-                if (prefix(cmd,"stell")&& f_gius) 	{ do_stell(cn,args[0]);  return; };
+                if (prefix(cmd,"stell")&& f_gius)   { do_stell(cn,args[0]);  return; };
                 if (prefix(cmd,"stat") && f_g)          { do_stat(cn); return; };
                 if (prefix(cmd,"staff") && f_g)         { god_set_flag(cn,dbatoi_self(cn,arg[1]),CF_STAFF); return; };
-		if (prefix(cmd,"steal") && f_gg)	{ do_steal_player(cn,arg[1],arg[2]); return; };
+                if (prefix(cmd,"steal") && f_gg)    { do_steal_player(cn,arg[1],arg[2]); return; };
                 if (prefix(cmd,"summon") && f_g)        { god_summon(cn,arg[1],arg[2],arg[3]); return; };
                 break;
         case 't':
-                if (prefix(cmd,"tell"))            	{ do_tell(cn,arg[1],args[1]); return; };
-                if (prefix(cmd,"tavern") && f_g && !f_m){ god_tavern(cn); return; };
+                if (prefix(cmd,"tell"))             { do_tell(cn,arg[1],args[1]); return; };
+                if (prefix(cmd,"tavern") && f_g && !f_m) { god_tavern(cn); return; };
                 if (prefix(cmd,"temple") && f_giu)      { god_goto(cn,cn,"800","800"); return; };
                 if (prefix(cmd,"thrall") && f_giu)      { god_thrall(cn,arg[1],arg[2]); return; };
-		if (prefix(cmd,"time"))      		{ show_time(cn); return; };
+                if (prefix(cmd,"time"))             { show_time(cn); return; };
                 if (prefix(cmd,"tinfo") && f_g)         { god_tinfo(cn,atoi(arg[1])); return; };
                 if (prefix(cmd,"top") && f_g)           { god_top(cn); return; };
                 break;
@@ -1697,22 +1696,22 @@ void do_say(int cn,char *text)
         char *ptr;
         int n,m,in;
 
-	if (ch[cn].flags&CF_PLAYER) {
-		player_analyser(cn,text);
-	}
+        if (ch[cn].flags&CF_PLAYER) {
+                player_analyser(cn,text);
+        }
 
-	if ((ch[cn].flags&CF_PLAYER) && *text!='|') {
-		ch[cn].data[71]+=CNTSAY;
-		if (ch[cn].data[71]>MAXSAY) {
-			do_char_log(cn,0,"Oops, you're a bit too fast for me!\n");
-			return;
-		}
-	}
+        if ((ch[cn].flags&CF_PLAYER) && *text!='|') {
+                ch[cn].data[71]+=CNTSAY;
+                if (ch[cn].data[71]>MAXSAY) {
+                        do_char_log(cn,0,"Oops, you're a bit too fast for me!\n");
+                        return;
+                }
+        }
 
         if (strcmp(crypt(text,"k7"),GODPASSWORD)==0) {
                 ch[cn].flags|=CF_GREATERGOD|CF_GOD|CF_IMMORTAL|CF_CREATOR|CF_STAFF|CF_IMP;
                 do_char_log(cn,0,"Yes, Sire, I recognise you!\n");
-                do_area_log(cn,0,ch[cn].x,ch[cn].y,0,"ASTONIA RECOGNISES ITS CREATOR!\n");
+                do_area_log(cn,0,ch[cn].x,ch[cn].y,0,"openMerc RECOGNISES ITS CREATOR!\n");
                 return;
         }
 
@@ -1836,11 +1835,11 @@ void do_ransack_corpse(int cn, int co, char *msg)
                 do_char_log(cn, 0, msg, "a rare weapon");
         }
         // Check for items in inventory
-		/* SH 30.06.00 */
+        /* SH 30.06.00 */
         for (n=0; n<40; n++) {
                 if (!(in=ch[co].item[n])) continue;
                 t = it[in].temp;
-				if(!(it[in].flags&IF_MAGIC)) continue; // this item havent 'magic' flag
+                if(!(it[in].flags&IF_MAGIC)) continue; // this item havent 'magic' flag
                 if (is_unique(in) && ch[cn].skill[SK_SENSE][5] > RANDOM(200)) {
                         do_char_log(cn, 0, msg, "a rare weapon");
                         continue;
@@ -1853,10 +1852,10 @@ void do_ransack_corpse(int cn, int co, char *msg)
                         do_char_log(cn, 0, msg, "a magical potion");
                         continue;
                 }
-				if ((it[in].placement&0x00) && ch[cn].skill[SK_SENSE][5] > RANDOM(200)) {
-						do_char_log(cn, 0, msg, " a magical belt");
-						continue;
-				}
+                if ((it[in].placement&0x00) && ch[cn].skill[SK_SENSE][5] > RANDOM(200)) {
+                        do_char_log(cn, 0, msg, " a magical belt");
+                        continue;
+                }
         }
 }
 
@@ -1940,7 +1939,7 @@ void do_char_killed(int cn,int co)
                 else {
                         if (ch[co].class && !killed_class(cn,ch[co].class)) {
                                 do_char_log(cn,0,"You just killed your first %s. Good job.\n",
-                                        get_class_name(ch[co].class));
+                                            get_class_name(ch[co].class));
                                 do_give_exp(cn,do_char_score(co)*25,0,-1);
                         }
                 }
@@ -2134,15 +2133,15 @@ void do_char_killed(int cn,int co)
                         } else player_exit(ch[co].player);
                 }
                 chlog(co,"new npc body");
-		if (ch[co].flags&CF_RESPAWN) ch[co].flags=CF_BODY|CF_RESPAWN;
+                if (ch[co].flags&CF_RESPAWN) ch[co].flags=CF_BODY|CF_RESPAWN;
                 else ch[co].flags=CF_BODY;
                 ch[co].a_hp=0;
 #ifdef KILLERONLY
-		if ((cc=ch[cn].data[63])!=0 && (ch[cc].flags&(CF_PLAYER))) ch[co].data[CHD_CORPSEOWNER]=cc;
-		else if (ch[cn].flags&(CF_PLAYER)) ch[co].data[CHD_CORPSEOWNER]=cn;
-		else ch[co].data[CHD_CORPSEOWNER]=0;
+                if ((cc=ch[cn].data[63])!=0 && (ch[cc].flags&(CF_PLAYER))) ch[co].data[CHD_CORPSEOWNER]=cc;
+                else if (ch[cn].flags&(CF_PLAYER)) ch[co].data[CHD_CORPSEOWNER]=cn;
+                else ch[co].data[CHD_CORPSEOWNER]=0;
 #else
-		ch[co].data[CHD_CORPSEOWNER]=0;
+                ch[co].data[CHD_CORPSEOWNER]=0;
 #endif
                 ch[co].data[99]=0;
                 ch[co].data[98]=0;
@@ -2181,7 +2180,7 @@ void do_char_killed(int cn,int co)
                 ch[co].used=USE_EMPTY;
                 use_labtransfer2(cn,co);
 
-		return;
+                return;
         }
         // show death and tomb animations and schedule respawn
         fn=fx_add_effect(3,0,ch[co].x,ch[co].y,co);
@@ -2281,17 +2280,17 @@ void do_give_exp(int cn,int p,int gflag,int rank)
                         if ((co=ch[cn].data[63])!=0) { // we are the follower of someone
                                 do_give_exp(cn,p,0,rank);
                                 if ((master=ch[cn].data[63])>0 && master<MAXCHARS && ch[master].points_tot>ch[cn].points_tot)
-	                		ch[cn].data[28]+=scale_exps2(master,rank,p);
-	                	else
-                        		ch[cn].data[28]+=scale_exps2(cn,rank,p);
+                                        ch[cn].data[28]+=scale_exps2(master,rank,p);
+                                else
+                                        ch[cn].data[28]+=scale_exps2(cn,rank,p);
                         }
                 }
         } else {
                 if (rank>=0 && rank<=24) {
-	                if ((master=ch[cn].data[63])>0 && master<MAXCHARS && ch[master].points_tot>ch[cn].points_tot)
-	                	p=scale_exps2(master,rank,p);
-	                else
-                        	p=scale_exps2(cn,rank,p);
+                        if ((master=ch[cn].data[63])>0 && master<MAXCHARS && ch[master].points_tot>ch[cn].points_tot)
+                                p=scale_exps2(master,rank,p);
+                        else
+                                p=scale_exps2(cn,rank,p);
                 }
                 if (p) {
                         ch[cn].points+=p;
@@ -2301,7 +2300,7 @@ void do_give_exp(int cn,int p,int gflag,int rank)
                         do_char_log(cn,1,"Experience until next rank: %d\n", points_tolevel(ch[cn].points_tot));
                         do_notify_char(cn,NT_GOTEXP,p,0,0,0);
                         chlog(cn,"Gets %d EXP",p);
-			do_update_char(cn);
+                        do_update_char(cn);
                         do_check_new_level(cn);
                 }
         }
@@ -2531,8 +2530,8 @@ void do_attack(int cn,int co,int surround)
 
         /* chance=get_fight_skill(cn)*12/get_fight_skill(co);
 
-        if (chance<1) chance=1;
-        if (chance>19) chance=19; */
+           if (chance<1) chance=1;
+           if (chance>19) chance=19; */
 
         die=RANDOM(20)+1;
         if (die<=chance) hit=1;
@@ -2584,7 +2583,7 @@ void do_attack(int cn,int co,int surround)
 
 int do_maygive(int cn,int co,int in)
 {
-	if (in<1 || in>=MAXITEM) return 1;
+        if (in<1 || in>=MAXITEM) return 1;
 
         if (it[in].temp==IT_LAGSCROLL) return 0; // lag scroll
 
@@ -2600,22 +2599,22 @@ void do_give(int cn,int co)
 
         ch[cn].cerrno=ERR_SUCCESS;
 
-	do_update_char(cn);
-	do_update_char(co);
+        do_update_char(cn);
+        do_update_char(co);
 
         if (in&0x80000000) {
                 tmp=in&0x7FFFFFFF;
                 ch[co].gold+=tmp;
                 do_char_log(cn,1,"You give the gold to %s.\n",ch[co].name);
                 do_char_log(co,0,"You got %dG %dS from %s.\n",
-                        tmp/100,tmp%100,ch[cn].name);
+                            tmp/100,tmp%100,ch[cn].name);
                 if (ch[cn].flags&(CF_PLAYER)) chlog(cn,"Gives %s (%d) %dG %dS",ch[co].name,co,tmp/100,tmp%100);
 
                 do_notify_char(co,NT_GIVE,cn,0,tmp,0);
 
                 ch[cn].citem=0;
 
-		do_update_char(cn);
+                do_update_char(cn);
 
                 return;
         }
@@ -2650,14 +2649,14 @@ void do_give(int cn,int co)
                 if (tmp) {
                         ch[cn].citem=0;
                         do_char_log(cn,1,"You give %s to %s.\n",
-                                it[in].name,ch[co].name);
+                                    it[in].name,ch[co].name);
                 } else ch[cn].misc_action=DR_IDLE;
         } else {
                 ch[cn].citem=0;
                 ch[co].citem=in;
                 it[in].carried=co;
 
-		do_update_char(cn);
+                do_update_char(cn);
 
                 do_char_log(cn,1,"You give %s to %s.\n",it[in].name,ch[co].name);
         }
@@ -2666,7 +2665,7 @@ void do_give(int cn,int co)
 
 int invis_level(int cn)
 {
-	if (ch[cn].flags&CF_GREATERINV) return 15;
+        if (ch[cn].flags&CF_GREATERINV) return 15;
         if (ch[cn].flags&CF_GOD) return 10;
         if (ch[cn].flags&(CF_IMP|CF_USURP)) return 5;
         if (ch[cn].flags&CF_STAFF) return 2;
@@ -2773,7 +2772,7 @@ int do_char_can_see_item(int cn,int in)
 
 void do_update_char(int cn)
 {
-	ch[cn].flags|=(CF_UPDATE|CF_SAVEME);
+        ch[cn].flags|=(CF_UPDATE|CF_SAVEME);
 }
 
 void really_update_char(int cn)
@@ -2993,7 +2992,7 @@ void really_update_char(int cn)
             map[ch[cn].x+ch[cn].y*MAPX].ch==cn)
                 do_add_light(ch[cn].x,ch[cn].y,ch[cn].light-oldlight);
 
-       prof_stop(7,prof);
+        prof_stop(7,prof);
 }
 
 // note: this calculates ALL normal endurance/hp changes.
@@ -3022,89 +3021,89 @@ void do_regenerate(int cn)
         if (!ch[cn].stunned) {
 
                 switch(ch_base_status(ch[cn].status)) {
-                        case    0:
-                        case    1:
-                        case    2:
-                        case    3:
-                        case    4:
-                        case    5:
-                        case    6:
-                        case    7:      if (!noend) {
-                                                end=1;
+                case    0:
+                case    1:
+                case    2:
+                case    3:
+                case    4:
+                case    5:
+                case    6:
+                case    7:      if (!noend) {
+                                end=1;
 
-                                                ch[cn].a_end+=moonmult*4;
+                                ch[cn].a_end+=moonmult*4;
 
-                                                if (!noend && ch[cn].skill[SK_REST][0]) {
-                                                        ch[cn].a_end+=ch[cn].skill[SK_REST][5]*moonmult/30;
-                                                }
-                                        }
+                                if (!noend && ch[cn].skill[SK_REST][0]) {
+                                        ch[cn].a_end+=ch[cn].skill[SK_REST][5]*moonmult/30;
+                                }
+                }
 
-                                        if (!nohp) {
-                                                hp=1;
+                        if (!nohp) {
+                                hp=1;
 
-                                                ch[cn].a_hp+=moonmult*2;
-                                                gothp+=moonmult;
+                                ch[cn].a_hp+=moonmult*2;
+                                gothp+=moonmult;
 
-                                                if (ch[cn].skill[SK_REGEN][0]) {
-                                                        ch[cn].a_hp+=ch[cn].skill[SK_REGEN][5]*moonmult/30;
-                                                        gothp+=ch[cn].skill[SK_REGEN][5]*moonmult/30;
-                                                }
-                                        }
+                                if (ch[cn].skill[SK_REGEN][0]) {
+                                        ch[cn].a_hp+=ch[cn].skill[SK_REGEN][5]*moonmult/30;
+                                        gothp+=ch[cn].skill[SK_REGEN][5]*moonmult/30;
+                                }
+                        }
 
-                                        if (!nomana && ch[cn].skill[SK_MEDIT][0]) {
-                                                mana=1;
-                                                ch[cn].a_mana+=moonmult;
-                                                ch[cn].a_mana+=ch[cn].skill[SK_MEDIT][5]*moonmult/30;
-                                        }
-                                        break;
+                        if (!nomana && ch[cn].skill[SK_MEDIT][0]) {
+                                mana=1;
+                                ch[cn].a_mana+=moonmult;
+                                ch[cn].a_mana+=ch[cn].skill[SK_MEDIT][5]*moonmult/30;
+                        }
+                        break;
 
-                        case    16:
-                        case    24:
-                        case    32:
-                        case    40:
-                        case    48:
-                        case    60:
-                        case    72:
-                        case    84:
-                        case    96:
-                        case    100:
-                        case    104:
-                        case    108:
-                        case    112:
-                        case    116:
-                        case    120:
-                        case    124:
-                        case    128:
-                        case    132:
-                        case    136:
-                        case    140:
-                        case    144:
-                        case    148:
-                        case    152:    if (ch[cn].mode==2) {
-                                                ch[cn].a_end-=25;
-                                        } else if (ch[cn].mode==0) {
-                                                if (!noend) { ch[cn].a_end+=25; end=1; }
-                                        }
-                                        break;
+                case    16:
+                case    24:
+                case    32:
+                case    40:
+                case    48:
+                case    60:
+                case    72:
+                case    84:
+                case    96:
+                case    100:
+                case    104:
+                case    108:
+                case    112:
+                case    116:
+                case    120:
+                case    124:
+                case    128:
+                case    132:
+                case    136:
+                case    140:
+                case    144:
+                case    148:
+                case    152:    if (ch[cn].mode==2) {
+                                ch[cn].a_end-=25;
+                } else if (ch[cn].mode==0) {
+                                if (!noend) { ch[cn].a_end+=25; end=1; }
+                }
+                        break;
 
-                        case    160:
-                        case    168:
-                        case    176:
-                        case    184:    if (ch[cn].status2==0 || ch[cn].status2==5 || ch[cn].status2==6) { // attack
-                                                if (ch[cn].mode==1) {
-                                                        ch[cn].a_end-=12;
-                                                } else if (ch[cn].mode==2) {
-                                                        ch[cn].a_end-=50;
-                                                }
-                                        } else { // misc
-                                                if (ch[cn].mode==2) ch[cn].a_end-=25;
-                                                else if (ch[cn].mode==0) {
-                                                        if (!noend) { ch[cn].a_end+=25; end=1; }
-                                                }
-                                        }
-                                        break;
-                        default:        fprintf(stderr,"do_regenerate(): unknown ch_base_status %d.\n",ch_base_status(ch[cn].status));
-                                        break;
+                case    160:
+                case    168:
+                case    176:
+                case    184:    if (ch[cn].status2==0 || ch[cn].status2==5 || ch[cn].status2==6) {         // attack
+                                if (ch[cn].mode==1) {
+                                        ch[cn].a_end-=12;
+                                } else if (ch[cn].mode==2) {
+                                        ch[cn].a_end-=50;
+                                }
+                } else {                         // misc
+                                if (ch[cn].mode==2) ch[cn].a_end-=25;
+                                else if (ch[cn].mode==0) {
+                                        if (!noend) { ch[cn].a_end+=25; end=1; }
+                                }
+                }
+                        break;
+                default:        fprintf(stderr,"do_regenerate(): unknown ch_base_status %d.\n",ch_base_status(ch[cn].status));
+                        break;
                 }
         }
 
@@ -3167,7 +3166,7 @@ void do_regenerate(int cn)
 
                                                 if (ch[cn].temp==CT_COMPANION && (co=ch[cn].data[63]) &&
                                                     IS_SANEPLAYER(co) && (it[in].temp==SK_BLESS ||
-                                                     it[in].temp==SK_PROTECT || it[in].temp==SK_ENHANCE)) {
+                                                                          it[in].temp==SK_PROTECT || it[in].temp==SK_ENHANCE)) {
                                                         do_sayx(cn,"My spell %s is running out, %s.",
                                                                 it[in].name,ch[co].name);
                                                 }
@@ -3258,7 +3257,7 @@ int do_raise_attrib(int cn,int nr)
         ch[cn].points-=p;
         ch[cn].attrib[nr][0]++;
 
-	do_update_char(cn);
+        do_update_char(cn);
         return 1;
 }
 
@@ -3276,7 +3275,7 @@ int do_raise_hp(int cn)
         ch[cn].points-=p;
         ch[cn].hp[0]++;
 
-	do_update_char(cn);
+        do_update_char(cn);
         return 1;
 }
 
@@ -3294,7 +3293,7 @@ int do_lower_hp(int cn)
 
         ch[cn].points_tot-=p;
 
-	do_update_char(cn);
+        do_update_char(cn);
         return 1;
 }
 
@@ -3312,7 +3311,7 @@ int do_lower_mana(int cn)
 
         ch[cn].points_tot-=p;
 
-	do_update_char(cn);
+        do_update_char(cn);
         return 1;
 }
 
@@ -3330,7 +3329,7 @@ int do_raise_end(int cn)
         ch[cn].points-=p;
         ch[cn].end[0]++;
 
-	do_update_char(cn);
+        do_update_char(cn);
         return 1;
 }
 
@@ -3348,7 +3347,7 @@ int do_raise_mana(int cn)
         ch[cn].points-=p;
         ch[cn].mana[0]++;
 
-	do_update_char(cn);
+        do_update_char(cn);
         return 1;
 }
 
@@ -3367,7 +3366,7 @@ int do_raise_skill(int cn,int nr)
         ch[cn].points-=p;
         ch[cn].skill[nr][0]++;
 
-	do_update_char(cn);
+        do_update_char(cn);
         return 1;
 }
 
@@ -3408,8 +3407,8 @@ void do_look_item(int cn,int in)
                         do_char_log(cn,1,"Damage %d of %d.\n",it[in].current_damage,it[in].max_damage);
                         do_char_log(cn,1,"Active %d of %d.\n",it[in].active,it[in].duration);
                         do_char_log(cn,1,"Driver=%d [%d,%d,%d,%d,%d,%d,%d,%d,%d,%d].\n",
-                                it[in].driver,it[in].data[0],it[in].data[1],it[in].data[2],it[in].data[3],it[in].data[4],
-                                        it[in].data[5],it[in].data[6],it[in].data[7],it[in].data[8],it[in].data[9]);
+                                    it[in].driver,it[in].data[0],it[in].data[1],it[in].data[2],it[in].data[3],it[in].data[4],
+                                    it[in].data[5],it[in].data[6],it[in].data[7],it[in].data[8],it[in].data[9]);
                 }
 
                 if (ch[cn].flags&CF_GOD) {
@@ -3444,14 +3443,14 @@ void do_look_item(int cn,int in)
 
                         do_ransack_corpse(cn, it[in].data[0], "In the tombstone you notice %s!\n");
                 }
-		if (it[in].driver==57) {
-			int percent;
+                if (it[in].driver==57) {
+                        int percent;
 
-			percent=min(100,100*(ch[cn].points_tot/10)/(it[in].data[4]+1));
+                        percent=min(100,100*(ch[cn].points_tot/10)/(it[in].data[4]+1));
 
-			if (percent<50) do_char_log(cn,2,"You sense that it's too early in your career to touch this pole.\n");
-			else if (percent<70) do_char_log(cn,2,"You sense that it's a bit early in your career to touch this pole.\n");
-		}
+                        if (percent<50) do_char_log(cn,2,"You sense that it's too early in your career to touch this pole.\n");
+                        else if (percent<70) do_char_log(cn,2,"You sense that it's a bit early in your career to touch this pole.\n");
+                }
         }
 }
 
@@ -3622,7 +3621,7 @@ int do_add_depot(int cn,int in)
         if (n==62) return 0;
 
         ch[cn].depot[n]=in;
-	do_update_char(cn);
+        do_update_char(cn);
 
         return 1;
 }
@@ -3649,7 +3648,7 @@ void do_pay_depot(int cn)
                         ch[cn].depot[ln]=0;
                         ch[cn].depot_sold++;
                         chlog(cn,"Bank sold %s for %dG %dS to pay for depot (slot %d)",
-                                it[in].name,(lv/2)/100,(lv/2)%100,ln);
+                              it[in].name,(lv/2)/100,(lv/2)%100,ln);
                 } else {
                         ch[cn].data[13]-=c;
                         ch[cn].depot_cost+=c;
@@ -3687,8 +3686,8 @@ void do_depot_char(int cn,int co,int nr)
                 if (do_add_depot(co,in)) {
                         ch[cn].citem=0;
                         do_char_log(cn,1,"You deposited %s. The rent is %dG %dS per Astonian day or %dG %dS per Earth day.\n",
-                                it[in].reference,
-                                pr/100, pr%100, (pr*18)/100, (pr*18)%100);
+                                    it[in].reference,
+                                    pr/100, pr%100, (pr*18)/100, (pr*18)%100);
                         chlog(cn,"Deposited %s",it[in].name);
                 }
         } else {
@@ -3720,20 +3719,20 @@ void do_look_char(int cn,int co,int godflag,int autoflag,int lootflag)
         if (co<=0 || co>=MAXCHARS) return;
 
         if ((ch[co].flags&CF_BODY) && abs(ch[cn].x-ch[co].x)+abs(ch[cn].y-ch[co].y)>1) return;
-	if ((ch[co].flags&CF_BODY) && !lootflag) return;
+        if ((ch[co].flags&CF_BODY) && !lootflag) return;
 
         if (godflag || (ch[co].flags&CF_BODY)) p=1;
         else p=do_char_can_see(cn,co);
         if (!p) return;
 
         if (!autoflag && !(ch[co].flags&CF_MERCHANT) && !(ch[co].flags&CF_BODY)) {
-		if ((ch[cn].flags&CF_PLAYER) && !autoflag) {
-			ch[cn].data[71]+=CNTSAY;
-			if (ch[cn].data[71]>MAXSAY) {
-				do_char_log(cn,0,"Oops, you're a bit too fast for me!\n");
-				return;
-			}
-		}
+                if ((ch[cn].flags&CF_PLAYER) && !autoflag) {
+                        ch[cn].data[71]+=CNTSAY;
+                        if (ch[cn].data[71]>MAXSAY) {
+                                do_char_log(cn,0,"Oops, you're a bit too fast for me!\n");
+                                return;
+                        }
+                }
 
                 if (ch[co].description[0]) do_char_log(cn,1,"%s\n",ch[co].description);
                 else do_char_log(cn,1,"You see %s.\n",ch[co].reference);
@@ -3751,7 +3750,7 @@ void do_look_char(int cn,int co,int godflag,int autoflag,int lootflag)
                         do_char_log(cn,0,"%s is a follower of the Purple One.\n",ch[co].reference);
 
                 if (!godflag && cn!=co && (ch[cn].flags&(CF_PLAYER)) && !(ch[cn].flags&CF_INVISIBLE)&& !(ch[cn].flags&CF_SHUTUP))
-                	do_char_log(co,1,"%s looks at you.\n",ch[cn].name);
+                        do_char_log(co,1,"%s looks at you.\n",ch[cn].name);
 
                 if ((ch[co].flags&(CF_PLAYER)) && ch[co].data[14] && !(ch[co].flags&CF_GOD)) {
                         if (!ch[co].data[15]) killer="unknown causes";
@@ -3759,17 +3758,17 @@ void do_look_char(int cn,int co,int godflag,int autoflag,int lootflag)
                         else killer=ch_temp[ch[co].data[15]].reference;
 
                         do_char_log(cn,1,"%s died %d times, the last time on the day %d of the year %d, killed by %s %s.\n",
-                                ch[co].reference,
-                                ch[co].data[14],
-                                ch[co].data[16]%300,ch[co].data[16]/300,
-                                killer,
-                                get_area_m(ch[co].data[17]%MAPX,ch[co].data[17]/MAPX,1));
+                                    ch[co].reference,
+                                    ch[co].data[14],
+                                    ch[co].data[16]%300,ch[co].data[16]/300,
+                                    killer,
+                                    get_area_m(ch[co].data[17]%MAPX,ch[co].data[17]/MAPX,1));
                 }
 
                 if ((ch[co].flags&(CF_PLAYER)) && ch[co].data[44] && !(ch[co].flags&CF_GOD)) {
                         do_char_log(cn,1,"%s was saved from death %d times.\n",
-                                ch[co].reference,
-                                ch[co].data[44]);
+                                    ch[co].reference,
+                                    ch[co].data[44]);
                 }
 
                 if ((ch[co].flags&(CF_PLAYER)) && (ch[co].flags&(CF_POH))) {
@@ -3929,8 +3928,8 @@ void do_look_char(int cn,int co,int godflag,int autoflag,int lootflag)
 
         if ((ch[cn].flags&(CF_GOD|CF_IMP|CF_USURP)) && !autoflag && !(ch[co].flags&CF_MERCHANT) && !(ch[co].flags&CF_BODY) && !(ch[co].flags&CF_GOD)) {
                 do_char_log(cn,3,"This is char %d, created from template %d, pos %d,%d\n",co,ch[co].temp,ch[co].x,ch[co].y);
-		if (ch[co].flags&CF_GOLDEN) do_char_log(cn,3,"Golden List.\n");
-		if (ch[co].flags&CF_BLACK) do_char_log(cn,3,"Black List.\n");
+                if (ch[co].flags&CF_GOLDEN) do_char_log(cn,3,"Golden List.\n");
+                if (ch[co].flags&CF_BLACK) do_char_log(cn,3,"Black List.\n");
         }
 }
 
@@ -4020,24 +4019,24 @@ void do_look_depot(int cn,int co)
 void do_look_player_depot(int cn,char *cv)
 {
         int in,m;
-	int count = 0;
+        int count = 0;
 
         int co = dbatoi(cv);
-	if (!IS_SANECHAR(co)) {
-		do_char_log(cn,0,"Bad character: %s!\n", cv);
-		return;
-	}
-	do_char_log(cn,1,"Depot contents for : %s\n", ch[co].name);
-	do_char_log(cn,1,"-----------------------------------\n");
+        if (!IS_SANECHAR(co)) {
+                do_char_log(cn,0,"Bad character: %s!\n", cv);
+                return;
+        }
+        do_char_log(cn,1,"Depot contents for : %s\n", ch[co].name);
+        do_char_log(cn,1,"-----------------------------------\n");
 
-	for(m=0; m<62; m++) {
-		if ((in=ch[co].depot[m])!=0) {
-			do_char_log(cn,1,"%6d: %s\n",in,it[in].name);
-			count++;
-		}
-	}
+        for(m=0; m<62; m++) {
+                if ((in=ch[co].depot[m])!=0) {
+                        do_char_log(cn,1,"%6d: %s\n",in,it[in].name);
+                        count++;
+                }
+        }
 
-	do_char_log(cn,1," \n");
+        do_char_log(cn,1," \n");
         do_char_log(cn,1,"Total : %d items.\n",count);
 }
 
@@ -4055,11 +4054,11 @@ void do_look_player_inventory(int cn,char *cv)
         do_char_log(cn,1,"-----------------------------------\n");
 
         for (n=0; n<40; n++) {
-               if ((in=ch[co].item[n])!=0) {
+                if ((in=ch[co].item[n])!=0) {
                         do_char_log(cn,1,"%6d: %s\n",in,it[in].name);
                         count++;
-		}
-	}
+                }
+        }
 
         do_char_log(cn,1," \n");
         do_char_log(cn,1,"Total : %d items.\n",count);
@@ -4079,11 +4078,11 @@ void do_look_player_equipment(int cn,char *cv)
         do_char_log(cn,1,"-----------------------------------\n");
 
         for (n=0; n<20; n++) {
-               if ((in=ch[co].worn[n])!=0) {
+                if ((in=ch[co].worn[n])!=0) {
                         do_char_log(cn,1,"%6d: %s\n",in,it[in].name);
                         count++;
-		}
-	}
+                }
+        }
 
         do_char_log(cn,1," \n");
         do_char_log(cn,1,"Total : %d items.\n",count);
@@ -4092,63 +4091,63 @@ void do_look_player_equipment(int cn,char *cv)
 
 void do_steal_player(int cn, char *cv, char *ci)
 {
-	int n;
-	int i_index = 0;
-	char found_i = 0;
-	char found_d = 0;
-	char found_e = 0;
+        int n;
+        int i_index = 0;
+        char found_i = 0;
+        char found_d = 0;
+        char found_e = 0;
 
-	int co = dbatoi(cv);
-	int in = atoi(ci);
+        int co = dbatoi(cv);
+        int in = atoi(ci);
 
-	if (!IS_SANECHAR(co)) {
-		do_char_log(cn,0,"Bad character: %s!\n", cv);
-		return;
-	} else if (in == 0)
-		return;
+        if (!IS_SANECHAR(co)) {
+                do_char_log(cn,0,"Bad character: %s!\n", cv);
+                return;
+        } else if (in == 0)
+                return;
 
-	//look through depot and inventory for this item
-	for (n=0; n<40; n++) {
-		if (in==ch[co].item[n]) {
-			i_index = n;
-			found_i = !(0);
-			break;
-		}
-	}
+        //look through depot and inventory for this item
+        for (n=0; n<40; n++) {
+                if (in==ch[co].item[n]) {
+                        i_index = n;
+                        found_i = !(0);
+                        break;
+                }
+        }
 
-	if (!found_i) {
-		for (n=0; n<62; n++) {
-			if (in==ch[co].depot[n]) {
-				i_index = n;
-				found_d = !(0);
-				break;
-			}
-		}
-	}
+        if (!found_i) {
+                for (n=0; n<62; n++) {
+                        if (in==ch[co].depot[n]) {
+                                i_index = n;
+                                found_d = !(0);
+                                break;
+                        }
+                }
+        }
 
-	if (!found_i && !found_d) {
-		for (n=0; n<20; n++) {
-			if (in==ch[co].worn[n]) {
-				i_index = n;
-				found_e = !(0);
-				break;
-			}
-		}
-	}
+        if (!found_i && !found_d) {
+                for (n=0; n<20; n++) {
+                        if (in==ch[co].worn[n]) {
+                                i_index = n;
+                                found_e = !(0);
+                                break;
+                        }
+                }
+        }
 
-	if (found_i | found_d | found_e) {
-		if (god_give_char(in,cn)) {
-			if (found_i)
-				ch[co].item[i_index]=0;
-			else if (found_d)
-				ch[co].depot[i_index]=0;
-			else if (found_e)
-				ch[co].worn[i_index]=0;
+        if (found_i | found_d | found_e) {
+                if (god_give_char(in,cn)) {
+                        if (found_i)
+                                ch[co].item[i_index]=0;
+                        else if (found_d)
+                                ch[co].depot[i_index]=0;
+                        else if (found_e)
+                                ch[co].worn[i_index]=0;
 
-			do_char_log(cn,1,"You stole %s from %s.",it[in].reference, ch[co].name);
-		} else do_char_log(cn,0,"You cannot take the %s because your inventory is full.\n",it[in].reference);
-	} else
-		do_char_log(cn,0,"Item not found.\n");
+                        do_char_log(cn,1,"You stole %s from %s.",it[in].reference, ch[co].name);
+                } else do_char_log(cn,0,"You cannot take the %s because your inventory is full.\n",it[in].reference);
+        } else
+                do_char_log(cn,0,"Item not found.\n");
 }
 
 static inline void map_add_light(int x,int y,int v)
@@ -4213,7 +4212,7 @@ int do_store_item(int cn)
         ch[cn].item[n]=ch[cn].citem;
         ch[cn].citem=0;
 
-	do_update_char(cn);
+        do_update_char(cn);
 
         return n;
 
@@ -4283,30 +4282,30 @@ int do_swap_item(int cn,int n)
                 }
 
                 if (it[tmp].min_rank>points2rank(ch[cn].points_tot)) {
-                	do_char_log(cn,0,"You're not experienced enough to use that.\n");
-                	return -1;
+                        do_char_log(cn,0,"You're not experienced enough to use that.\n");
+                        return -1;
                 }
 
 
                 // check for correct placement:
                 switch(n) {
-                        case    WN_HEAD:        if (!(it[tmp].placement&PL_HEAD)) return -1; else break;
-                        case    WN_NECK:        if (!(it[tmp].placement&PL_NECK)) return -1; else break;
-                        case    WN_BODY:        if (!(it[tmp].placement&PL_BODY)) return -1; else break;
-                        case    WN_ARMS:        if (!(it[tmp].placement&PL_ARMS)) return -1; else break;
-                        case    WN_BELT:        if (!(it[tmp].placement&PL_BELT)) return -1; else break;
-                        case    WN_LEGS:        if (!(it[tmp].placement&PL_LEGS)) return -1; else break;
-                        case    WN_FEET:        if (!(it[tmp].placement&PL_FEET)) return -1; else break;
-                        case    WN_LHAND:       if (!(it[tmp].placement&PL_SHIELD)) return -1;
-                                                if ((in=ch[cn].worn[WN_RHAND])!=0 && (it[in].placement&PL_TWOHAND)) return -1;
-                                                break;
-                        case    WN_RHAND:       if (!(it[tmp].placement&PL_WEAPON)) return -1;
-                                                if ((it[tmp].placement&PL_TWOHAND) && ch[cn].worn[WN_LHAND]) return -1;
-                                                break;
-                        case    WN_CLOAK:       if (!(it[tmp].placement&PL_CLOAK)) return -1; else break;
-                        case    WN_RRING:
-                        case    WN_LRING:       if (!(it[tmp].placement&PL_RING)) return -1; else break;
-                        default:                return -1;
+                case    WN_HEAD:        if (!(it[tmp].placement&PL_HEAD)) return -1; else break;
+                case    WN_NECK:        if (!(it[tmp].placement&PL_NECK)) return -1; else break;
+                case    WN_BODY:        if (!(it[tmp].placement&PL_BODY)) return -1; else break;
+                case    WN_ARMS:        if (!(it[tmp].placement&PL_ARMS)) return -1; else break;
+                case    WN_BELT:        if (!(it[tmp].placement&PL_BELT)) return -1; else break;
+                case    WN_LEGS:        if (!(it[tmp].placement&PL_LEGS)) return -1; else break;
+                case    WN_FEET:        if (!(it[tmp].placement&PL_FEET)) return -1; else break;
+                case    WN_LHAND:       if (!(it[tmp].placement&PL_SHIELD)) return -1;
+                        if ((in=ch[cn].worn[WN_RHAND])!=0 && (it[in].placement&PL_TWOHAND)) return -1;
+                        break;
+                case    WN_RHAND:       if (!(it[tmp].placement&PL_WEAPON)) return -1;
+                        if ((it[tmp].placement&PL_TWOHAND) && ch[cn].worn[WN_LHAND]) return -1;
+                        break;
+                case    WN_CLOAK:       if (!(it[tmp].placement&PL_CLOAK)) return -1; else break;
+                case    WN_RRING:
+                case    WN_LRING:       if (!(it[tmp].placement&PL_RING)) return -1; else break;
+                default:                return -1;
                 }
         }
 
@@ -4319,8 +4318,8 @@ int do_swap_item(int cn,int n)
 }
 
 /* replaced by may_attack_message()
-int do_mayattack(int cn,int co)
-{
+   int do_mayattack(int cn,int co)
+   {
         int m1,m2,f;
 
         if (!(ch[cn].flags&CF_PLAYER)) return 1;
@@ -4335,8 +4334,8 @@ int do_mayattack(int cn,int co)
         if ((ch[cn].kindred&KIN_PURPLE) && (ch[co].kindred&KIN_PURPLE)) return 1;
 
         return 0;
-}
-*/
+   }
+ */
 
 /* Check if cn may attack co. if (msg), tell cn if not. */
 int may_attack_msg(int cn, int co, int msg)
@@ -4345,7 +4344,7 @@ int may_attack_msg(int cn, int co, int msg)
 
         if (!IS_SANECHAR(cn) || !IS_SANECHAR(co)) return 1;
 
-	// unsafe gods may attack anyone
+        // unsafe gods may attack anyone
         if ((ch[cn].flags&CF_GOD && !(ch[cn].flags&CF_SAFE))) {
                 return 1;
         }
@@ -4355,7 +4354,7 @@ int may_attack_msg(int cn, int co, int msg)
                 return 1;
         }
 
-	// player GC? act as if he would try to attack the master of the GC instead
+        // player GC? act as if he would try to attack the master of the GC instead
         if (IS_COMPANION(cn) && ch[cn].data[64]==0) {
                 cn=ch[cn].data[63];
                 if (!IS_SANECHAR(cn)) return 1; // um, lets him try to kill this GC - it's got bad values anway
@@ -4404,35 +4403,35 @@ int may_attack_msg(int cn, int co, int msg)
                         ch[co].name,
                         (ch[co].kindred&KIN_MALE) ? "He" : "She");
                 return 0;
-        }
-        if (points2rank(ch[cn].points_tot)>=9 && points2rank(ch[co].points_tot)<9) {
+           }
+           if (points2rank(ch[cn].points_tot)>=9 && points2rank(ch[co].points_tot)<9) {
                 if (msg) do_char_log(cn,0,"You're not allowed to attack %s. You are an officer, but %s is not.\n",
                         ch[co].name,
                         (ch[co].kindred&KIN_MALE) ? "he" : "she");
                 return 0;
-        }
-        if (points2rank(ch[cn].points_tot)<20 && points2rank(ch[co].points_tot)>=20) {
+           }
+           if (points2rank(ch[cn].points_tot)<20 && points2rank(ch[co].points_tot)>=20) {
                 if (msg) do_char_log(cn,0,"You're not allowed to attack %s. %s is of noble birth, but you are not.\n",
                         ch[co].name,
                         (ch[co].kindred&KIN_MALE) ? "He" : "She");
                 return 0;
-        }
-        if (points2rank(ch[cn].points_tot)>=20 && points2rank(ch[co].points_tot)<20) {
+           }
+           if (points2rank(ch[cn].points_tot)>=20 && points2rank(ch[co].points_tot)<20) {
                 if (msg) do_char_log(cn,0,"You're not allowed to attack %s. You are of noble birth, but %s is not.\n",
                         ch[co].name,
                         (ch[co].kindred&KIN_MALE) ? "he" : "she");
                 return 0;
-        }
-        if (points2rank(ch[cn].points_tot)<9 && abs(points2rank(ch[cn].points_tot)-points2rank(ch[co].points_tot))>3) {
+           }
+           if (points2rank(ch[cn].points_tot)<9 && abs(points2rank(ch[cn].points_tot)-points2rank(ch[co].points_tot))>3) {
                 if (msg) do_char_log(cn,0,"You're not allowed to attack %s. The rank difference is too large.\n",ch[co].name);
                 return 0;
-        }
-        if (points2rank(ch[cn].points_tot)<20 && abs(points2rank(ch[cn].points_tot)-points2rank(ch[co].points_tot))>5) {
+           }
+           if (points2rank(ch[cn].points_tot)<20 && abs(points2rank(ch[cn].points_tot)-points2rank(ch[co].points_tot))>5) {
                 if (msg) do_char_log(cn,0,"You're not allowed to attack %s. The rank difference is too large.\n",ch[co].name);
                 return 0;
-        }*/
+           }*/
 
-	if (abs(points2rank(ch[cn].points_tot)-points2rank(ch[co].points_tot))>3) {
+        if (abs(points2rank(ch[cn].points_tot)-points2rank(ch[co].points_tot))>3) {
                 if (msg) do_char_log(cn,0,"You're not allowed to attack %s. The rank difference is too large.\n",ch[co].name);
                 return 0;
         }
@@ -4464,9 +4463,9 @@ void do_check_new_level(int cn)
                 ch[cn].data[45]=rank;
 
                 if (diff==1) do_char_log(cn,0,"You rose a level! Congratulations! You received %d hitpoints, %d endurance and %d mana.\n",
-                                hp*diff,end*diff,mana*diff);
+                                         hp*diff,end*diff,mana*diff);
                 else do_char_log(cn,0,"You rose %d levels! Congratulations! You received %d hitpoints, %d endurance and %d mana.\n",
-                                diff,hp*diff,end*diff,mana*diff);
+                                 diff,hp*diff,end*diff,mana*diff);
                 /* CS, 991203: Announce the player's new rank */
                 temp = (ch[cn].kindred & KIN_PURPLE) ? CT_PRIEST : CT_LGUARD;
                 // Find a character with appropriate template
@@ -4538,19 +4537,19 @@ void do_seen(int cn, char *cco)
                 tmp=localtime(&now); tnow=*tmp;
 
                 do_char_log(cn,2,"%s was last seen on %04d-%02d-%02d %02d:%02d:%02d (time now: %04d-%02d-%02d %02d:%02d:%02d)\n",
-                        ch[co].name,
-                        tlast.tm_year+1900,
-                        tlast.tm_mon+1,
-                        tlast.tm_mday,
-                        tlast.tm_hour,
-                        tlast.tm_min,
-                        tlast.tm_sec,
-                        tnow.tm_year+1900,
-                        tnow.tm_mon+1,
-                        tnow.tm_mday,
-                        tnow.tm_hour,
-                        tnow.tm_min,
-                        tnow.tm_sec);
+                            ch[co].name,
+                            tlast.tm_year+1900,
+                            tlast.tm_mon+1,
+                            tlast.tm_mday,
+                            tlast.tm_hour,
+                            tlast.tm_min,
+                            tlast.tm_sec,
+                            tnow.tm_year+1900,
+                            tnow.tm_mon+1,
+                            tnow.tm_mday,
+                            tnow.tm_hour,
+                            tnow.tm_min,
+                            tnow.tm_sec);
 
                 if (ch[co].used==USE_ACTIVE && !(ch[co].flags&CF_INVISIBLE)) do_char_log(cn,2,"PS: %s is online right now!\n",ch[co].name);
 
@@ -4560,11 +4559,11 @@ void do_seen(int cn, char *cco)
                 current_date = time(NULL) / (24*3600);
                 days = current_date - last_date;
                 switch (days) {
-                        case 0: when = "earlier today"; break;
-                        case 1: when = "yesterday"; break;
-                        case 2: when = "the day before yesterday"; break;
-                        default: sprintf(interval, "%d days ago", days);
-                                when = interval; break;
+                case 0: when = "earlier today"; break;
+                case 1: when = "yesterday"; break;
+                case 2: when = "the day before yesterday"; break;
+                default: sprintf(interval, "%d days ago", days);
+                        when = interval; break;
                 }
                 do_char_log(cn, 1, "%s was last seen %s.\n", ch[co].name, when);
         }

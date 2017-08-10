@@ -40,7 +40,7 @@ void initspiral() {
 
         areaspiral[point] = 0;
         for (dist=1; dist<=AREASIZE; dist++) {
-                                         areaspiral[++point] = -MAPX; // N
+                areaspiral[++point] = -MAPX;                          // N
                 for (j=2*dist-1; j; j--) areaspiral[++point] = -1;    // W
                 for (j=2*dist; j; j--) areaspiral[++point]   = MAPX;  // S
                 for (j=2*dist; j; j--) areaspiral[++point]   = 1;     // E
@@ -106,6 +106,7 @@ void do_area_say1(int cn, int xs, int ys, char *msg)
                                 do_log(cc, 3, msg_invis); // talker invis
                         }
                 } else { // listener is NPC: Store in list for second pass
+                         // DB: note: this should be changed for staff/god NPCs
                         if (!invis && cnt<ARRAYSIZE(npcs)) { // NPCs pretend not to hear invis people
                                 if (j < 169) { // don't address mobs outside radius 6
                                         npcs[cnt++] = cc;

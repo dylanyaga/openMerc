@@ -1,4 +1,17 @@
+# openMerc server
+* Get the Repo
+* Run `chmod +x setup.sh`
+* Run `./setup.sh`
+* Change directories to `/home/merc/`
+* Run the server with: `./server console`, `CTRL + C` will shutdown
+* After further changes are made to the source, just run `make` and it will compile and deploy
 
+## Web UI
+* Open a browser and navigate to `localhost/cgi-imp/acct.cgi`
+* Edit items, NPCs and templates
+* **REMEMBER** This is editing the **LIVE** Server data, so be cautious, make backups.
+
+# Old README Info:
 Please read the LICENSE
 
 There is a bug somewhere if the server finds lost items (garbage collection) or

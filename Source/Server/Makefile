@@ -29,6 +29,7 @@ structure:
 	sudo chmod -R a+rwx $(SERVERDIR)/.dat/
 	sudo mkdir -p $(CGIIMP)
 	sudo cp -R Web/* $(WEB)
+	sudo touch $(SERVERDIR)/server.log
 
 server:	$(OBJS) structure
 	$(CC) $(LDFLAGS) -o server $(OBJS) $(ENDFLAGS)

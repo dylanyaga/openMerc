@@ -21,6 +21,7 @@ SERVERDIR=/home/merc
 CGIIMP=/usr/lib/cgi-imp
 CGIBIN=/usr/lib/cgi-bin
 WEB=/var/www/html/
+USERNAME := $(shell whoami)
 structure:
 	sudo mkdir -p $(SERVERDIR)
 	sudo mkdir -p $(SERVERDIR)/.obj
@@ -30,6 +31,11 @@ structure:
 	sudo mkdir -p $(CGIIMP)
 	sudo cp -R Web/* $(WEB)
 	sudo touch $(SERVERDIR)/server.log
+	sudo touch $(SERVERDIR)/server.pid
+	sudo chown $(USERNAME) $(SERVERDIR)/server.log
+	sudo chown $(USERNAME) $(SERVERDIR)/server.pid
+	sudo chgrp $(USERNAME) $(SERVERDIR)/server.log
+	sudo chgrp $(USERNAME) $(SERVERDIR)/server.pid
 
 server:	$(OBJS) structure
 	$(CC) $(LDFLAGS) -o server $(OBJS) $(ENDFLAGS)

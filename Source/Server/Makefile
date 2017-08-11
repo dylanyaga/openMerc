@@ -23,6 +23,7 @@ CGIBIN=/usr/lib/cgi-bin
 WEB=/var/www/html/
 structure:
 	sudo mkdir -p $(SERVERDIR)
+	sudo mkdir -p $(SERVERDIR)/.obj
 	sudo mkdir -p $(SERVERDIR)/.dat
 	sudo cp .dat/*.* $(SERVERDIR)/.dat/
 	sudo chmod -R a+rwx $(SERVERDIR)/.dat/

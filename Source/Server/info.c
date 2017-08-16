@@ -608,29 +608,29 @@ int main(int argc,char *args[])
 
 	printf("Content-Type: text/html\n\n");
 	printf("<html><head><title>Server Info</title></head>\n");
-	printf("<BODY TEXT=#D7D700 BGCOLOR=#264A9F LINK=#FFFFBB VLINK=#CCCC00 ALINK=#FFFF9D background=/gfx/back4.gif>");
-	printf("<center>");
-	printf("<table width=\"100%%\"><tr>");
+	printf("<BODY TEXT=#D7D700 BGCOLOR=#264A9F LINK=#FFFFBB VLINK=#CCCC00 ALINK=#FFFF9D background=/gfx/back4.gif>\n");
+	printf("<center>\n");
+	printf("<table width=\"100%%\">\n<tr>\n");
 	printf(
-"    <table width=\"100%%\">"
-"        <tr>"
-"            <td align=\"center\"><a href=\"https://github.com/dylanyaga/openMerc/\"><img src=\"/gfx/logo.gif\" width=\"100\" height=\"60\" border=\"0\"></a></td>"
-"            <td align=\"center\">"
-"                <a href=\"/\">Home</a>"
-"                <a href=\"/manual.html\">Manual</a>"
-"                <a href=\"/terms.html\">Terms</a>"
-"                <a href=\"/download.html\">Download</a>"
-"                <a href=\"/contact.html\">Contact</a>"
-"                <a href=\"/cgi-bin/info.cgi\">Server&nbsp;Status</a>"
-"                <a href=\"/cgi-bin/info.cgi?who\">Who's&nbsp;Online</a>"
-"                <a href=\"/bugs.html\">Bugs</a>"
-"                <a href=\"/changes.html\">Changes</a>"
-"                <a href=\"/creators.html\">Creators</a>"
-"                <a href=\"/links.html\">Links</a>"
-"                <a href=\"/privacy.html\">Privacy</a>"
-"            </td>"
-"            <td align=\"center\"><a href=\"https://github.com/dylanyaga/openMerc/\"><img src=\"/gfx/logo.gif\" width=\"100\" height=\"60\" border=\"0\"></a></td>"
-"        </tr>"
+"    <table width=\"100%%\">\n"
+"        <tr>\n"
+"            <td align=\"center\"><a href=\"https://github.com/dylanyaga/openMerc/\"><img src=\"/gfx/logo.gif\" width=\"100\" height=\"60\" border=\"0\"></a></td>\n"
+"            <td align=\"center\">\n"
+"                <a href=\"/\">Home</a>\n"
+"                <a href=\"/manual.html\">Manual</a>\n"
+"                <a href=\"/terms.html\">Terms</a>\n"
+"                <a href=\"/download.html\">Download</a>\n"
+"                <a href=\"/contact.html\">Contact</a>\n"
+"                <a href=\"/cgi-bin/info.cgi\">Server&nbsp;Status</a>\n"
+"                <a href=\"/cgi-bin/info.cgi?who\">Who's&nbsp;Online</a>\n"
+"                <a href=\"/bugs.html\">Bugs</a>\n"
+"                <a href=\"/changes.html\">Changes</a>\n"
+"                <a href=\"/creators.html\">Creators</a>\n"
+"                <a href=\"/links.html\">Links</a>\n"
+"                <a href=\"/privacy.html\">Privacy</a>\n"
+"            </td>\n"
+"            <td align=\"center\"><a href=\"https://github.com/dylanyaga/openMerc/\"><img src=\"/gfx/logo.gif\" width=\"100\" height=\"60\" border=\"0\"></a></td>\n"
+"        </tr>\n"
 "    </table>");
 	printf("</td></tr></table>");
 	printf("<hr width=80%% color=\"#808000\"><br>\n");
@@ -660,13 +660,9 @@ int main(int argc,char *args[])
 	printf("</td></tr></table><br>");
 
 	printf(
-	"<hr width=80%% color=\"#808000\"><br>\n"
-	"<table width=\"100%%\" cellpadding=0 cellspacing=0 border=0><tr>"
-	"<td width=\"33%%\" align=center><a href=/devel.html>Back to main page</a></td>"
-	"<td width=\"33%%\" align=center>&nbsp;</td>"
-	"<td width=\"33%%\" align=center>All material on this server is based on the Mercenaries of Astonia engine by Daniel Brockhaus.</font></td>"
-	"</tr></table>"
-	"</center><br><br>"
+	"<hr width=80%% color=\"#808000\"><br>\n\n"
+    "All material on this server is based on the Mercenaries of Astonia engine by Daniel Brockhaus.\n"
+	"</center><br><br>\n"
 	"</body></html>");
 
 	return 0;

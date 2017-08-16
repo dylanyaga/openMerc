@@ -16,7 +16,7 @@ void *xmalloc(int size);
 
 extern HWND desk_hwnd;
 
-extern int RED, GREEN, BLUE, RGBM, MAXXOVER;
+extern int  RED, GREEN, BLUE, RGBM, MAXXOVER;
 
 struct gfx
 {
@@ -30,10 +30,10 @@ void convert(HWND hwnd)
 	int m, n, handle, hidx, hdat, len, xs, ys, offset = 0, size, c, x, y;
 	unsigned int r, g, b;
 	char buf[512];
-	unsigned char *ptr, *bits;
+	unsigned char * ptr, *bits;
 	BITMAPINFO *info;
 	BITMAPFILEHEADER *file_hdr;
-	struct gfx gfx;
+	struct gfx  gfx;
 
 	hidx = open("gx00.idx", O_WRONLY | O_CREAT | O_TRUNC | O_BINARY, 0600);
 	hdat = open("gx00.dat", O_WRONLY | O_CREAT | O_TRUNC | O_BINARY, 0600);
@@ -66,7 +66,7 @@ void convert(HWND hwnd)
 		xs = info->bmiHeader.biWidth;
 		ys = info->bmiHeader.biHeight;
 		size = xs * ys;
-		dat = malloc(size * 2);
+		dat  = malloc(size * 2);
 
 		if (info->bmiHeader.biPlanes!=1 ||
 		    info->bmiHeader.biBitCount!=24 ||
@@ -79,8 +79,8 @@ void convert(HWND hwnd)
 		}
 
 		lseek(hidx, n * sizeof(struct gfx), SEEK_SET);
-		gfx.xs = xs;
-		gfx.ys = ys;
+		gfx.xs  = xs;
+		gfx.ys  = ys;
 		gfx.off = offset;
 		write(hidx, &gfx, sizeof(gfx));
 
@@ -200,10 +200,10 @@ void *conv_load(int nr, int *xs, int *ys)
 
 	for (n = 0; n<size; n++)
 	{
-		r = ptr[n] >> 11;
+		r  = ptr[n] >> 11;
 		g1 = (ptr[n] & 0x7e0) >> 5;
 		g2 = (ptr[n] & 0x7e0) >> 6;
-		b = ptr[n] & 0x1f;
+		b  = ptr[n] & 0x1f;
 
 		switch (RGBM)
 		{
@@ -223,7 +223,7 @@ int create_pnglib(HWND hwnd)
 {
 	int n, nr, hidx, hpng, hin, off;
 	char *buf;
-	int *idx;
+	int * idx;
 	struct ffblk ff;
 
 	hidx = open("pnglib.idx", O_WRONLY | O_TRUNC | O_CREAT | O_BINARY, 0666);
@@ -289,7 +289,7 @@ int create_pnglib(HWND hwnd)
 }
 
 static FILE *fpng = NULL;
-static int *idx = NULL;
+static int * idx  = NULL;
 
 int init_pnglib(void)
 {

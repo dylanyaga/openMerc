@@ -1728,7 +1728,7 @@ void cmd(int cmd, int x, int y)
 
 	buf[0] = (char)cmd;
 	*(unsigned short*)(buf + 1) = (short)x;
-	*(unsigned long*)(buf + 3) = (long)y;
+	*(unsigned long*)(buf + 3)  = (long)y;
 	xsend(buf);
 }
 
@@ -1738,7 +1738,7 @@ void cmds(int cmd, int x, int y)
 
 	buf[0] = (char)cmd;
 	*(unsigned short*)(buf + 1) = (short)x;
-	*(unsigned long*)(buf + 3) = (long)y;
+	*(unsigned long*)(buf + 3)  = (long)y;
 	xsend(buf);
 }
 
@@ -1882,7 +1882,7 @@ void mouse_mapbox(int x, int y, int state)
 			xmove = 0;
 			cmd(CL_CMD_MOVE, map[m].x, map[m].y);
 		}
-		hightlight = HL_MAP;
+		hightlight  = HL_MAP;
 		cursor_type = CT_WALK;
 		return;
 	}
@@ -1891,7 +1891,7 @@ void mouse_mapbox(int x, int y, int state)
 	{
 		if (pl.citem)
 		{
-			hightlight = HL_MAP;
+			hightlight  = HL_MAP;
 			cursor_type = CT_DROP;
 		}
 		else if (map[m].flags & ISITEM)
@@ -2490,7 +2490,7 @@ void mouse(int x, int y, int state)
 		return;
 	}
 
-	hightlight = 0;
+	hightlight  = 0;
 	cursor_type = CT_NONE;
 
 	mouse_x = x;

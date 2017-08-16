@@ -74,20 +74,20 @@ struct character
 	int dir;
 };
 
-#define MAXCHARS   8
+#define MAXCHARS 8
 extern struct character ch[];
 
 // wear positions
-#define WN_HEAD    0
-#define WN_NECK    1
-#define WN_BODY    2
-#define WN_ARMS    3
-#define WN_BELT    4
-#define WN_LEGS    5
-#define WN_FEET    6
-#define WN_LHAND   7   // shield
-#define WN_RHAND   8   // weapon
-#define WN_CLOAK   9
+#define WN_HEAD  0
+#define WN_NECK  1
+#define WN_BODY  2
+#define WN_ARMS  3
+#define WN_BELT  4
+#define WN_LEGS  5
+#define WN_FEET  6
+#define WN_LHAND 7     // shield
+#define WN_RHAND 8     // weapon
+#define WN_CLOAK 9
 
 // placement bits
 #define PL_HEAD    1
@@ -138,7 +138,7 @@ struct item
 
 };
 
-#define MAXITEMS   7
+#define MAXITEMS 7
 extern struct item it[];
 
 

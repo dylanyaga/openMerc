@@ -54,4 +54,3 @@ each 						  	6                                          10.00
 
 Titanium total			  48			Agil 90, Stren 90				      300.00
 each								8												       50.00	Magical, No-Repair
-

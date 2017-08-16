@@ -422,7 +422,7 @@ static void top(void)
 
 	for (m = 0; m<25; m++)
 	{
-		b[m] = -1;
+		b[m]  = -1;
 		nr[m] = -1;
 	}
 
@@ -451,7 +451,7 @@ static void top(void)
 					memmove(&b[m + 1], &b[m], (24 - m) * sizeof(int));
 					memmove(&nr[m + 1], &nr[m], (24 - m) * sizeof(int));
 				}
-				b[m] = ch[n].points_tot;
+				b[m]  = ch[n].points_tot;
 				nr[m] = n;
 				break;
 			}
@@ -487,7 +487,7 @@ static void xtop(int srank)
 
 	for (m = 0; m<25; m++)
 	{
-		b[m] = -1;
+		b[m]  = -1;
 		nr[m] = -1;
 	}
 
@@ -520,7 +520,7 @@ static void xtop(int srank)
 					memmove(&b[m + 1], &b[m], (24 - m) * sizeof(int));
 					memmove(&nr[m + 1], &nr[m], (24 - m) * sizeof(int));
 				}
-				b[m] = ppm[n];
+				b[m]  = ppm[n];
 				nr[m] = n;
 				break;
 			}
@@ -550,7 +550,7 @@ static void dtop(int srank)
 
 	for (m = 0; m<25; m++)
 	{
-		b[m] = 99999999;
+		b[m]  = 99999999;
 		nr[m] = -1;
 	}
 
@@ -583,7 +583,7 @@ static void dtop(int srank)
 					memmove(&b[m + 1], &b[m], (24 - m) * sizeof(int));
 					memmove(&nr[m + 1], &nr[m], (24 - m) * sizeof(int));
 				}
-				b[m] = ch[n].data[14] + ch[n].data[44];
+				b[m]  = ch[n].data[14] + ch[n].data[44];
 				nr[m] = n;
 				break;
 			}
@@ -692,7 +692,7 @@ static char *stars(int cnt)
 	return(buf);
 }
 
-#define T_WEEK     (60 * 60 * 24 * 7)
+#define T_WEEK (60 * 60 * 24 * 7)
 
 static void info(int cn)
 {
@@ -784,7 +784,7 @@ static void hog(void)
 
 	for (m = 0; m<25; m++)
 	{
-		b[m] = -1;
+		b[m]  = -1;
 		nr[m] = -1;
 	}
 
@@ -805,7 +805,7 @@ static void hog(void)
 					memmove(&b[m + 1], &b[m], (24 - m) * sizeof(int));
 					memmove(&nr[m + 1], &nr[m], (24 - m) * sizeof(int));
 				}
-				b[m] = ch[n].data[98];
+				b[m]  = ch[n].data[98];
 				nr[m] = n;
 				break;
 			}

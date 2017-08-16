@@ -33,15 +33,15 @@ int get_avgcol(int nr);
 char *lookup(int nr, unsigned short id);
 
 extern char input[];
-extern int in_len;
-extern int cur_pos;
-extern int view_pos;
-extern int logstart;
-extern int logtimer;
-extern int RED, GREEN, BLUE;
+extern int  in_len;
+extern int  cur_pos;
+extern int  view_pos;
+extern int  logstart;
+extern int  logtimer;
+extern int  RED, GREEN, BLUE;
 int tput = 0;
 
-extern int do_shadow;
+extern int  do_shadow;
 
 void do_msg(void);
 
@@ -60,117 +60,117 @@ char *at_name[5] = {
 #define AT_STREN 4
 
 struct skilltab *skilltab;
-struct skilltab _skilltab[50] = {
-	{0, 'C', "Hand to Hand", "Fighting without weapons.", {AT_BRAVE, AT_AGIL, AT_STREN}
+struct skilltab  _skilltab[50] = {
+	{0,  'C', "Hand to Hand",    "Fighting without weapons.",                               {AT_BRAVE, AT_AGIL,  AT_STREN}
 	},
-	{1, 'C', "Karate", "Fighting without weapons and doing damage.", {AT_BRAVE, AT_AGIL, AT_STREN}
+	{1,  'C', "Karate",          "Fighting without weapons and doing damage.",              {AT_BRAVE, AT_AGIL,  AT_STREN}
 	},
-	{2, 'C', "Dagger", "Fighting with daggers or similiar weapons.", {AT_BRAVE, AT_AGIL, AT_INT}
+	{2,  'C', "Dagger",          "Fighting with daggers or similiar weapons.",              {AT_BRAVE, AT_AGIL,  AT_INT  }
 	},
-	{3, 'C', "Sword", "Fighting with swords or similiar weapons.", {AT_BRAVE, AT_AGIL, AT_STREN}
+	{3,  'C', "Sword",           "Fighting with swords or similiar weapons.",               {AT_BRAVE, AT_AGIL,  AT_STREN}
 	},
-	{4, 'C', "Axe", "Fighting with axes or similiar weapons.", {AT_BRAVE, AT_STREN, AT_STREN}
+	{4,  'C', "Axe",             "Fighting with axes or similiar weapons.",                 {AT_BRAVE, AT_STREN, AT_STREN}
 	},
-	{5, 'C', "Staff", "Fighting with staffs or similiar weapons.", {AT_AGIL, AT_STREN, AT_STREN}
+	{5,  'C', "Staff",           "Fighting with staffs or similiar weapons.",               {AT_AGIL,  AT_STREN, AT_STREN}
 	},
-	{6, 'C', "Two-Handed", "Fighting with two-handed weapons.", {AT_AGIL, AT_STREN, AT_STREN}
-	},
-
-	{7, 'G', "Lock-Picking", "Opening doors without keys.", {AT_INT, AT_WILL, AT_AGIL}
-	},
-	{8, 'G', "Stealth", "Moving without being seen or heard.", {AT_INT, AT_WILL, AT_AGIL}
-	},
-	{9, 'G', "Perception", "Seeing and hearing.", {AT_INT, AT_WILL, AT_AGIL}
+	{6,  'C', "Two-Handed",      "Fighting with two-handed weapons.",                       {AT_AGIL,  AT_STREN, AT_STREN}
 	},
 
-	{10, 'M', "Swimming", "Moving through water without drowning.", {AT_INT, AT_WILL, AT_AGIL}
+	{7,  'G', "Lock-Picking",    "Opening doors without keys.",                             {AT_INT,   AT_WILL,  AT_AGIL }
 	},
-	{11, 'R', "Magic Shield", "Spell: Create a magic shield (Cost: 25 Mana).", {AT_BRAVE, AT_INT, AT_WILL}
+	{8,  'G', "Stealth",         "Moving without being seen or heard.",                     {AT_INT,   AT_WILL,  AT_AGIL }
 	},
-
-	{12, 'G', "Bartering", "Getting good prices from merchants.", {AT_BRAVE, AT_INT, AT_WILL}
-	},
-	{13, 'G', "Repair", "Repairing items.", {AT_INT, AT_WILL, AT_AGIL}
+	{9,  'G', "Perception",      "Seeing and hearing.",                                     {AT_INT,   AT_WILL,  AT_AGIL }
 	},
 
-	{14, 'R', "Light", "Spell: Create light (Cost: 5 Mana).", {AT_BRAVE, AT_INT, AT_WILL}
+	{10, 'M', "Swimming",        "Moving through water without drowning.",                  {AT_INT,   AT_WILL,  AT_AGIL }
 	},
-	{15, 'R', "Recall", "Spell: Teleport to temple (Cost: 15 Mana).", {AT_BRAVE, AT_INT, AT_WILL}
-	},
-	{16, 'R', "Guardian Angel", "Spell: Avoid loss of HPs and items on death.", {AT_BRAVE, AT_INT, AT_WILL}
-	},
-	{17, 'R', "Protection", "Spell: Enhance Armor of target (Cost: 15 Mana).", {AT_BRAVE, AT_INT, AT_WILL}
-	},
-	{18, 'R', "Enhance Weapon", "Spell: Enhance Weapon of target (Cost: 15 Mana).", {AT_BRAVE, AT_INT, AT_WILL}
-	},
-	{19, 'R', "Stun", "Spell: Make target motionless (Cost: 20 Mana).", {AT_BRAVE, AT_INT, AT_WILL}
-	},
-	{20, 'R', "Curse", "Spell: Decrease attributes of target (Cost: 35 Mana).", {AT_BRAVE, AT_INT, AT_WILL}
-	},
-	{21, 'R', "Bless", "Spell: Increase attributes of target (Cost: 35 Mana).", {AT_BRAVE, AT_INT, AT_WILL}
-	},
-	{22, 'R', "Identify", "Spell: Read stats of item/character. (Cost: 25 Mana)", {AT_BRAVE, AT_INT, AT_WILL}
+	{11, 'R', "Magic Shield",    "Spell: Create a magic shield (Cost: 25 Mana).",           {AT_BRAVE, AT_INT,   AT_WILL }
 	},
 
-	{23, 'G', "Resistance", "Resist against magic.", {AT_INT, AT_WILL, AT_STREN}
+	{12, 'G', "Bartering",       "Getting good prices from merchants.",                     {AT_BRAVE, AT_INT,   AT_WILL }
+	},
+	{13, 'G', "Repair",          "Repairing items.",                                        {AT_INT,   AT_WILL,  AT_AGIL }
 	},
 
-	{24, 'R', "Blast", "Spell: Inflict injuries to target (Cost: varies).", {AT_INT, AT_WILL, AT_STREN}
+	{14, 'R', "Light",           "Spell: Create light (Cost: 5 Mana).",                     {AT_BRAVE, AT_INT,   AT_WILL }
 	},
-	{25, 'R', "Dispel Magic", "Spell: Removes curse magic from target (Cost: 25 Mana).", {AT_BRAVE, AT_INT, AT_WILL}
+	{15, 'R', "Recall",          "Spell: Teleport to temple (Cost: 15 Mana).",              {AT_BRAVE, AT_INT,   AT_WILL }
 	},
-
-	{26, 'R', "Heal", "Spell: Heal injuries (Cost: 25 Mana).", {AT_BRAVE, AT_INT, AT_WILL}
+	{16, 'R', "Guardian Angel",  "Spell: Avoid loss of HPs and items on death.",            {AT_BRAVE, AT_INT,   AT_WILL }
 	},
-	{27, 'R', "Ghost Companion", "Spell: Create a ghost to attack an enemy.", {AT_BRAVE, AT_INT, AT_WILL}
+	{17, 'R', "Protection",      "Spell: Enhance Armor of target (Cost: 15 Mana).",         {AT_BRAVE, AT_INT,   AT_WILL }
 	},
-
-	{28, 'B', "Regenerate", "Regenerate Hitpoints faster.", {AT_STREN, AT_STREN, AT_STREN}
+	{18, 'R', "Enhance Weapon",  "Spell: Enhance Weapon of target (Cost: 15 Mana).",        {AT_BRAVE, AT_INT,   AT_WILL }
 	},
-	{29, 'B', "Rest", "Regenerate Endurance faster.", {AT_AGIL, AT_AGIL, AT_AGIL}
+	{19, 'R', "Stun",            "Spell: Make target motionless (Cost: 20 Mana).",          {AT_BRAVE, AT_INT,   AT_WILL }
 	},
-	{30, 'B', "Meditate", "Regenerate Mana faster.", {AT_INT, AT_WILL, AT_WILL}
+	{20, 'R', "Curse",           "Spell: Decrease attributes of target (Cost: 35 Mana).",   {AT_BRAVE, AT_INT,   AT_WILL }
 	},
-
-	{31, 'G', "Sense Magic", "Find out who casts what at you.", {AT_BRAVE, AT_INT, AT_WILL}
+	{21, 'R', "Bless",           "Spell: Increase attributes of target (Cost: 35 Mana).",   {AT_BRAVE, AT_INT,   AT_WILL }
 	},
-	{32, 'G', "Immunity", "Partial immunity against negative magic.", {AT_BRAVE, AT_AGIL, AT_STREN}
-	},
-	{33, 'G', "Surround Hit", "Hit all your enemies at once.", {AT_BRAVE, AT_AGIL, AT_STREN}
-	},
-	{34, 'G', "Concentrate", "Reduces mana cost for all spells.", {AT_WILL, AT_WILL, AT_WILL}
-	},
-	{35, 'G', "Warcry", "Frighten all enemies in hearing distance.", {AT_BRAVE, AT_BRAVE, AT_STREN}
+	{22, 'R', "Identify",        "Spell: Read stats of item/character. (Cost: 25 Mana)",    {AT_BRAVE, AT_INT,   AT_WILL }
 	},
 
-	{36, 'Z', "", "", {0, 0, 0, }
-	},
-	{37, 'Z', "", "", {0, 0, 0, }
-	},
-	{38, 'Z', "", "", {0, 0, 0, }
-	},
-	{39, 'Z', "", "", {0, 0, 0, }
+	{23, 'G', "Resistance",      "Resist against magic.",                                   {AT_INT,   AT_WILL,  AT_STREN}
 	},
 
-	{40, 'Z', "", "", {0, 0, 0, }
+	{24, 'R', "Blast",           "Spell: Inflict injuries to target (Cost: varies).",       {AT_INT,   AT_WILL,  AT_STREN}
 	},
-	{41, 'Z', "", "", {0, 0, 0, }
+	{25, 'R', "Dispel Magic",    "Spell: Removes curse magic from target (Cost: 25 Mana).", {AT_BRAVE, AT_INT,   AT_WILL }
 	},
-	{42, 'Z', "", "", {0, 0, 0, }
+
+	{26, 'R', "Heal",            "Spell: Heal injuries (Cost: 25 Mana).",                   {AT_BRAVE, AT_INT,   AT_WILL }
 	},
-	{43, 'Z', "", "", {0, 0, 0, }
+	{27, 'R', "Ghost Companion", "Spell: Create a ghost to attack an enemy.",               {AT_BRAVE, AT_INT,   AT_WILL }
 	},
-	{44, 'Z', "", "", {0, 0, 0, }
+
+	{28, 'B', "Regenerate",      "Regenerate Hitpoints faster.",                            {AT_STREN, AT_STREN, AT_STREN}
 	},
-	{45, 'Z', "", "", {0, 0, 0, }
+	{29, 'B', "Rest",            "Regenerate Endurance faster.",                            {AT_AGIL,  AT_AGIL,  AT_AGIL }
 	},
-	{46, 'Z', "", "", {0, 0, 0, }
+	{30, 'B', "Meditate",        "Regenerate Mana faster.",                                 {AT_INT,   AT_WILL,  AT_WILL }
 	},
-	{47, 'Z', "", "", {0, 0, 0, }
+
+	{31, 'G', "Sense Magic",     "Find out who casts what at you.",                         {AT_BRAVE, AT_INT,   AT_WILL }
 	},
-	{48, 'Z', "", "", {0, 0, 0, }
+	{32, 'G', "Immunity",        "Partial immunity against negative magic.",                {AT_BRAVE, AT_AGIL,  AT_STREN}
 	},
-	{49, 'Z', "", "", {0, 0, 0, }
+	{33, 'G', "Surround Hit",    "Hit all your enemies at once.",                           {AT_BRAVE, AT_AGIL,  AT_STREN}
+	},
+	{34, 'G', "Concentrate",     "Reduces mana cost for all spells.",                       {AT_WILL,  AT_WILL,  AT_WILL }
+	},
+	{35, 'G', "Warcry",          "Frighten all enemies in hearing distance.",               {AT_BRAVE, AT_BRAVE, AT_STREN}
+	},
+
+	{36, 'Z', "",                "",                                                        {0,        0,        0,      }
+	},
+	{37, 'Z', "",                "",                                                        {0,        0,        0,      }
+	},
+	{38, 'Z', "",                "",                                                        {0,        0,        0,      }
+	},
+	{39, 'Z', "",                "",                                                        {0,        0,        0,      }
+	},
+
+	{40, 'Z', "",                "",                                                        {0,        0,        0,      }
+	},
+	{41, 'Z', "",                "",                                                        {0,        0,        0,      }
+	},
+	{42, 'Z', "",                "",                                                        {0,        0,        0,      }
+	},
+	{43, 'Z', "",                "",                                                        {0,        0,        0,      }
+	},
+	{44, 'Z', "",                "",                                                        {0,        0,        0,      }
+	},
+	{45, 'Z', "",                "",                                                        {0,        0,        0,      }
+	},
+	{46, 'Z', "",                "",                                                        {0,        0,        0,      }
+	},
+	{47, 'Z', "",                "",                                                        {0,        0,        0,      }
+	},
+	{48, 'Z', "",                "",                                                        {0,        0,        0,      }
+	},
+	{49, 'Z', "",                "",                                                        {0,        0,        0,      }
 	}
 };
 
@@ -234,7 +234,7 @@ struct look look = {0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 0, 0, "", 0, 0, 0, 0};
 
 struct cplayer pl;
 
-static char *rank[24] = {
+static char *  rank[24] = {
 	"Private",
 	"Private First Class",
 	"Lance Corporal",
@@ -450,16 +450,16 @@ unsigned int show_look = 0,
 
 unsigned char inv_block[20] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-extern int inv_object;      // object carried with the mouse cursor
-extern int mouse_x, mouse_y;  // current mouse coordinates
+extern int   inv_object;    // object carried with the mouse cursor
+extern int   mouse_x, mouse_y; // current mouse coordinates
 
-#define XS       49
-#define LL       22
-#define XLL      (22 * 10)
-static char logtext[XLL][60];
-static char logfont[XLL];
+#define XS  49
+#define LL  22
+#define XLL (22 * 10)
+static char  logtext[XLL][60];
+static char  logfont[XLL];
 
-#define MAXTS    20
+#define MAXTS 20
 
 int load = 0;
 
@@ -468,16 +468,16 @@ void eng_display_win(int plr_sprite, int init)
 	int y, n, m;
 	char *tmp, buf[50];
 	static int wntab[20] = {
-		WN_HEAD, WN_CLOAK,
-		WN_BODY, WN_ARMS,
-		WN_NECK, WN_BELT,
+		WN_HEAD,  WN_CLOAK,
+		WN_BODY,  WN_ARMS,
+		WN_NECK,  WN_BELT,
 		WN_RHAND, WN_LHAND,
 		WN_RRING, WN_LRING,
-		WN_LEGS, WN_FEET,
-		0, 0,
-		0, 0,
-		0, 0,
-		0, 0
+		WN_LEGS,  WN_FEET,
+		0,        0,
+		0,        0,
+		0,        0,
+		0,        0
 	};
 
 	if (load)
@@ -948,7 +948,7 @@ struct looks
 
 struct looks *looks = NULL;
 int lookmax = 0;
-int lookat = 0;
+int lookat  = 0;
 
 char *lookup(int nr, unsigned short id)
 {
@@ -962,7 +962,7 @@ char *lookup(int nr, unsigned short id)
 		{
 			strcpy(looks[n].name, "");
 			looks[n].known = 0;
-			looks[n].proz = 0;
+			looks[n].proz  = 0;
 		}
 		lookmax = nr + 10;
 	}
@@ -1030,7 +1030,7 @@ void add_look(unsigned short nr, char *name, unsigned short id)
 		{
 			strcpy(looks[n].name, "");
 			looks[n].known = 0;
-			looks[n].proz = 0;
+			looks[n].proz  = 0;
 		}
 		lookmax = nr + 10;
 	}
@@ -1045,7 +1045,7 @@ void add_look(unsigned short nr, char *name, unsigned short id)
 	strncpy(looks[nr].name, name, 16);
 	looks[nr].name[16] = 0;
 	looks[nr].known = 1;
-	looks[nr].proz = 0;
+	looks[nr].proz  = 0;
 	looks[nr].id = id;
 }
 
@@ -2971,8 +2971,8 @@ void send_opt(void)
 	state++;
 }
 
-int firstquit = 0;
-int wantquit = 0;
+int firstquit  = 0;
+int wantquit   = 0;
 int maynotquit = TICKS * 5;
 
 void cmd_exit(void)
@@ -3039,9 +3039,9 @@ void engine(void)
 		{
 			pskip = 100.0 * (float)skip / (float)frame;
 			pidle = 100.0 * (float)idle / (float)xtime;
-			skip = frame = 0;
-			idle = xtime = 0;
-			step = 0;
+			skip  = frame = 0;
+			idle  = xtime = 0;
+			step  = 0;
 		}
 
 		frame++;

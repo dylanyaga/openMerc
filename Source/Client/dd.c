@@ -78,7 +78,7 @@ void *xcalloc(int size1, int size2)
 
 extern HWND desk_hwnd;
 
-#define TILE         32
+#define TILE 32
 unsigned short background = 0;
 int invisible = 0;
 
@@ -259,29 +259,29 @@ struct vtab
 
 struct vtab vtab[] = {
 	{   1024, 2048},
-	{   800, 2048},
-	{   640, 2048},
-	{   512, 2048},
+	{   800,  2048},
+	{   640,  2048},
+	{   512,  2048},
 	{   1024, 1024},
-	{   800, 1024},
-	{   640, 1024},
-	{   512, 1024},
-	{   1024, 600},
-	{   800, 600},
-	{   640, 600},
-	{   512, 600},
-	{   1024, 512},
-	{   800, 512},
-	{   640, 512},
-	{   512, 512},
-	{   1024, 480},
-	{   800, 480},
-	{   640, 480},
-	{   512, 480},
-	{   1024, 256},
-	{   800, 256},
-	{   640, 256},
 	{   512, 256},
+	{   800,  1024},
+	{   640,  1024},
+	{   1024, 600 },
+	{   800,  600 },
+	{   640,  600 },
+	{   512,  600 },
+	{   1024, 512 },
+	{   800,  512 },
+	{   640,  512 },
+	{   512,  512 },
+	{   1024, 480 },
+	{   800,  480 },
+	{   640,  480 },
+	{   512,  480 },
+	{   1024, 256 },
+	{   800,  256 },
+	{   640,  256 },
+	{   512,  256 },
 /*  {  1024,  128  },
    {  800,  128  },
    {  640,  128  },
@@ -301,7 +301,7 @@ int dd_init(HWND hwnd, int x, int y)
 {
 	DDSURFACEDESC surface;
 	long ret;
-	int ysize, n;
+	int  ysize, n;
 
 	MAXX = x;
 	MAXY = y;
@@ -328,7 +328,7 @@ int dd_init(HWND hwnd, int x, int y)
 		return(-3);
 	}
 
-	surface.dwSize = sizeof(surface);
+	surface.dwSize  = sizeof(surface);
 	surface.dwFlags = DDSD_ALL;
 	ret = dd->lpVtbl->GetDisplayMode(dd, &surface);
 	if (ret!=DD_OK)
@@ -349,7 +349,7 @@ int dd_init(HWND hwnd, int x, int y)
 
 	RED = surface.ddpfPixelFormat.u2.dwRBitMask;
 	GREEN = surface.ddpfPixelFormat.u3.dwGBitMask;
-	BLUE = surface.ddpfPixelFormat.u4.dwBBitMask;
+	BLUE  = surface.ddpfPixelFormat.u4.dwBBitMask;
 
 	if (RED==0xF800 && GREEN==0x07E0 && BLUE==0x001F)
 	{
@@ -366,17 +366,17 @@ int dd_init(HWND hwnd, int x, int y)
 
 	if (tricky_flag)
 	{
-		surface.dwSize = sizeof(surface);
+		surface.dwSize  = sizeof(surface);
 		surface.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH;
 		surface.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_VIDEOMEMORY;
-		surface.dwWidth = 800;
+		surface.dwWidth  = 800;
 		surface.dwHeight = 600;
 
 		dd->lpVtbl->CreateSurface(dd, &surface, &suro, NULL);
 	}
 
 	memset(&surface, 0, sizeof(surface));
-	surface.dwSize = sizeof(surface);
+	surface.dwSize  = sizeof(surface);
 	surface.dwFlags = DDSD_CAPS | DDSD_BACKBUFFERCOUNT;
 	surface.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE | DDSCAPS_FLIP | DDSCAPS_COMPLEX;
 	surface.dwBackBufferCount = 1;
@@ -390,7 +390,7 @@ int dd_init(HWND hwnd, int x, int y)
 		return(-6);
 	}
 
-	surface.dwSize = sizeof(surface);
+	surface.dwSize  = sizeof(surface);
 	surface.dwFlags = DDSD_CAPS;
 	surface.ddsCaps.dwCaps = DDSCAPS_BACKBUFFER;
 	ret = sur1->lpVtbl->GetAttachedSurface(sur1, &surface.ddsCaps, &sur2);
@@ -408,7 +408,7 @@ int dd_init(HWND hwnd, int x, int y)
 		suro->lpVtbl->Release(suro);
 	}
 
-	surface.dwSize = sizeof(surface);
+	surface.dwSize  = sizeof(surface);
 	surface.dwFlags = DDSD_PITCH | DDSD_HEIGHT;
 	ret = sur1->lpVtbl->GetSurfaceDesc(sur1, &surface);
 	if (ret!=DD_OK)
@@ -421,10 +421,10 @@ int dd_init(HWND hwnd, int x, int y)
 	}
 	MAXX1 = surface.u1.lPitch / 2;
 	MAXY1 = surface.dwHeight;
-	MAXX = MAXX1;
-	MAXY = MAXY1;
+	MAXX  = MAXX1;
+	MAXY  = MAXY1;
 
-	surface.dwSize = sizeof(surface);
+	surface.dwSize  = sizeof(surface);
 	surface.dwFlags = DDSD_CAPS;
 	ret = sur1->lpVtbl->GetSurfaceDesc(sur2, &surface);
 	if (ret!=DD_OK)
@@ -442,10 +442,10 @@ int dd_init(HWND hwnd, int x, int y)
 	{
 		for (n = 0; n<sizeof(vtab) / sizeof(struct vtab); n++)
 		{
-			surface.dwSize = sizeof(surface);
+			surface.dwSize  = sizeof(surface);
 			surface.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH;
 			surface.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_VIDEOMEMORY;
-			surface.dwWidth = vtab[n].x;
+			surface.dwWidth  = vtab[n].x;
 			surface.dwHeight = vtab[n].y;
 
 			ret = dd->lpVtbl->CreateSurface(dd, &surface, &suro, NULL);
@@ -465,10 +465,10 @@ int dd_init(HWND hwnd, int x, int y)
 		// trying some combinations
 		for (n = 0; n<sizeof(vtab) / sizeof(struct vtab); n++)
 		{
-			surface.dwSize = sizeof(surface);
+			surface.dwSize  = sizeof(surface);
 			surface.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH;
 			surface.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN;
-			surface.dwWidth = vtab[n].x;
+			surface.dwWidth  = vtab[n].x;
 			surface.dwHeight = vtab[n].y;
 
 			ret = dd->lpVtbl->CreateSurface(dd, &surface, &suro, NULL);
@@ -484,7 +484,7 @@ int dd_init(HWND hwnd, int x, int y)
 		}
 	}
 
-	surface.dwSize = sizeof(surface);
+	surface.dwSize  = sizeof(surface);
 	surface.dwFlags = DDSD_PITCH | DDSD_CAPS | DDSD_WIDTH;
 	ret = suro->lpVtbl->GetSurfaceDesc(suro, &surface);
 	if (ret!=DD_OK)
@@ -533,7 +533,7 @@ int dd_init(HWND hwnd, int x, int y)
 {
 	DDSURFACEDESC surface;
 	long ret;
-	int ysize, n;
+	int  ysize, n;
 
 	printf("DirectDrawCreate\n");
 	if ((ret = DirectDrawCreate(NULL, &dd, NULL))!=DD_OK)
@@ -552,7 +552,7 @@ int dd_init(HWND hwnd, int x, int y)
 
 	printf("CreateSurface\n");
 	memset(&surface, 0, sizeof(surface));
-	surface.dwSize = sizeof(surface);
+	surface.dwSize  = sizeof(surface);
 	surface.dwFlags = DDSD_CAPS;
 	surface.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE;
 
@@ -565,13 +565,13 @@ int dd_init(HWND hwnd, int x, int y)
 
 	printf("CreateSurface 2\n");
 	memset(&surface, 0, sizeof(surface));
-	surface.dwSize = sizeof(surface);
+	surface.dwSize  = sizeof(surface);
 	surface.dwFlags = DDSD_CAPS | DDSD_WIDTH | DDSD_HEIGHT | DDSD_PIXELFORMAT;
 	surface.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_VIDEOMEMORY;
-	surface.dwWidth = x;
+	surface.dwWidth  = x;
 	surface.dwHeight = y;
 
-	surface.ddpfPixelFormat.dwSize = sizeof(surface.ddpfPixelFormat);
+	surface.ddpfPixelFormat.dwSize  = sizeof(surface.ddpfPixelFormat);
 	surface.ddpfPixelFormat.dwFlags = DDPF_RGB;
 	surface.ddpfPixelFormat.u1.dwRGBBitCount = 16;
 	surface.ddpfPixelFormat.u2.dwRBitMask = 0xf800;
@@ -610,7 +610,7 @@ int dd_init(HWND hwnd, int x, int y)
 		return( -7);
 	}
 
-	surface.dwSize = sizeof(surface);
+	surface.dwSize  = sizeof(surface);
 	surface.dwFlags = DDSD_PITCH | DDSD_HEIGHT;
 	ret = sur2->lpVtbl->GetSurfaceDesc(sur2, &surface);
 	if (ret!=DD_OK)
@@ -622,22 +622,22 @@ int dd_init(HWND hwnd, int x, int y)
 	}
 	MAXX1 = surface.u1.lPitch / 2;
 	MAXY1 = surface.dwHeight;
-	MAXX = MAXX1;
-	MAXY = MAXY1;
+	MAXX  = MAXX1;
+	MAXY  = MAXY1;
 
 	RED = 0xF800;
 	GREEN = 0x07E0;
-	BLUE = 0x001F;
-	RGBM = 0;
+	BLUE  = 0x001F;
+	RGBM  = 0;
 
 	for (n = 0; n<sizeof(vtab) / sizeof(struct vtab); n++)
 	{
-		surface.dwSize = sizeof(surface);
+		surface.dwSize  = sizeof(surface);
 		surface.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH | DDSD_PIXELFORMAT;
 		surface.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_VIDEOMEMORY;
-		surface.dwWidth = vtab[n].x;
+		surface.dwWidth  = vtab[n].x;
 		surface.dwHeight = vtab[n].y;
-		surface.ddpfPixelFormat.dwSize = sizeof(surface.ddpfPixelFormat);
+		surface.ddpfPixelFormat.dwSize  = sizeof(surface.ddpfPixelFormat);
 		surface.ddpfPixelFormat.dwFlags = DDPF_RGB;
 		surface.ddpfPixelFormat.u1.dwRGBBitCount = 16;
 		surface.ddpfPixelFormat.u2.dwRBitMask = 0x7c00;
@@ -660,7 +660,7 @@ int dd_init(HWND hwnd, int x, int y)
 		return(-9);
 	}
 
-	surface.dwSize = sizeof(surface);
+	surface.dwSize  = sizeof(surface);
 	surface.dwFlags = DDSD_PITCH | DDSD_CAPS | DDSD_WIDTH;
 	ret = suro->lpVtbl->GetSurfaceDesc(suro, &surface);
 	if (ret!=DD_OK)
@@ -892,7 +892,7 @@ int dd_set_background(int color)
 	long ret;
 
 	background = (unsigned short)color;
-	key.dwColorSpaceLowValue = color;
+	key.dwColorSpaceLowValue  = color;
 	key.dwColorSpaceHighValue = color;
 
 	ret = suro->lpVtbl->SetColorKey(suro, DDCKEY_SRCBLT, &key);
@@ -910,7 +910,7 @@ int dd_set_background(int color)
 int DBBltFast(LPDIRECTDRAWSURFACE sur1, int xt, int yt, LPDIRECTDRAWSURFACE sur2, RECT *rect)
 {
 	unsigned short *from, *to;
-	DDSURFACEDESC surface;
+	DDSURFACEDESC   surface;
 	int ret, ys, xs, x;
 
 	surface.dwSize = sizeof(surface);
@@ -934,7 +934,7 @@ int DBBltFast(LPDIRECTDRAWSURFACE sur1, int xt, int yt, LPDIRECTDRAWSURFACE sur2
 
 	from += rect->top * MAXXOVER + rect->left;
 	to += yt * MAXX + xt;
-	xs = rect->right - rect->left;
+	xs  = rect->right - rect->left;
 
 	for (ys = rect->bottom - rect->top; ys; ys--)
 	{
@@ -960,7 +960,7 @@ int dd_copytile(int nr, int x, int y, LPDIRECTDRAWSURFACE sur, int mapcheck)
 {
 	RECT rect;
 	long ret;
-	int xs = 0, ys = 0, xe = 0, ye = 0;
+	int  xs = 0, ys = 0, xe = 0, ye = 0;
 
 	if (!mapcheck)
 	{
@@ -972,12 +972,12 @@ int dd_copytile(int nr, int x, int y, LPDIRECTDRAWSURFACE sur, int mapcheck)
 		if (x<0)
 		{
 			xs = -x;
-			x = 0;
+			x  = 0;
 		}
 		if (y<0)
 		{
 			ys = -y;
-			y = 0;
+			y  = 0;
 		}
 
 		if (x + 32>=MODEX)
@@ -999,12 +999,12 @@ int dd_copytile(int nr, int x, int y, LPDIRECTDRAWSURFACE sur, int mapcheck)
 		if (x<0)
 		{
 			xs = -x;
-			x = 0;
+			x  = 0;
 		}
 		if (y<200)
 		{
 			ys = -y + 200;
-			y = 200;
+			y  = 200;
 		}
 
 		if (x + 32>=MODEX)
@@ -1017,7 +1017,7 @@ int dd_copytile(int nr, int x, int y, LPDIRECTDRAWSURFACE sur, int mapcheck)
 		}
 	}
 
-	rect.left = (nr % cachex) * TILE + xs;
+	rect.left  = (nr % cachex) * TILE + xs;
 	rect.right = (nr % cachex) * TILE + TILE - xe;
 	rect.top = (nr / cachex) * TILE + ys;
 	rect.bottom = (nr / cachex) * TILE + TILE - ye;
@@ -1355,7 +1355,7 @@ void dd_flip(void)
 
 	// determine bounds of window in a more sensible way !!!
 	rect.bottom -= 1;
-	rect.left += 1;
+	rect.left  += 1;
 	rect.right -= 1;
 	rect.top += 20;
 
@@ -1367,7 +1367,7 @@ void dd_flip(void)
 void dd_error(HWND hwnd, char *msg, long err)
 {
 	char *ptr;
-	HDC hdc;
+	HDC   hdc;
 
 	ptr = get_dderr(err);
 
@@ -1386,7 +1386,7 @@ void dd_error(HWND hwnd, char *msg, long err)
    ------------- */
 
 static void*__mem = NULL;
-static int __msize = 0;
+static int  __msize = 0;
 
 void *load_file(char *file)
 {
@@ -1508,7 +1508,7 @@ void *dd_load_bitmap(char *name, int *xs, int *ys, LPDIRECTDRAWSURFACE sur)
 // tiles in the upper left corner of the cache area will be destroyed by loading a new
 // sprite
 
-#define MAXEFFECT    1024
+#define MAXEFFECT 1024
 
 #define current_tick GetTickCount()
 
@@ -1584,9 +1584,9 @@ void free_2nd_cache(void)
 					if (cachetab[tmp].sprite)
 					{
 						usedvid--;
-						cachetab[tmp].sprite = 0;
-						cachetab[tmp].ticker = 0;
-						cachetab[tmp].effect = 0;
+						cachetab[tmp].sprite  = 0;
+						cachetab[tmp].ticker  = 0;
+						cachetab[tmp].effect  = 0;
 						cachetab[tmp].visible = 0;
 					}
 				}
@@ -1681,8 +1681,8 @@ extern char path[];
 void dd_load_sprite(int nr)
 {
 	int xs, ys, alphacnt = 0;
-	unsigned short *optr = NULL;
-	unsigned char *alpha = NULL;
+	unsigned short *optr  = NULL;
+	unsigned char * alpha = NULL;
 	char buf[80];
 	FILE *fp;
 
@@ -1741,9 +1741,9 @@ void dd_invalidate_cache(void)
 
 	for (n = 0; n<MAXCACHE; n++)
 	{
-		cachetab[n].ticker = 0;
-		cachetab[n].sprite = 0;
-		cachetab[n].effect = 0;
+		cachetab[n].ticker  = 0;
+		cachetab[n].sprite  = 0;
+		cachetab[n].effect  = 0;
 		cachetab[n].visible = 0;
 	}
 	usedvid = 0;
@@ -1767,7 +1767,7 @@ void dd_init_sprites(void)
 	dd_set_background(RED + BLUE);
 }
 
-#define LEFFECT      (gamma-4880)//120
+#define LEFFECT (gamma-4880)     //120
 
 int gamma = 5000;
 
@@ -1784,12 +1784,12 @@ unsigned short do_effect(unsigned short val, int effect, int seed1, int seed2, i
 	if (effect & 32)
 	{
 		effect -= 32;
-		green = 1;
+		green   = 1;
 	}                                      //green border
 	if (effect & 64)
 	{
 		effect -= 64;
-		invis = 1;
+		invis   = 1;
 	}                                       //blackened out
 	if (effect & 128)
 	{
@@ -1799,12 +1799,12 @@ unsigned short do_effect(unsigned short val, int effect, int seed1, int seed2, i
 	if (effect & 256)
 	{
 		effect -= 256;
-		infra = 1;
+		infra   = 1;
 	}                                         //grey scale
 	if (effect & 512)
 	{
 		effect -= 512;
-		water = 1;
+		water   = 1;
 	}                                         //grey scale
 
 	switch (RGBM)
@@ -2139,7 +2139,7 @@ int tile2cache(int tile, int sprite, int xpos, int ypos, int xs, int effect)
 	sy = ypos * 32;
 
 	screen += cx + cy * MAXXOVER;
-	image += sx + sy * xs * 32;
+	image  += sx + sy * xs * 32;
 
 	for (y = 0; y<32; y++)
 	{
@@ -2153,7 +2153,7 @@ int tile2cache(int tile, int sprite, int xpos, int ypos, int xs, int effect)
 			screen++;
 		}
 		screen += MAXXOVER - 32;
-		image += (xs - 1) * 32;
+		image  += (xs - 1) * 32;
 	}
 
 
@@ -2204,9 +2204,9 @@ int gettile(unsigned int sprite, unsigned int effect, int x, int y, int xs)
 	}
 
 	cachetab[old].visible = tile2cache(old, sprite, x, y, xs, effect);
-	cachetab[old].sprite = nr;
-	cachetab[old].ticker = random(1024) + 24;
-	cachetab[old].effect = effect;
+	cachetab[old].sprite  = nr;
+	cachetab[old].ticker  = random(1024) + 24;
+	cachetab[old].effect  = effect;
 	sprtab[sprite].cache[(x + y * xs) * MAXEFFECT + effect] = (short)old;
 
 	if (!cachetab[old].visible)
@@ -2417,14 +2417,14 @@ void dd_gputc(int xpos, int ypos, int font, int c)
 		return;
 	}
 
-	off = c * 6;
+	off  = c * 6;
 	tptr = dd_get_ptr(sur2);
 	if (!tptr)
 	{
 		return;
 	}
 	tptr += xpos + ypos * MAXX;
-	fptr = sprtab[nr].image + off + 576;
+	fptr  = sprtab[nr].image + off + 576;
 	sprtab[nr].ticker = current_tick;
 
 	for (y = 0; y<9; y++)
@@ -2513,14 +2513,14 @@ void dd_putc(int xpos, int ypos, char font, int c)
 		return;
 	}
 
-	off = c * 6;
+	off  = c * 6;
 	tptr = dd_get_ptr(sur2);
 	if (!tptr)
 	{
 		return;
 	}
 	tptr += xpos + ypos * MAXX;
-	fptr = sprtab[nr].image + off + 576;
+	fptr  = sprtab[nr].image + off + 576;
 	sprtab[nr].ticker = current_tick;
 
 	for (y = 0; y<9; y++)
@@ -2637,12 +2637,12 @@ void do_rgb8_effect(int *r1, int *g1, int *b1, int effect)
 	if (effect & 32)
 	{
 		effect -= 32;
-		green = 1;
+		green   = 1;
 	}                                       //green border
 	if (effect & 64)
 	{
 		effect -= 64;
-		invis = 1;
+		invis   = 1;
 	}                                       //blackened out
 	if (effect & 128)
 	{
@@ -2652,12 +2652,12 @@ void do_rgb8_effect(int *r1, int *g1, int *b1, int effect)
 	if (effect & 256)
 	{
 		effect -= 256;
-		infra = 1;
+		infra   = 1;
 	}                                         //infrared
 	if (effect & 512)
 	{
 		effect -= 512;
-		water = 1;
+		water   = 1;
 	}                                         //under water
 
 	r = *r1;
@@ -2774,8 +2774,8 @@ void display_alpha(unsigned char *alpha, int alphacnt, int xf, int yf, int effec
 
 	for (n = 0; n<alphacnt; n += 6)
 	{
-		x = alpha[n + 0];
-		y = alpha[n + 1];
+		x  = alpha[n + 0];
+		y  = alpha[n + 1];
 		r1 = alpha[n + 2];
 		g1 = alpha[n + 3];
 		b1 = alpha[n + 4];
@@ -2883,8 +2883,8 @@ unsigned short *dd_load_png(FILE *fp, int *xs, int *ys, unsigned char **alpha_pt
 	unsigned char **row, *alpha = NULL;
 	unsigned short *bmp;
 	png_structp png_ptr;
-	png_infop info_ptr;
-	png_infop end_info;
+	png_infop   info_ptr;
+	png_infop   end_info;
 
 	png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 	if (!png_ptr)
@@ -3062,9 +3062,9 @@ void dd_invalidate_alpha(void)
 			if (cachetab[tmp].sprite)
 			{
 				usedvid--;
-				cachetab[tmp].sprite = 0;
-				cachetab[tmp].ticker = 0;
-				cachetab[tmp].effect = 0;
+				cachetab[tmp].sprite  = 0;
+				cachetab[tmp].ticker  = 0;
+				cachetab[tmp].effect  = 0;
 				cachetab[tmp].visible = 0;
 			}
 		}
@@ -3201,7 +3201,7 @@ void dd_shadow(int nr, int xpos, int ypos, int xoff, int yoff)
 					continue;
 				}
 
-				v = dst[p];
+				v   = dst[p];
 				v >>= 1;
 				if (RGBM==0)
 				{
@@ -3248,7 +3248,7 @@ void dd_shadow(int nr, int xpos, int ypos, int xoff, int yoff)
 				continue;
 			}
 
-			v = dst[p];
+			v   = dst[p];
 			v >>= 1;
 			if (RGBM==0)
 			{

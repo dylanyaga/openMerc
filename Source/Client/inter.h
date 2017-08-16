@@ -1,29 +1,29 @@
-#define VERSION      0x020E06
+#define VERSION 0x020E06
 
-#define MAXSPRITE    2000+(32*1024)
+#define MAXSPRITE 2000+(32*1024)
 
-#define MODEX        800
-#define MODEY        600
+#define MODEX 800
+#define MODEY 600
 
 //#define DB_WINDOWED
 
-#define MAPX         TILEX
-#define MAPY         TILEY
+#define MAPX TILEX
+#define MAPY TILEY
 
-#define YPOS         440
-#define XPOS         0
+#define YPOS 440
+#define XPOS 0
 
-#define MS_MOVE      0
-#define MS_LB_DOWN   1
-#define MS_RB_DOWN   2
-#define MS_LB_UP     3
-#define MS_RB_UP     4
+#define MS_MOVE    0
+#define MS_LB_DOWN 1
+#define MS_RB_DOWN 2
+#define MS_LB_UP   3
+#define MS_RB_UP   4
 
-#define TICK         (1000/TICKS)
+#define TICK (1000/TICKS)
 
-#define HIGH_VAL     (1<<30)
+#define HIGH_VAL (1<<30)
 
-#define QSIZE        8
+#define QSIZE 8
 
 struct xbutton
 {
@@ -127,15 +127,15 @@ extern unsigned int show_shop;
 extern int hightlight;
 extern int hightlight_sub;
 
-#define CT_NONE      1
-#define CT_TAKE      2
-#define CT_DROP      3
-#define CT_USE       4
-#define CT_GIVE      5
-#define CT_WALK      6
-#define CT_HIT       7
-#define CT_SWAP      8
-#define CT_SEL       9
+#define CT_NONE 1
+#define CT_TAKE 2
+#define CT_DROP 3
+#define CT_USE  4
+#define CT_GIVE 5
+#define CT_WALK 6
+#define CT_HIT  7
+#define CT_SWAP 8
+#define CT_SEL  9
 
 struct skilltab
 {

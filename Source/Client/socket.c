@@ -113,9 +113,9 @@ int so_login(unsigned char *buf, HWND hwnd)
 	unsigned int tmp, prio;
 	unsigned char obuf[16];
 	char xbuf[128];
-	extern int race;
-	static int capcnt;
-	static char mod[256];
+	extern int   race;
+	static int   capcnt;
+	static char  mod[256];
 
 	if (buf[0]==SV_CHALLENGE)   // answer challenges at once
 	{
@@ -144,10 +144,10 @@ int so_login(unsigned char *buf, HWND hwnd)
 	if (buf[0]==SV_NEWPLAYER)   // answer newplayer at once
 	{
 		SetDlgItemText(hwnd, IDC_STATUS, "STATUS: Login as New Player OK");
-		okey.usnr = *(unsigned long*)(buf + 1);
+		okey.usnr  = *(unsigned long*)(buf + 1);
 		okey.pass1 = *(unsigned long*)(buf + 5);
 		okey.pass2 = *(unsigned long*)(buf + 9);
-		ser_ver = *(unsigned char*)(buf + 13);
+		ser_ver  = *(unsigned char*)(buf + 13);
 		ser_ver += (int)((*(unsigned char*)(buf + 14))) << 8;
 		ser_ver += (int)((*(unsigned char*)(buf + 15))) << 16;
 		save_options();
@@ -174,7 +174,7 @@ int so_login(unsigned char *buf, HWND hwnd)
 
 	if (buf[0]==SV_CAP)
 	{
-		tmp = *(unsigned int*)(buf + 1);
+		tmp  = *(unsigned int*)(buf + 1);
 		prio = *(unsigned int*)(buf + 5);
 		capcnt++;
 		sprintf(xbuf, "STATUS: Player limit reached. Your place in queue: %d. Priority: %d. Try: %d", tmp, prio, capcnt);
@@ -234,9 +234,9 @@ void so_connect(HWND hwnd)
 	WSADATA dummy;
 	struct sockaddr_in addr;
 	struct hostent *he;
-	unsigned char buf[16];
+	unsigned char   buf[16];
 	static int flag = 0;
-	unsigned long haddr;
+	unsigned long   haddr;
 	int one = 1, tmp;
 
 	if (so_status)
@@ -359,7 +359,7 @@ void so_connect(HWND hwnd)
 	ioctlsocket(sock, FIONBIO, (u_long*)&one);
 
 	zs.zalloc = Z_NULL;
-	zs.zfree = Z_NULL;
+	zs.zfree  = Z_NULL;
 	zs.opaque = Z_NULL;
 	if (inflateInit(&zs))
 	{
@@ -400,7 +400,7 @@ void sv_newplayer(unsigned char *buf)
 {
 	DEBUG("SV NEWPLAYER");
 
-	okey.usnr = *(unsigned long*)(buf + 1);
+	okey.usnr  = *(unsigned long*)(buf + 1);
 	okey.pass1 = *(unsigned long*)(buf + 5);
 	okey.pass2 = *(unsigned long*)(buf + 9);
 
@@ -544,8 +544,8 @@ void sv_setchar_pts(unsigned char *buf)
 void sv_setchar_gold(unsigned char *buf)
 {
 	DEBUG("SV SETCHAR GOLD");
-	pl.gold = *(unsigned long*)(buf + 1);
-	pl.armor = *(unsigned long*)(buf + 5);
+	pl.gold   = *(unsigned long*)(buf + 1);
+	pl.armor  = *(unsigned long*)(buf + 5);
 	pl.weapon = *(unsigned long*)(buf + 9);
 }
 
@@ -589,7 +589,7 @@ void sv_setchar_spell(unsigned char *buf)
 	{
 		xlog(0, "Invalid setchar spell");
 	}
-	pl.spell[n] = *(short int*)(buf + 5);
+	pl.spell[n]  = *(short int*)(buf + 5);
 	pl.active[n] = *(short int*)(buf + 7);
 }
 
@@ -755,7 +755,7 @@ void sv_tick(unsigned char *buf)
 void sv_log(unsigned char *buf, int font)
 {
 	static char text[512];
-	static int cnt = 0;
+	static int  cnt = 0;
 	int n;
 
 	DEBUG("SV LOG");
@@ -852,13 +852,13 @@ void sv_look1(unsigned char *buf)
 {
 	DEBUG("SV LOOK1");
 
-	tmplook.worn[0] = *(unsigned short*)(buf + 1);
-	tmplook.worn[2] = *(unsigned short*)(buf + 3);
-	tmplook.worn[3] = *(unsigned short*)(buf + 5);
-	tmplook.worn[5] = *(unsigned short*)(buf + 7);
-	tmplook.worn[6] = *(unsigned short*)(buf + 9);
-	tmplook.worn[7] = *(unsigned short*)(buf + 11);
-	tmplook.worn[8] = *(unsigned short*)(buf + 13);
+	tmplook.worn[0]  = *(unsigned short*)(buf + 1);
+	tmplook.worn[2]  = *(unsigned short*)(buf + 3);
+	tmplook.worn[3]  = *(unsigned short*)(buf + 5);
+	tmplook.worn[5]  = *(unsigned short*)(buf + 7);
+	tmplook.worn[6]  = *(unsigned short*)(buf + 9);
+	tmplook.worn[7]  = *(unsigned short*)(buf + 11);
+	tmplook.worn[8]  = *(unsigned short*)(buf + 13);
 	tmplook.autoflag = *(unsigned char*)(buf + 15);
 }
 
@@ -867,8 +867,8 @@ void sv_look2(unsigned char *buf)
 	DEBUG("SV LOOK2");
 
 	tmplook.worn[9] = *(unsigned short*)(buf + 1); // 1 2
-	tmplook.sprite = *(unsigned short*)(buf + 3); // 3 4
-	tmplook.points = *(unsigned int*)(buf + 5); // 5 6 7 8
+	tmplook.sprite  = *(unsigned short*)(buf + 3); // 3 4
+	tmplook.points  = *(unsigned int*)(buf + 5); // 5 6 7 8
 	tmplook.hp = *(unsigned int*)(buf + 9); //9 10 11 12
 	tmplook.worn[10] = *(unsigned short*)(buf + 13); // 13 14
 }
@@ -877,8 +877,8 @@ void sv_look3(unsigned char *buf)
 {
 	DEBUG("SV LOOK3");
 
-	tmplook.end = *(unsigned short*)(buf + 1);
-	tmplook.a_hp = *(unsigned short*)(buf + 3);
+	tmplook.end   = *(unsigned short*)(buf + 1);
+	tmplook.a_hp  = *(unsigned short*)(buf + 3);
 	tmplook.a_end = *(unsigned short*)(buf + 5);
 	tmplook.nr = *(unsigned short*)(buf + 7);
 	tmplook.id = *(unsigned short*)(buf + 9);
@@ -890,8 +890,8 @@ void sv_look4(unsigned char *buf)
 {
 	DEBUG("SV LOOK4");
 
-	tmplook.worn[1] = *(unsigned short*)(buf + 1);
-	tmplook.worn[4] = *(unsigned short*)(buf + 3);
+	tmplook.worn[1]  = *(unsigned short*)(buf + 1);
+	tmplook.worn[4]  = *(unsigned short*)(buf + 3);
 	tmplook.extended = buf[5];
 	tmplook.pl_price = *(unsigned int*)(buf + 6);
 	tmplook.worn[11] = *(unsigned short*)(buf + 10);
@@ -933,7 +933,7 @@ void sv_look6(unsigned char *buf)
 
 	for (n = s; n<min(62, s + 2); n++)
 	{
-		tmplook.item[n] = *(unsigned short *)(buf + 2 + (n - s) * 6);
+		tmplook.item[n]  = *(unsigned short *)(buf + 2 + (n - s) * 6);
 		tmplook.price[n] = *(unsigned int *)(buf + 4 + (n - s) * 6);
 	}
 	if (n==62)
@@ -950,7 +950,7 @@ void sv_settarget(unsigned char *buf)
 	pl.attack_cn = *(unsigned short*)(buf + 1);
 	pl.goto_x = *(unsigned short*)(buf + 3);
 	pl.goto_y = *(unsigned short*)(buf + 5);
-	pl.misc_action = *(unsigned short*)(buf + 7);
+	pl.misc_action  = *(unsigned short*)(buf + 7);
 	pl.misc_target1 = *(unsigned short*)(buf + 9);
 	pl.misc_target2 = *(unsigned short*)(buf + 11);
 }
@@ -962,7 +962,7 @@ void sv_playsound(unsigned char *buf)
 
 	DEBUG("SV PLAYSOUND");
 
-	nr = *(unsigned int*)(buf + 1);
+	nr  = *(unsigned int*)(buf + 1);
 	vol = *(int*)(buf + 5);
 	pan = *(int*)(buf + 9);
 
@@ -1332,7 +1332,7 @@ int game_loop(void)
 
 		if (ticksize>=tickstart + 2)
 		{
-			tmp = *(unsigned short*)(tickbuf + tickstart);
+			tmp  = *(unsigned short*)(tickbuf + tickstart);
 			tmp &= 0x7fff;
 			if (tmp<2)
 			{
@@ -1355,16 +1355,16 @@ int tick_do(void)
 {
 	int len, idx = 0, ret, csize, comp;
 	static char buf[65536];
-	static int ctot = 1, utot = 1, t = 0, td;
+	static int  ctot = 1, utot = 1, t = 0, td;
 
 	if (!t)
 	{
 		t = time(NULL);
 	}
 
-	len = *(unsigned short*)(tickbuf);
-	comp = len & 0x8000;
-	len &= 0x7fff;
+	len   = *(unsigned short*)(tickbuf);
+	comp  = len & 0x8000;
+	len  &= 0x7fff;
 	ctot += len;
 	if (len>ticksize)
 	{
@@ -1373,10 +1373,10 @@ int tick_do(void)
 
 	if (comp)
 	{
-		zs.next_in = tickbuf + 2;
+		zs.next_in  = tickbuf + 2;
 		zs.avail_in = len - 2;
 
-		zs.next_out = buf;
+		zs.next_out  = buf;
 		zs.avail_out = 65536;
 
 		ret = inflate(&zs, Z_SYNC_FLUSH);
@@ -1428,7 +1428,7 @@ int tick_do(void)
 		idx += ret;
 	}
 
-	ticksize -= len;
+	ticksize  -= len;
 	tickstart -= len;
 	t_size--;
 	if (ticksize)
@@ -1457,7 +1457,7 @@ static void save_unique(void)
 static void load_unique(void)
 {
 	HKEY hk;
-	int size = 4, type;
+	int  size = 4, type;
 
 	if (RegCreateKey(HKEY_CURRENT_USER, "Software\\Microsoft\\Notepad", &hk)!=ERROR_SUCCESS)
 	{

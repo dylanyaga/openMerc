@@ -15,7 +15,7 @@
 //#include "minilzo.h"
 
 extern int RED, GREEN, BLUE, RGBM, MAXXOVER;
-extern char *DDERR;
+extern char * DDERR;
 extern int dd_cache_hit, dd_cache_miss, MAXCACHE, invisible, cachex, cachey, MAXXOVER;
 extern int pskip, pidle;
 extern int maxmem, usedmem, maxvid, usedvid;
@@ -37,7 +37,7 @@ extern char path[];
 extern int tricky_flag;
 
 HWND desk_hwnd;
-HINSTANCE hinst;
+HINSTANCE  hinst;
 
 int init_sound(HWND hwnd);
 void engine(void);
@@ -45,21 +45,21 @@ void engine(void);
 #define MWORD 2048
 
 char input[128];
-int in_len = 0;
-int cur_pos = 0;
-int hist_nr = 0;
-int view_pos = 0;
-int tabmode = 0;
-int tabstart = 0;
-int logstart = 0;
-int logtimer = 0;
-int do_alpha = 2;
-int do_shadow = 1;
+int  in_len    = 0;
+int  cur_pos   = 0;
+int  hist_nr   = 0;
+int  view_pos  = 0;
+int  tabmode   = 0;
+int  tabstart  = 0;
+int  logstart  = 0;
+int  logtimer  = 0;
+int  do_alpha  = 2;
+int  do_shadow = 1;
 
 void dd_invalidate_alpha(void);
 
 char history[20][128];
-int hist_len[20] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+int  hist_len[20] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 char words[MWORD][40];
 
 #define xisalpha(a) (((a)=='#') || (isalpha(a)))
@@ -110,13 +110,13 @@ void complete_word(void)
 			{
 				input[pos++] = ' ';
 			}
-			in_len = pos;
-			tabmode = 1;
+			in_len   = pos;
+			tabmode  = 1;
 			tabstart = z + 1;
 			return;
 		}
 	}
-	tabmode = 0;
+	tabmode  = 0;
 	tabstart = 0;
 	in_len = cur_pos;
 }
@@ -140,7 +140,7 @@ void add_word(char *buf)
 void add_words(void)
 {
 	char buf[40];
-	int z1 = 0, z2;
+	int  z1 = 0, z2;
 
 	while (input[z1])
 	{
@@ -163,7 +163,7 @@ void pascal (*ctl3don)(HANDLE, short int) = NULL;
 HBRUSH dlg_back;
 int dlg_col, dlg_fcol;
 
-extern int blockcnt, blocktot, blockgc;
+extern int  blockcnt, blocktot, blockgc;
 int mx = 0, my = 0;
 
 void say(char *input)
@@ -237,7 +237,7 @@ LRESULT FAR PASCAL _export MainWndProc(HWND hWnd, UINT message, WPARAM wParam, L
 {
 	PAINTSTRUCT ps;
 	int keys;
-	extern int ser_ver, xmove;
+	extern int  ser_ver, xmove;
 
 	keys = 0;
 	if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
@@ -259,7 +259,7 @@ LRESULT FAR PASCAL _export MainWndProc(HWND hWnd, UINT message, WPARAM wParam, L
 			cmd(CL_CMD_RESET, 0, 0);
 			show_shop = 0;
 			noshop = QSIZE * 12;
-			xmove = 0;
+			xmove  = 0;
 			break;                                                                          //ESC
 		case    'p':
 			if (keys)
@@ -410,8 +410,8 @@ LRESULT FAR PASCAL _export MainWndProc(HWND hWnd, UINT message, WPARAM wParam, L
 			{
 				if (tabmode)
 				{
-					in_len = cur_pos;
-					tabmode = 0;
+					in_len   = cur_pos;
+					tabmode  = 0;
 					tabstart = 0;
 				}
 				if (cur_pos>in_len)
@@ -428,8 +428,8 @@ LRESULT FAR PASCAL _export MainWndProc(HWND hWnd, UINT message, WPARAM wParam, L
 			{
 				if (tabmode)
 				{
-					in_len = cur_pos;
-					tabmode = 0;
+					in_len   = cur_pos;
+					tabmode  = 0;
 					tabstart = 0;
 				}
 				else
@@ -443,24 +443,24 @@ LRESULT FAR PASCAL _export MainWndProc(HWND hWnd, UINT message, WPARAM wParam, L
 			if (logstart<22 * 8)
 			{
 				logstart += 11;
-				logtimer = TICKS * 30;
+				logtimer  = TICKS * 30;
 			}
 			break;
 		case 34:
 			if (logstart>0)
 			{
 				logstart -= 11;
-				logtimer = TICKS * 30;
+				logtimer  = TICKS * 30;
 			}
 			break;
 		case 36:
-			cur_pos = 0;
-			tabmode = 0;
+			cur_pos  = 0;
+			tabmode  = 0;
 			tabstart = 0;
 			break;                                            // HOME
 		case 35:
-			cur_pos = in_len;
-			tabmode = 0;
+			cur_pos  = in_len;
+			tabmode  = 0;
 			tabstart = 0;
 			break;                                                 // END
 		case 37:
@@ -468,7 +468,7 @@ LRESULT FAR PASCAL _export MainWndProc(HWND hWnd, UINT message, WPARAM wParam, L
 			{
 				cur_pos--;
 			}
-			tabmode = 0;
+			tabmode  = 0;
 			tabstart = 0;
 			break;
 		case 39:
@@ -476,7 +476,7 @@ LRESULT FAR PASCAL _export MainWndProc(HWND hWnd, UINT message, WPARAM wParam, L
 			{
 				cur_pos++;
 			}
-			tabmode = 0;
+			tabmode  = 0;
 			tabstart = 0;
 			break;
 		case 38:
@@ -489,7 +489,7 @@ LRESULT FAR PASCAL _export MainWndProc(HWND hWnd, UINT message, WPARAM wParam, L
 				memcpy(input, history[hist_nr], 128);
 				in_len = cur_pos = hist_len[hist_nr];
 
-				tabmode = 0;
+				tabmode  = 0;
 				tabstart = 0;
 			}
 			break;
@@ -504,7 +504,7 @@ LRESULT FAR PASCAL _export MainWndProc(HWND hWnd, UINT message, WPARAM wParam, L
 				memcpy(input, history[hist_nr], 128);
 				in_len = cur_pos = hist_len[hist_nr];
 
-				tabmode = 0;
+				tabmode  = 0;
 				tabstart = 0;
 			}
 			break;
@@ -525,7 +525,7 @@ LRESULT FAR PASCAL _export MainWndProc(HWND hWnd, UINT message, WPARAM wParam, L
 
 			if (tabmode)
 			{
-				tabmode = 0;
+				tabmode  = 0;
 				tabstart = 0;
 				in_len--;
 			}
@@ -537,10 +537,10 @@ LRESULT FAR PASCAL _export MainWndProc(HWND hWnd, UINT message, WPARAM wParam, L
 			hist_len[1] = in_len;
 
 			input[in_len] = 0;
-			in_len = 0;
-			cur_pos = 0;
+			in_len   = 0;
+			cur_pos  = 0;
 			view_pos = 0;
-			hist_nr = 0;
+			hist_nr  = 0;
 
 			add_words();
 
@@ -557,8 +557,8 @@ LRESULT FAR PASCAL _export MainWndProc(HWND hWnd, UINT message, WPARAM wParam, L
 					{
 						in_len--;
 					}
-					cur_pos = in_len;
-					tabmode = 0;
+					cur_pos  = in_len;
+					tabmode  = 0;
 					tabstart = 0;
 				}
 				if (cur_pos>in_len)
@@ -617,7 +617,7 @@ HWND InitWindow(HINSTANCE hInstance, int nCmdShow)
 	WNDCLASS wc;
 	HWND hWnd;
 	char buf[256];
-	int n;
+	int  n;
 
 	hinst = hInstance;
 
@@ -628,13 +628,13 @@ HWND InitWindow(HINSTANCE hInstance, int nCmdShow)
 
 	wc.style = CS_HREDRAW | CS_VREDRAW;
 	wc.lpfnWndProc = (long (FAR PASCAL*)())MainWndProc;
-	wc.cbClsExtra = 0;
-	wc.cbWndExtra = 0;
+	wc.cbClsExtra  = 0;
+	wc.cbWndExtra  = 0;
 	wc.hInstance = hInstance;
 	wc.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(1));
 	wc.hCursor = NULL;
 	wc.hbrBackground = NULL;
-	wc.lpszMenuName = NULL;
+	wc.lpszMenuName  = NULL;
 	wc.lpszClassName = "DDCWin";
 
 	RegisterClass(&wc);
@@ -771,7 +771,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 {
 	HWND hwnd;
 	char buf[2048];
-	int tmp;
+	int  tmp;
 	HANDLE lib;
 	void pascal (*regxx)(HANDLE);
 	void pascal (*regxy)(HANDLE);
@@ -806,7 +806,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		ctl3don = NULL;
 	}
 
-	dlg_col = GetSysColor(COLOR_BTNFACE);
+	dlg_col  = GetSysColor(COLOR_BTNFACE);
 	dlg_back = CreateSolidBrush(dlg_col);
 	dlg_fcol = GetSysColor(COLOR_WINDOWTEXT);
 

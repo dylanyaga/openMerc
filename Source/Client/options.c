@@ -48,33 +48,33 @@ typedef struct tagOFN
 LCC_OPENFILENAME, *LCC_LPOPENFILENAME;
 
 extern char history[20][128];
-extern int hist_len[20];
+extern int  hist_len[20];
 extern char words[2048][40];
 extern char passwd[15];
 
 extern void pascal (*ctl3don)(HANDLE, short int);
 extern HBRUSH dlg_back;
-extern int dlg_col, dlg_fcol;
+extern int  dlg_col, dlg_fcol;
 
-extern int quit;
+extern int  quit;
 
-extern int do_alpha;
-extern int do_shadow;
+extern int  do_alpha;
+extern int  do_shadow;
 
 extern HINSTANCE hinst;
 extern HWND desk_hwnd;
-extern int so_status;
+extern int  so_status;
 
-struct key okey;
+struct key  okey;
 struct pdata pdata = {"", "", "", 0};
 
 //--------------
 // option flags
 //--------------
 
-extern int domusic, dosound, smode;
+extern int  domusic, dosound, smode;
 extern char host_addr[];
-static int opmusic, opsound, opshadow;
+static int  opmusic, opsound, opshadow;
 int race = 0, sex = 0;
 
 static char *new_msg1 = {
@@ -99,94 +99,94 @@ void translate_okey2race(int *race_ptr, int *sex_ptr)
 	{
 	case 2:
 		race = 2;
-		sex = 1;
+		sex  = 1;
 		break;                // mercenary M
 	case 3:
 		race = 1;
-		sex = 1;
+		sex  = 1;
 		break;                // templar M
 	case 4:
 		race = 3;
-		sex = 1;
+		sex  = 1;
 		break;                // harakim M
 
 	case 13:
 		race = 4;
-		sex = 1;
+		sex  = 1;
 		break;                 // seyan M
 
 	case 76:
 		race = 2;
-		sex = 2;
+		sex  = 2;
 		break;                 // mercenary F
 	case 77:
 		race = 2;
-		sex = 2;
+		sex  = 2;
 		break;                 // templar F
 	case 78:
 		race = 2;
-		sex = 2;
+		sex  = 2;
 		break;                 // harakim F
 
 	case 79:
 		race = 2;
-		sex = 2;
+		sex  = 2;
 		break;                 // seyan F
 
 	case 543:
 		race = 0;
-		sex = 1;
+		sex  = 1;
 		break;                  // god M
 
 	case 544:
 		race = 5;
-		sex = 1;
+		sex  = 1;
 		break;                  // arch templar M
 	case 545:
 		race = 6;
-		sex = 1;
+		sex  = 1;
 		break;                  // arch harakim M
 
 	case 546:
 		race = 7;
-		sex = 1;
+		sex  = 1;
 		break;                  // sorcerer M
 	case 547:
 		race = 8;
-		sex = 1;
+		sex  = 1;
 		break;                  // warrior M
 
 	case 548:
 		race = 0;
-		sex = 2;
+		sex  = 2;
 		break;                  // god F
 
 	case 549:
 		race = 5;
-		sex = 2;
+		sex  = 2;
 		break;                  // arch templar F
 	case 550:
 		race = 6;
-		sex = 2;
+		sex  = 2;
 		break;                  // arch harakim F
 
 	case 551:
 		race = 7;
-		sex = 2;
+		sex  = 2;
 		break;                  // sorcerer F
 	case 552:
 		race = 8;
-		sex = 2;
+		sex  = 2;
 		break;                  // warrior F
 
 	default:
 		race = 0;
-		sex = 1;
+		sex  = 1;
 		break;
 	}
 
 	*race_ptr = race;
-	*sex_ptr = sex;
+	*sex_ptr  = sex;
 }
 
 void load_options(void)
@@ -245,9 +245,9 @@ void load_options(void)
 		memset(history, 0, sizeof(history));
 		memset(hist_len, 0, sizeof(hist_len));
 		memset(words, 0, sizeof(words));
-		domusic = 0;
-		dosound = 1;
-		do_alpha = 2;
+		domusic   = 0;
+		dosound   = 1;
+		do_alpha  = 2;
 		do_shadow = 1;
 		memset(&pdata, 0, sizeof(pdata));
 		pdata.show_names = 1;
@@ -310,9 +310,9 @@ void load_char(HWND hwnd, char *name)
 	{
 		pdata.hide = 0;
 		pdata.show_names = 1;
-		pdata.show_proz = 1;
+		pdata.show_proz  = 1;
 		pdata.cname[0] = 0;
-		pdata.ref[0] = 0;
+		pdata.ref[0]  = 0;
 		pdata.desc[0] = 0;
 		pdata.changed = 0;
 
@@ -396,7 +396,7 @@ int load_dialog(HWND hwnd, char *name)
 	LCC_OPENFILENAME ofn;
 	char filter[] = {MNAME " Character Save\0*.moa\0\0"};
 	char buf[256] = {"\0"};
-	int disk, err;
+	int  disk, err;
 	char dir[256], dir2[300];
 
 	disk = getdisk();
@@ -410,7 +410,7 @@ int load_dialog(HWND hwnd, char *name)
 	ofn.lpstrCustomFilter = NULL;
 	ofn.nFilterIndex = 1;
 	ofn.lpstrFile = buf;
-	ofn.nMaxFile = 256;
+	ofn.nMaxFile  = 256;
 	ofn.lpstrInitialDir = NULL;
 	ofn.lpstrTitle = "Load Character";
 	ofn.Flags = OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST;
@@ -418,7 +418,7 @@ int load_dialog(HWND hwnd, char *name)
 	ofn.nFileExtension = 0;
 	ofn.lpstrDefExt = "moa";
 	ofn.lCustData = NULL;
-	ofn.lpfnHook = NULL;
+	ofn.lpfnHook  = NULL;
 
 	if (!GetOpenFileName((OPENFILENAME *) &ofn))
 	{
@@ -441,7 +441,7 @@ int save_dialog(HWND hwnd, char *name)
 	LCC_OPENFILENAME ofn;
 	char filter[] = {MNAME " Character Save\0*.moa\0\0"};
 	char buf[256];
-	int disk;
+	int  disk;
 	char dir[256], dir2[300];
 
 	disk = getdisk();
@@ -458,7 +458,7 @@ int save_dialog(HWND hwnd, char *name)
 	ofn.lpstrCustomFilter = NULL;
 	ofn.nFilterIndex = 1;
 	ofn.lpstrFile = buf;
-	ofn.nMaxFile = 256;
+	ofn.nMaxFile  = 256;
 	ofn.lpstrInitialDir = NULL;
 	ofn.lpstrTitle = "Save Character as";
 	ofn.Flags = OFN_OVERWRITEPROMPT | OFN_PATHMUSTEXIST | OFN_HIDEREADONLY;
@@ -466,7 +466,7 @@ int save_dialog(HWND hwnd, char *name)
 	ofn.nFileExtension = 0;
 	ofn.lpstrDefExt = "moa";
 	ofn.lCustData = NULL;
-	ofn.lpfnHook = NULL;
+	ofn.lpfnHook  = NULL;
 
 	if (!GetSaveFileName((OPENFILENAME *) &ofn))
 	{
@@ -733,7 +733,7 @@ APIENTRY OptionsProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				return(1);
 			}
-			okey.usnr = 0;
+			okey.usnr  = 0;
 			okey.pass1 = 0;
 			okey.pass2 = 0;
 			pdata.changed = 1;
@@ -942,8 +942,8 @@ APIENTRY OptionsProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 void options(void)
 {
-	opmusic = domusic;
-	opsound = dosound;
+	opmusic  = domusic;
+	opsound  = dosound;
 	opshadow = do_shadow;
 
 	if (DialogBox(hinst, MAKEINTRESOURCE(OPTIONS), desk_hwnd, OptionsProc)==-1)

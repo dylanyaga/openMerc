@@ -2170,6 +2170,7 @@ int main(int argc, char *args[])
 		break;
 	case    16:
 		list_characters_good(head);
+		break;
 	case    21:
 		list_objects(head);
 		break;
@@ -2200,7 +2201,7 @@ int main(int argc, char *args[])
 	default:
 		printf("Together those lists include all character-templates<br>");
 		printf("<a href=/cgi-imp/acct.cgi?step=11>Characters (without Grolms, Gargoyles, Icegargs)</a><br>");
-		printf("<a href=/cgi-imp/acct.cgi?step=16>Characters (only with Positive Alignment) </a><br><br>");
+		printf("<a href=/cgi-imp/acct.cgi?step=16>Characters (only with Positive Alignment) </a><br>");
 		printf("<a href=/cgi-imp/acct.cgi?step=41>Characters (only Grolms, Gargoyles, Icegargs) </a><br><br>");
 		printf("This list includes only characters with high IDs for fast access<br>");
 		printf("<a href=/cgi-imp/acct.cgi?step=51>New characters (only if they got a high ID)</a><br><br>");

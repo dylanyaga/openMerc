@@ -1,10 +1,10 @@
 /*************************************************************************
 
-This file is part of 'Mercenaries of Astonia v2'
-Copyright (c) 1997-2001 Daniel Brockhaus (joker@astonia.com)
-All rights reserved.
+   This file is part of 'Mercenaries of Astonia v2'
+   Copyright (c) 1997-2001 Daniel Brockhaus (joker@astonia.com)
+   All rights reserved.
 
-**************************************************************************/
+ **************************************************************************/
 
 #ifndef _TIME_H
 #include <time.h>

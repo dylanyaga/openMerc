@@ -41,9 +41,9 @@ FONT 8, "MS Sans Serif"
  EDITTEXT IDC_PASS, 170, 32, 68, 12, ES_PASSWORD | WS_BORDER | WS_TABSTOP
  CHECKBOX "Shadows", IDC_DOSHADOW, 20, 212, 60, 12, BS_AUTOCHECKBOX | WS_TABSTOP
 }
-1 VERSIONINFO
-FILEVERSION 1, 0, 0, 0
-PRODUCTVERSION 1, 0, 0, 0
+2 VERSIONINFO
+FILEVERSION 0, 2, 14, 06
+PRODUCTVERSION 0, 2, 14, 06
 FILEFLAGSMASK VS_FFI_FILEFLAGSMASK
 FILEOS VOS_DOS_WINDOWS16
 FILETYPE VFT_APP
@@ -54,13 +54,13 @@ FILETYPE VFT_APP
   {
    VALUE "CompanyName", "Daniel Brockhaus\000"
    VALUE "Author", "Daniel Brockhaus\000"
-   VALUE "FileDescription", "Mercenaries of Astonia\000"
-   VALUE "FileVersion", "2.14.00\000"
-   VALUE "InternalName", "MERC\000"
+   VALUE "FileDescription", "openMerc\000"
+   VALUE "FileVersion", "2.14.06\000"
+   VALUE "InternalName", "openMerc\000"
    VALUE "LegalCopyright", "Copyright \251 D.Brockhaus 1997-2001\000"
-   VALUE "OriginalFilename", "MERC.EXE\000"
-   VALUE "ProductName", "Mercenaries of Astonia\000"
-   VALUE "ProductVersion", "2.14.00\000"
+   VALUE "OriginalFilename", "openMerc.EXE\000"
+   VALUE "ProductName", "openMerc\000"
+   VALUE "ProductVersion", "2.14.06\000"
    VALUE "Comments", "Beta Test Version\000"
   }
 
@@ -68,13 +68,13 @@ FILETYPE VFT_APP
   {
    VALUE "CompanyName", "Daniel Brockhaus\000"
    VALUE "Author", "Daniel Brockhaus\000"
-   VALUE "FileDescription", "Mercenaries of Astonia\000"
-   VALUE "FileVersion", "2.14.00\000"
-   VALUE "InternalName", "MERC\000"
+   VALUE "FileDescription", "openMerc\000"
+   VALUE "FileVersion", "2.14.06\000"
+   VALUE "InternalName", "openMerc\000"
    VALUE "LegalCopyright", "Copyright \251 D.Brockhaus 1997-2001\000"
-   VALUE "OriginalFilename", "MERC.EXE\000"
-   VALUE "ProductName", "Mercenaries of Astonia\000"
-   VALUE "ProductVersion", "2.14.00\000"
+   VALUE "OriginalFilename", "openMerc.EXE\000"
+   VALUE "ProductName", "openMerc\000"
+   VALUE "ProductVersion", "2.14.06\000"
    VALUE "Comments", "Beta Test Version\000"
   }
 

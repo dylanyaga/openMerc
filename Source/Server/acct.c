@@ -1961,6 +1961,38 @@ void list_characters2(LIST *head)       // listing grolms,gargs,icegargs only, d
 	printf("</table>");
 }
 
+void list_characters_good(LIST *head)    // excludes grolms, gargs, icegargs. decides by sprite-nr
+{
+	int n;
+
+	printf("<table>");
+
+	for (n = 0; n<MAXTCHARS; n++)
+	{
+		if (ch[n].used==USE_EMPTY)
+		{
+			continue;
+		}
+		if (ch[n].sprite==12240 || ch[n].sprite==18384 || ch[n].sprite==21456)
+		{
+			continue;
+		}
+		if(ch[n].alignment < 0)
+		{
+			continue;
+		}
+		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
+		       "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",
+		       n, n,
+		       (ch[n].flags & CF_RESPAWN) ? "<b>" : "",
+		       ch[n].name,
+		       (ch[n].flags & CF_RESPAWN) ? "</b>" : "",
+		       ch[n].x, ch[n].y, ch[n].points_tot >> 10, ch[n].alignment, n, n);
+	}
+
+	printf("</table>");
+}
+
 void list_new_characters(LIST *head)        // listing characters with high IDs
 {
 	int n;
@@ -2136,7 +2168,8 @@ int main(int argc, char *args[])
 	case    15:
 		copy_character(head);
 		break;
-
+	case    16:
+		list_characters_good(head);
 	case    21:
 		list_objects(head);
 		break;
@@ -2167,7 +2200,8 @@ int main(int argc, char *args[])
 	default:
 		printf("Together those lists include all character-templates<br>");
 		printf("<a href=/cgi-imp/acct.cgi?step=11>Characters (without Grolms, Gargoyles, Icegargs)</a><br>");
-		printf("<a href=/cgi-imp/acct.cgi?step=41>Characters (only    Grolms, Gargoyles, Icegargs) </a><br><br>");
+		printf("<a href=/cgi-imp/acct.cgi?step=16>Characters (only with Positive Alignment) </a><br><br>");
+		printf("<a href=/cgi-imp/acct.cgi?step=41>Characters (only Grolms, Gargoyles, Icegargs) </a><br><br>");
 		printf("This list includes only characters with high IDs for fast access<br>");
 		printf("<a href=/cgi-imp/acct.cgi?step=51>New characters (only if they got a high ID)</a><br><br>");
 		printf("<a href=/cgi-imp/acct.cgi?step=21>Object Templates</a><br>");
@@ -2181,18 +2215,9 @@ int main(int argc, char *args[])
 
 	printf("<hr width=80%% color=\"#808000\"><br>\n");
 	printf("<table width=\"100%%\"><tr>");
-	if (step>11 && step<20)
-	{
-		printf("<td align=center><a href=/cgi-imp/acct.cgi?step=11>Back to main page</a></td>");
-	}
-	else if (step>21 && step<30)
-	{
-		printf("<td align=center><a href=/cgi-imp/acct.cgi?step=21>Back to main page</a></td>");
-	}
-	else
-	{
-		printf("<td align=center><a href=/cgi-imp/acct.cgi>Back to main page</a></td>");
-	}
+
+	printf("<td align=center><a href=/cgi-imp/acct.cgi>Back to main page</a></td>");
+
 	printf("<td align=right><table><tr><td>");
 
 	printf("</td></tr></table></td></tr></table>");

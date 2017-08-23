@@ -137,9 +137,9 @@ static void unload(void)
 	{
 		perror("munmap(ch)");
 	}
-	if (munmap(ch, CHARSIZE))
+	if (munmap(player, CHARSIZE))
 	{
-		perror("munmap(ch)");
+		perror("munmap(player)");
 	}
 	if (munmap(it, TITEMSIZE))
 	{

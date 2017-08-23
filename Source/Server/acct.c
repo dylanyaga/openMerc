@@ -268,10 +268,11 @@ static char *data_name[100] = {
 
 void list_all_player_characters()
 {
+	int n;
 	printf("<ul>\n");
-	for (n = 1; n<MAXCHARS && shown<50; n++)
+	for (n = 1; n<MAXCHARS; n++)
 	{
-		printf("<li>%s</li>", players[n].name);
+		printf("<li>%s</li>", player[n].name);
 	}
 	printf("</ul>\n");
 }

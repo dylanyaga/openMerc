@@ -54,6 +54,36 @@ char *at_name[5] = {
 	"Strength"
 };
 
+int extend(int handle, long sizereq, size_t sizeone, void*templ)
+{
+	long length;
+	void *buffer;
+
+	length = lseek(handle, 0L, SEEK_END);
+	if (length < sizereq)
+	{
+		xlog("Current size = %ldK, extending to %ldK", length / 1024, sizereq / 1024);
+		buffer = templ;
+		if (buffer == NULL)
+		{
+			buffer = calloc(1, sizeone);             // automatically clears memory
+		}
+		if (buffer == NULL)
+		{
+			return( 0);           // calloc() failure
+		}
+		for (; length < sizereq; length += sizeone)
+		{
+			write(handle, buffer, sizeone);
+		}
+		if (templ == NULL)
+		{
+			free(buffer);
+		}
+	}
+	return(1); // success
+}
+
 static int load(void)
 {
 	int handle;

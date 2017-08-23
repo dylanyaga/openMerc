@@ -340,7 +340,7 @@ void copy_character(LIST *head)
 
 }
 
-void view_character(LIST *head, character *target)
+void view_character(LIST *head, struct character *target)
 {
 	int cn, n;
 	char *tmp;

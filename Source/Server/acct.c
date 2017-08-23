@@ -2229,7 +2229,13 @@ int main(int argc, char *args[])
 	LIST *head;
 	head = is_form_empty() ? NULL : cgi_input_parse();
 
-	chdir("/home/merc");
+	int result = chdir("/home/merc");
+
+	if(result != 0)
+	{
+		printf("Unable to find /home/merc");
+		exit(1);
+	}
 
 	printf("Content-Type: text/html\n\n");
 	printf("<html><head><title>World Builder</title><META HTTP-EQUIV=\"PRAGMA\" CONTENT=\"NO-CACHE\"></head>\n");

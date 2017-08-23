@@ -1992,7 +1992,7 @@ void list_characters_good(LIST *head)    // excludes grolms, gargs, icegargs. de
 
 	printf("</table>\n");
 }
-static int bad_name_count = 56;
+#define bad_name_count 56
 static char *bad_names[bad_name_count] = {
 	"Guard",
 	"Janitor",

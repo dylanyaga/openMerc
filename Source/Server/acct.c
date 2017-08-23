@@ -2013,25 +2013,25 @@ void list_named_characters(LIST *head)    // excludes grolms, gargs, icegargs. d
 		{
 			continue;
 		}
-		if(ch[n].name == "Guard" ||
-		   ch[n].name == "Janitor" ||
-		   ch[n].name == "Peacekeeper" ||
-		   ch[n].name == "Merchant" ||
-		   ch[n].name == "Barkeeper" ||
-		   ch[n].name == "Cityguard" ||
-		   ch[n].name == "Librarian" ||
-		   ch[n].name == "Amazon" ||
-		   ch[n].name == "Swordsman" ||
-		   ch[n].name == "Thief" ||
-		   ch[n].name == "Adventurer" ||
-		   ch[n].name == "Tower Guard" ||
-		   ch[n].name == "Tower Ratling" ||
-		   ch[n].name == "Tower Greenling" ||
-		   ch[n].name == "Tower Skeleton" ||
-		   ch[n].name == "Tower Seyan'Du" ||
-		   ch[n].name == "Tower Warrior" ||
-		   ch[n].name == "Tower Sorceress" ||
-		   ch[n].name == "Golem"
+		if(strcmp(ch[n].name, "Guard") == 0 ||
+		   strcmp(ch[n].name, "Janitor") == 0  ||
+		   strcmp(ch[n].name, "Peacekeeper") == 0  ||
+		   strcmp(ch[n].name, "Merchant") == 0  ||
+		   strcmp(ch[n].name, "Barkeeper") == 0  ||
+		   strcmp(ch[n].name, "Cityguard") == 0  ||
+		   strcmp(ch[n].name, "Librarian") == 0  ||
+		   strcmp(ch[n].name, "Amazon") == 0  ||
+		   strcmp(ch[n].name, "Swordsman") == 0  ||
+		   strcmp(ch[n].name, "Thief") == 0  ||
+		   strcmp(ch[n].name, "Adventurer") == 0  ||
+		   strcmp(ch[n].name, "Tower Guard") == 0  ||
+		   strcmp(ch[n].name, "Tower Ratling") == 0  ||
+		   strcmp(ch[n].name, "Tower Greenling") == 0  ||
+		   strcmp(ch[n].name, "Tower Skeleton") == 0  ||
+		   strcmp(ch[n].name, "Tower Seyan'Du") == 0  ||
+		   strcmp(ch[n].name, "Tower Warrior") == 0  ||
+		   strcmp(ch[n].name, "Tower Sorceress") == 0  ||
+		   strcmp(ch[n].name, "Golem") == 0
 		   )
 		{
 			continue;

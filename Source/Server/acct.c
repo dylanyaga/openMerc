@@ -82,7 +82,12 @@ static int load(void)
 	handle = open(DATDIR "/char.dat", O_RDWR);
 	if (handle==-1)
 	{
-		fprintf(stderr, "char.dat does not exist.\n");
+		if (getcwd(cwd, sizeof(cwd)) != NULL)
+		{
+			fprintf(stderr, "cwd: %s\n", cwd);
+		}
+		perror(DATDIR "/char.dat");
+
 		return(-1);
 	}
 

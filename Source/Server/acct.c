@@ -2074,7 +2074,7 @@ void list_named_characters(LIST *head)    // excludes grolms, gargs, icegargs. d
 		}
 		for(int i = 0; i < bad_name_count; i++)
 		{
-			if(strcmp(ch[n].name, bad_name[i]) == 0)
+			if(strcmp(ch[n].name, bad_names[i]) == 0)
 			{
 				continue;
 			}

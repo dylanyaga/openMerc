@@ -2066,7 +2066,9 @@ void list_named_characters(LIST *head)    // excludes grolms, gargs, icegargs. d
 		   strcmp(ch[n].name, "Archmage") == 0 ||
 		   strcmp(ch[n].name, "Swindler") == 0 ||
 		   strcmp(ch[n].name, "Sea Golem") == 0 ||
-		   strcmp(ch[n].name, "Barbaric Fighter") == 0
+		   strcmp(ch[n].name, "Barbaric Fighter") == 0 ||
+		   strcmp(ch[n].name, "Lizard Attacker") == 0 ||
+		   strcmp(ch[n].name, "Lizard Necromancer") == 0
 		   )
 		{
 			continue;

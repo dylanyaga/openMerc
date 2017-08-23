@@ -2005,7 +2005,7 @@ void list_characters_non_monster(LIST *head)    // excludes grolms, gargs, icega
 		{
 			continue;
 		}
-		if(ch[cn].kindred & KIN_MONSTER)
+		if(ch[n].kindred & KIN_MONSTER)
 		{
 			continue;
 		}

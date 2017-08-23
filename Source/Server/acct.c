@@ -2260,7 +2260,7 @@ int main(int argc, char *args[])
 		printf("Together those lists include all character-templates<br>\n");
 		printf("<a href=/cgi-imp/acct.cgi?step=11>Characters (without Grolms, Gargoyles, Icegargs)</a><br>\n");
 		printf("<a href=/cgi-imp/acct.cgi?step=16>Characters (only with Positive Alignment) </a><br>\n");
-		printf("<a href=/cgi-imp/acct.cgi?step=16>Characters (only Named) </a><br>\n");
+		printf("<a href=/cgi-imp/acct.cgi?step=17>Characters (only Named) </a><br>\n");
 		printf("<a href=/cgi-imp/acct.cgi?step=41>Characters (only Grolms, Gargoyles, Icegargs) </a><br><br>\n");
 		printf("This list includes only characters with high IDs for fast access<br>\n");
 		printf("<a href=/cgi-imp/acct.cgi?step=51>New characters (only if they got a high ID)</a><br><br>\n");

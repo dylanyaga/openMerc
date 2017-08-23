@@ -69,6 +69,10 @@ static int load(void)
 		perror(DATDIR "/tchar.dat");
 		return(-1);
 	}
+	if (!extend(handle, TCHARSIZE, sizeof(struct character), NULL))
+	{
+		return( -1);
+	}
 
 	ch = mmap(NULL, TCHARSIZE, PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
 	if (ch==(void*)-1)
@@ -82,20 +86,20 @@ static int load(void)
 	handle = open(DATDIR "/char.dat", O_RDWR);
 	if (handle==-1)
 	{
-		if (getcwd(cwd, sizeof(cwd)) != NULL)
-		{
-			fprintf(stderr, "cwd: %s\n", cwd);
-		}
 		perror(DATDIR "/char.dat");
 
 		return(-1);
+	}
+	if (!extend(handle, CHARSIZE, sizeof(struct character), NULL))
+	{
+		return( -1);
 	}
 
 	player = mmap(NULL, CHARSIZE, PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
 	if (player==(void*)-1)
 	{
 		fprintf(stderr, "cannot mmap char.dat.\n");
-		return(-1);
+		return( -1);
 	}
 	close(handle);
 // DY Add player open

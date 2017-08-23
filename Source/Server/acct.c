@@ -310,7 +310,7 @@ void copy_character(LIST *head)
 
 	for (n = 1; n<MAXTCHARS; n++)
 	{
-		if (target[n].used==USE_EMPTY)
+		if (ch[n].used==USE_EMPTY)
 		{
 			break;
 		}
@@ -320,20 +320,20 @@ void copy_character(LIST *head)
 		printf("MAXTCHARS reached!\n");
 		return;
 	}
-	target[n] = target[cn];
+	ch[n] = ch[cn];
 
 	printf("Done. Here is your new, copied monster\n");
 	printf("<table>\n"); // show copied monster for direct access.
 
 
-//                if (target[n].used==USE_EMPTY) continue;
+//                if (ch[n].used==USE_EMPTY) continue;
 	printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
 	       "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",
 	       n, n,
-	       (target[n].flags & CF_RESPAWN) ? "<b>" : "",
-	       target[n].name,
-	       (target[n].flags & CF_RESPAWN) ? "</b>" : "",
-	       target[n].x, target[n].y, target[n].points_tot >> 10, target[n].alignment, n, n);
+	       (ch[n].flags & CF_RESPAWN) ? "<b>" : "",
+	       ch[n].name,
+	       (ch[n].flags & CF_RESPAWN) ? "</b>" : "",
+	       ch[n].x, ch[n].y, ch[n].points_tot >> 10, ch[n].alignment, n, n);
 
 	printf("</table>\n");
 
@@ -873,9 +873,9 @@ void delete_character(LIST *head)
 		return;
 	}
 
-	target[cn].used = USE_EMPTY;
+	ch[cn].used = USE_EMPTY;
 
-	if (target[cn].flags & CF_RESPAWN)
+	if (ch[cn].flags & CF_RESPAWN)
 	{
 		globs->reset_char = cn;
 	}
@@ -921,14 +921,14 @@ void update_character(LIST *head)
 		return;
 	}
 
-	bzero(&target[cn], sizeof(struct character));
-	target[cn].used = USE_ACTIVE;
+	bzero(&ch[cn], sizeof(struct character));
+	ch[cn].used = USE_ACTIVE;
 
 	tmp = find_val(head, "name");
 	if (tmp)
 	{
-		strncpy(target[cn].name, tmp, 35);
-		target[cn].name[35] = 0;
+		strncpy(ch[cn].name, tmp, 35);
+		ch[cn].name[35] = 0;
 	}
 	else
 	{
@@ -939,8 +939,8 @@ void update_character(LIST *head)
 	tmp = find_val(head, "reference");
 	if (tmp)
 	{
-		strncpy(target[cn].reference, tmp, 35);
-		target[cn].reference[35] = 0;
+		strncpy(ch[cn].reference, tmp, 35);
+		ch[cn].reference[35] = 0;
 	}
 	else
 	{
@@ -951,8 +951,8 @@ void update_character(LIST *head)
 	tmp = find_val(head, "description");
 	if (tmp)
 	{
-		strncpy(target[cn].description, tmp, 195);
-		target[cn].description[195] = 0;
+		strncpy(ch[cn].description, tmp, 195);
+		ch[cn].description[195] = 0;
 	}
 	else
 	{
@@ -967,13 +967,13 @@ void update_character(LIST *head)
 		{
 			val |= atoi(tmps[n]);
 		}
-		target[cn].kindred = val;
+		ch[cn].kindred = val;
 	}
 
 	tmp = find_val(head, "sprite");
 	if (tmp)
 	{
-		target[cn].sprite = atoi(tmp);
+		ch[cn].sprite = atoi(tmp);
 	}
 	else
 	{
@@ -984,7 +984,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "sound");
 	if (tmp)
 	{
-		target[cn].sound = atoi(tmp);
+		ch[cn].sound = atoi(tmp);
 	}
 	else
 	{
@@ -995,7 +995,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "class");
 	if (tmp)
 	{
-		target[cn].class = atoi(tmp);
+		ch[cn].class = atoi(tmp);
 	}
 	else
 	{
@@ -1012,12 +1012,12 @@ void update_character(LIST *head)
 			lval |= atoll(tmps[n]);
 		}
 	}
-	target[cn].flags = lval;
+	ch[cn].flags = lval;
 
 	tmp = find_val(head, "alignment");
 	if (tmp)
 	{
-		target[cn].alignment = atoi(tmp);
+		ch[cn].alignment = atoi(tmp);
 	}
 	else
 	{
@@ -1031,11 +1031,11 @@ void update_character(LIST *head)
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			target[cn].data[n] = atoi(tmp);
+			ch[cn].data[n] = atoi(tmp);
 		}
 		else
 		{
-			target[cn].data[n] = 0;
+			ch[cn].data[n] = 0;
 		}
 	}
 
@@ -1045,13 +1045,13 @@ void update_character(LIST *head)
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			strncpy(target[cn].text[n], tmp, 158);
+			strncpy(ch[cn].text[n], tmp, 158);
 		}
 		else
 		{
-			target[cn].text[n][0] = 0;
+			ch[cn].text[n][0] = 0;
 		}
-		target[cn].text[n][159] = 0;
+		ch[cn].text[n][159] = 0;
 	}
 
 	for (n = 0; n<5; n++)
@@ -1060,7 +1060,7 @@ void update_character(LIST *head)
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			target[cn].attrib[n][0] = atoi(tmp);
+			ch[cn].attrib[n][0] = atoi(tmp);
 		}
 		else
 		{
@@ -1072,7 +1072,7 @@ void update_character(LIST *head)
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			target[cn].attrib[n][1] = atoi(tmp);
+			ch[cn].attrib[n][1] = atoi(tmp);
 		}
 		else
 		{
@@ -1084,7 +1084,7 @@ void update_character(LIST *head)
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			target[cn].attrib[n][2] = atoi(tmp);
+			ch[cn].attrib[n][2] = atoi(tmp);
 		}
 		else
 		{
@@ -1096,7 +1096,7 @@ void update_character(LIST *head)
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			target[cn].attrib[n][3] = atoi(tmp);
+			ch[cn].attrib[n][3] = atoi(tmp);
 		}
 		else
 		{
@@ -1108,7 +1108,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "hp_0");
 	if (tmp)
 	{
-		target[cn].hp[0] = atoi(tmp);
+		ch[cn].hp[0] = atoi(tmp);
 	}
 	else
 	{
@@ -1119,7 +1119,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "hp_1");
 	if (tmp)
 	{
-		target[cn].hp[1] = atoi(tmp);
+		ch[cn].hp[1] = atoi(tmp);
 	}
 	else
 	{
@@ -1130,7 +1130,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "hp_2");
 	if (tmp)
 	{
-		target[cn].hp[2] = atoi(tmp);
+		ch[cn].hp[2] = atoi(tmp);
 	}
 	else
 	{
@@ -1141,7 +1141,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "hp_3");
 	if (tmp)
 	{
-		target[cn].hp[3] = atoi(tmp);
+		ch[cn].hp[3] = atoi(tmp);
 	}
 	else
 	{
@@ -1152,7 +1152,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "end_0");
 	if (tmp)
 	{
-		target[cn].end[0] = atoi(tmp);
+		ch[cn].end[0] = atoi(tmp);
 	}
 	else
 	{
@@ -1163,7 +1163,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "end_1");
 	if (tmp)
 	{
-		target[cn].end[1] = atoi(tmp);
+		ch[cn].end[1] = atoi(tmp);
 	}
 	else
 	{
@@ -1174,7 +1174,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "end_2");
 	if (tmp)
 	{
-		target[cn].end[2] = atoi(tmp);
+		ch[cn].end[2] = atoi(tmp);
 	}
 	else
 	{
@@ -1185,7 +1185,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "end_3");
 	if (tmp)
 	{
-		target[cn].end[3] = atoi(tmp);
+		ch[cn].end[3] = atoi(tmp);
 	}
 	else
 	{
@@ -1196,7 +1196,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "mana_0");
 	if (tmp)
 	{
-		target[cn].mana[0] = atoi(tmp);
+		ch[cn].mana[0] = atoi(tmp);
 	}
 	else
 	{
@@ -1207,7 +1207,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "mana_1");
 	if (tmp)
 	{
-		target[cn].mana[1] = atoi(tmp);
+		ch[cn].mana[1] = atoi(tmp);
 	}
 	else
 	{
@@ -1218,7 +1218,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "mana_2");
 	if (tmp)
 	{
-		target[cn].mana[2] = atoi(tmp);
+		ch[cn].mana[2] = atoi(tmp);
 	}
 	else
 	{
@@ -1229,7 +1229,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "mana_3");
 	if (tmp)
 	{
-		target[cn].mana[3] = atoi(tmp);
+		ch[cn].mana[3] = atoi(tmp);
 	}
 	else
 	{
@@ -1244,51 +1244,51 @@ void update_character(LIST *head)
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			target[cn].skill[n][0] = atoi(tmp);
+			ch[cn].skill[n][0] = atoi(tmp);
 		}
 		else
 		{
-			target[cn].skill[n][0] = 0;
+			ch[cn].skill[n][0] = 0;
 		}
 
 		sprintf(buf, "skill%d_1", n);
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			target[cn].skill[n][1] = atoi(tmp);
+			ch[cn].skill[n][1] = atoi(tmp);
 		}
 		else
 		{
-			target[cn].skill[n][1] = 0;
+			ch[cn].skill[n][1] = 0;
 		}
 
 		sprintf(buf, "skill%d_2", n);
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			target[cn].skill[n][2] = atoi(tmp);
+			ch[cn].skill[n][2] = atoi(tmp);
 		}
 		else
 		{
-			target[cn].skill[n][2] = 0;
+			ch[cn].skill[n][2] = 0;
 		}
 
 		sprintf(buf, "skill%d_3", n);
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			target[cn].skill[n][3] = atoi(tmp);
+			ch[cn].skill[n][3] = atoi(tmp);
 		}
 		else
 		{
-			target[cn].skill[n][3] = 0;
+			ch[cn].skill[n][3] = 0;
 		}
 	}
 
 	tmp = find_val(head, "speed_mod");
 	if (tmp)
 	{
-		target[cn].speed_mod = atoi(tmp);
+		ch[cn].speed_mod = atoi(tmp);
 	}
 	else
 	{
@@ -1299,7 +1299,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "weapon_bonus");
 	if (tmp)
 	{
-		target[cn].weapon_bonus = atoi(tmp);
+		ch[cn].weapon_bonus = atoi(tmp);
 	}
 	else
 	{
@@ -1310,7 +1310,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "light_bonus");
 	if (tmp)
 	{
-		target[cn].light_bonus = atoi(tmp);
+		ch[cn].light_bonus = atoi(tmp);
 	}
 	else
 	{
@@ -1321,7 +1321,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "armor_bonus");
 	if (tmp)
 	{
-		target[cn].armor_bonus = atoi(tmp);
+		ch[cn].armor_bonus = atoi(tmp);
 	}
 	else
 	{
@@ -1332,7 +1332,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "points");
 	if (tmp)
 	{
-		target[cn].points = atoi(tmp);
+		ch[cn].points = atoi(tmp);
 	}
 	else
 	{
@@ -1343,7 +1343,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "points_tot");
 	if (tmp)
 	{
-		target[cn].points_tot = atoi(tmp);
+		ch[cn].points_tot = atoi(tmp);
 	}
 	else
 	{
@@ -1354,7 +1354,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "x");
 	if (tmp)
 	{
-		target[cn].x = atoi(tmp);
+		ch[cn].x = atoi(tmp);
 	}
 	else
 	{
@@ -1365,7 +1365,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "y");
 	if (tmp)
 	{
-		target[cn].y = atoi(tmp);
+		ch[cn].y = atoi(tmp);
 	}
 	else
 	{
@@ -1376,7 +1376,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "dir");
 	if (tmp)
 	{
-		target[cn].dir = atoi(tmp);
+		ch[cn].dir = atoi(tmp);
 	}
 	else
 	{
@@ -1387,7 +1387,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "gold");
 	if (tmp)
 	{
-		target[cn].gold = atoi(tmp);
+		ch[cn].gold = atoi(tmp);
 	}
 	else
 	{
@@ -1401,7 +1401,7 @@ void update_character(LIST *head)
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			target[cn].worn[n] = atoi(tmp);
+			ch[cn].worn[n] = atoi(tmp);
 		}
 	}
 
@@ -1411,14 +1411,14 @@ void update_character(LIST *head)
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			target[cn].item[n] = atoi(tmp);
+			ch[cn].item[n] = atoi(tmp);
 		}
 	}
 
 	tmp = find_val(head, "citem");
 	if (tmp)
 	{
-		target[cn].citem = atoi(tmp);
+		ch[cn].citem = atoi(tmp);
 	}
 	else
 	{
@@ -1426,14 +1426,14 @@ void update_character(LIST *head)
 		return;
 	}
 
-	if (target[cn].flags & CF_RESPAWN)
+	if (ch[cn].flags & CF_RESPAWN)
 	{
 		globs->reset_char = cn;
 	}
 
-	if (!target[cn].data[29] && (target[cn].flags & CF_RESPAWN))
+	if (!ch[cn].data[29] && (ch[cn].flags & CF_RESPAWN))
 	{
-		target[cn].data[29] = target[cn].x + target[cn].y * MAPX;
+		ch[cn].data[29] = ch[cn].x + ch[cn].y * MAPX;
 	}
 
 	printf("Done.\n");
@@ -1956,21 +1956,21 @@ void list_characters(LIST *head)    // excludes grolms, gargs, icegargs. decides
 
 	for (n = 0; n<MAXTCHARS; n++)
 	{
-		if (target[n].used==USE_EMPTY)
+		if (ch[n].used==USE_EMPTY)
 		{
 			continue;
 		}
-		if (target[n].sprite==12240 || target[n].sprite==18384 || target[n].sprite==21456)
+		if (ch[n].sprite==12240 || ch[n].sprite==18384 || ch[n].sprite==21456)
 		{
 			continue;
 		}
 		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
 		       "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",
 		       n, n,
-		       (target[n].flags & CF_RESPAWN) ? "<b>" : "",
-		       target[n].name,
-		       (target[n].flags & CF_RESPAWN) ? "</b>" : "",
-		       target[n].x, target[n].y, target[n].points_tot >> 10, target[n].alignment, n, n);
+		       (ch[n].flags & CF_RESPAWN) ? "<b>" : "",
+		       ch[n].name,
+		       (ch[n].flags & CF_RESPAWN) ? "</b>" : "",
+		       ch[n].x, ch[n].y, ch[n].points_tot >> 10, ch[n].alignment, n, n);
 	}
 
 	printf("</table>\n");
@@ -1984,21 +1984,21 @@ void list_characters2(LIST *head)       // listing grolms,gargs,icegargs only, d
 
 	for (n = 0; n<MAXTCHARS; n++)
 	{
-		if (target[n].used==USE_EMPTY)
+		if (ch[n].used==USE_EMPTY)
 		{
 			continue;
 		}
-		if (!(target[n].sprite==12240 || target[n].sprite==18384 || target[n].sprite==21456))
+		if (!(ch[n].sprite==12240 || ch[n].sprite==18384 || ch[n].sprite==21456))
 		{
 			continue;
 		}
 		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
 		       "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",
 		       n, n,
-		       (target[n].flags & CF_RESPAWN) ? "<b>" : "",
-		       target[n].name,
-		       (target[n].flags & CF_RESPAWN) ? "</b>" : "",
-		       target[n].x, target[n].y, target[n].points_tot >> 10, target[n].alignment, n, n);
+		       (ch[n].flags & CF_RESPAWN) ? "<b>" : "",
+		       ch[n].name,
+		       (ch[n].flags & CF_RESPAWN) ? "</b>" : "",
+		       ch[n].x, ch[n].y, ch[n].points_tot >> 10, ch[n].alignment, n, n);
 	}
 
 	printf("</table>\n");
@@ -2012,25 +2012,25 @@ void list_characters_good(LIST *head)    // excludes grolms, gargs, icegargs. de
 
 	for (n = 0; n<MAXTCHARS; n++)
 	{
-		if (target[n].used==USE_EMPTY)
+		if (ch[n].used==USE_EMPTY)
 		{
 			continue;
 		}
-		if (target[n].sprite==12240 || target[n].sprite==18384 || target[n].sprite==21456)
+		if (ch[n].sprite==12240 || ch[n].sprite==18384 || ch[n].sprite==21456)
 		{
 			continue;
 		}
-		if(target[n].alignment < 0)
+		if(ch[n].alignment < 0)
 		{
 			continue;
 		}
 		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
 		       "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",
 		       n, n,
-		       (target[n].flags & CF_RESPAWN) ? "<b>" : "",
-		       target[n].name,
-		       (target[n].flags & CF_RESPAWN) ? "</b>" : "",
-		       target[n].x, target[n].y, target[n].points_tot >> 10, target[n].alignment, n, n);
+		       (ch[n].flags & CF_RESPAWN) ? "<b>" : "",
+		       ch[n].name,
+		       (ch[n].flags & CF_RESPAWN) ? "</b>" : "",
+		       ch[n].x, ch[n].y, ch[n].points_tot >> 10, ch[n].alignment, n, n);
 	}
 
 	printf("</table>\n");
@@ -2044,21 +2044,21 @@ void list_characters_non_monster(LIST *head)    // excludes grolms, gargs, icega
 
 	for (n = 0; n<MAXTCHARS; n++)
 	{
-		if (target[n].used==USE_EMPTY)
+		if (ch[n].used==USE_EMPTY)
 		{
 			continue;
 		}
-		if(target[n].kindred & KIN_MONSTER)
+		if(ch[n].kindred & KIN_MONSTER)
 		{
 			continue;
 		}
 		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
 		       "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",
 		       n, n,
-		       (target[n].flags & CF_RESPAWN) ? "<b>" : "",
-		       target[n].name,
-		       (target[n].flags & CF_RESPAWN) ? "</b>" : "",
-		       target[n].x, target[n].y, target[n].points_tot >> 10, target[n].alignment, n, n);
+		       (ch[n].flags & CF_RESPAWN) ? "<b>" : "",
+		       ch[n].name,
+		       (ch[n].flags & CF_RESPAWN) ? "</b>" : "",
+		       ch[n].x, ch[n].y, ch[n].points_tot >> 10, ch[n].alignment, n, n);
 	}
 
 	printf("</table>\n");
@@ -2133,21 +2133,21 @@ void list_named_characters(LIST *head)    // excludes grolms, gargs, icegargs. d
 	for (n = 0; n<MAXTCHARS; n++)
 	{
 		int found = 0;
-		if (target[n].used==USE_EMPTY)
+		if (ch[n].used==USE_EMPTY)
 		{
 			continue;
 		}
-		if (target[n].sprite==12240 ||
-		    target[n].sprite==18384 ||
-		    target[n].sprite==21456 ||
-		    target[n].sprite==14288 ||
-		    target[n].sprite==31696)
+		if (ch[n].sprite==12240 ||
+		    ch[n].sprite==18384 ||
+		    ch[n].sprite==21456 ||
+		    ch[n].sprite==14288 ||
+		    ch[n].sprite==31696)
 		{
 			continue;
 		}
 		for(i = 0; i < bad_name_count; i++)
 		{
-			if(strcmp(target[n].name, bad_names[i]) == 0)
+			if(strcmp(ch[n].name, bad_names[i]) == 0)
 			{
 				found = 1;
 			}
@@ -2159,10 +2159,10 @@ void list_named_characters(LIST *head)    // excludes grolms, gargs, icegargs. d
 		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
 		       "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",
 		       n, n,
-		       (target[n].flags & CF_RESPAWN) ? "<b>" : "",
-		       target[n].name,
-		       (target[n].flags & CF_RESPAWN) ? "</b>" : "",
-		       target[n].x, target[n].y, target[n].points_tot >> 10, target[n].alignment, n, n);
+		       (ch[n].flags & CF_RESPAWN) ? "<b>" : "",
+		       ch[n].name,
+		       (ch[n].flags & CF_RESPAWN) ? "</b>" : "",
+		       ch[n].x, ch[n].y, ch[n].points_tot >> 10, ch[n].alignment, n, n);
 	}
 
 	printf("</table>\n");
@@ -2176,17 +2176,17 @@ void list_new_characters(LIST *head)        // listing characters with high IDs
 
 	for (n = 1012; n<MAXTCHARS; n++)
 	{
-		if (target[n].used==USE_EMPTY)
+		if (ch[n].used==USE_EMPTY)
 		{
 			continue;
 		}
 		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
 		       "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",
 		       n, n,
-		       (target[n].flags & CF_RESPAWN) ? "<b>" : "",
-		       target[n].name,
-		       (target[n].flags & CF_RESPAWN) ? "</b>" : "",
-		       target[n].x, target[n].y, target[n].points_tot >> 10, target[n].alignment, n, n);
+		       (ch[n].flags & CF_RESPAWN) ? "<b>" : "",
+		       ch[n].name,
+		       (ch[n].flags & CF_RESPAWN) ? "</b>" : "",
+		       ch[n].x, ch[n].y, ch[n].points_tot >> 10, ch[n].alignment, n, n);
 	}
 
 	printf("</table>\n");
@@ -2317,14 +2317,14 @@ int main(int argc, char *args[])
 		}
 	}
 
-	target[1].used = USE_ACTIVE;
-	strcpy(target[1].name, "Blank Template");
+	ch[1].used = USE_ACTIVE;
+	strcpy(ch[1].name, "Blank Template");
 
 	it[1].used = USE_ACTIVE;
 	strcpy(it[1].name, "Blank Template");
 
 	/* for (n=1; n<MAXTCHARS; n++) {
-	        if (target[n].used==USE_EMPTY) continue;
+	        if (ch[n].used==USE_EMPTY) continue;
 	   } */
 
 /*      for (n=1; n<MAXTITEM; n++) {

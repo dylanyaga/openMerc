@@ -1992,6 +1992,35 @@ void list_characters_good(LIST *head)    // excludes grolms, gargs, icegargs. de
 
 	printf("</table>\n");
 }
+
+void list_characters_non_monster(LIST *head)    // excludes grolms, gargs, icegargs. decides by sprite-nr
+{
+	int n;
+
+	printf("<table>\n");
+
+	for (n = 0; n<MAXTCHARS; n++)
+	{
+		if (ch[n].used==USE_EMPTY)
+		{
+			continue;
+		}
+		if(ch[cn].kindred & KIN_MONSTER)
+		{
+			continue;
+		}
+		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
+		       "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",
+		       n, n,
+		       (ch[n].flags & CF_RESPAWN) ? "<b>" : "",
+		       ch[n].name,
+		       (ch[n].flags & CF_RESPAWN) ? "</b>" : "",
+		       ch[n].x, ch[n].y, ch[n].points_tot >> 10, ch[n].alignment, n, n);
+	}
+
+	printf("</table>\n");
+}
+
 #define bad_name_count 56
 static char *bad_names[bad_name_count] = {
 	"Guard",
@@ -2277,6 +2306,9 @@ int main(int argc, char *args[])
 	case 17:
 		list_named_characters(head);
 		break;
+	case 18:
+		list_characters_non_monster(head);
+		break;
 	case    21:
 		list_objects(head);
 		break;
@@ -2309,6 +2341,7 @@ int main(int argc, char *args[])
 		printf("<a href=/cgi-imp/acct.cgi?step=11>Characters (without Grolms, Gargoyles, Icegargs)</a><br>\n");
 		printf("<a href=/cgi-imp/acct.cgi?step=16>Characters (only with Positive Alignment) </a><br>\n");
 		printf("<a href=/cgi-imp/acct.cgi?step=17>Characters (only Named) </a><br>\n");
+		printf("<a href=/cgi-imp/acct.cgi?step=18>Characters (Non Monster) </a><br>\n");
 		printf("<a href=/cgi-imp/acct.cgi?step=41>Characters (only Grolms, Gargoyles, Icegargs) </a><br><br>\n");
 		printf("This list includes only characters with high IDs for fast access<br>\n");
 		printf("<a href=/cgi-imp/acct.cgi?step=51>New characters (only if they got a high ID)</a><br><br>\n");

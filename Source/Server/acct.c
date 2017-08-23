@@ -2013,56 +2013,50 @@ void list_named_characters(LIST *head)    // excludes grolms, gargs, icegargs. d
 		{
 			continue;
 		}
-		int bad_name_count = 41;
-		char *bad_names[bad_name_count] = {
-			"Guard",
-			"Janitor",
-			"Peacekeeper",
-			"Merchant",
-			"Barkeeper",
-			"Cityguard",
-			"Librarian",
-			"Amazon",
-			"Swordsman",
-			"Thief",
-			"Adventurer",
-			"Tower Guard",
-			"Tower Ratling",
-			"Tower Greenling",
-			"Tower Skeleton",
-			"Tower Seyan'Du",
-			"Tower Warrior",
-			"Tower Sorceress",
-			"Golem",
-			"Ghost",
-			"Gatekeeper",
-			"Skeleton",
-			"Outlaw",
-			"Manager",
-			"Lizard Youngster",
-			"Lizard Youth",
-			"Lizard Worker",
-			"Lizard Fighter",
-			"Lizard Warrior",
-			"Lizard Mage",
-			"Bartender",
-			"Spellcaster",
-			"Spellcaster Guard",
-			"Keeper",
-			"Knight",
-			"Undead",
-			"Spider",
-			"Robber",
-			"Undead Lord",
-			"Lord",
-			"Flame"
-		};
-		for(int i = 0; i < bad_name_count; i++)
+		if(strcmp(ch[n].name, "Guard") == 0 ||
+		   strcmp(ch[n].name, "Janitor") == 0  ||
+		   strcmp(ch[n].name, "Peacekeeper") == 0  ||
+		   strcmp(ch[n].name, "Merchant") == 0  ||
+		   strcmp(ch[n].name, "Barkeeper") == 0  ||
+		   strcmp(ch[n].name, "Cityguard") == 0  ||
+		   strcmp(ch[n].name, "Librarian") == 0  ||
+		   strcmp(ch[n].name, "Amazon") == 0  ||
+		   strcmp(ch[n].name, "Swordsman") == 0  ||
+		   strcmp(ch[n].name, "Thief") == 0  ||
+		   strcmp(ch[n].name, "Adventurer") == 0  ||
+		   strcmp(ch[n].name, "Tower Guard") == 0  ||
+		   strcmp(ch[n].name, "Tower Ratling") == 0  ||
+		   strcmp(ch[n].name, "Tower Greenling") == 0  ||
+		   strcmp(ch[n].name, "Tower Skeleton") == 0  ||
+		   strcmp(ch[n].name, "Tower Seyan'Du") == 0  ||
+		   strcmp(ch[n].name, "Tower Warrior") == 0  ||
+		   strcmp(ch[n].name, "Tower Sorceress") == 0  ||
+		   strcmp(ch[n].name, "Golem") == 0 ||
+		   strcmp(ch[n].name, "Ghost") == 0 ||
+		   strcmp(ch[n].name, "Gatekeeper") == 0 ||
+		   strcmp(ch[n].name, "Skeleton") == 0 ||
+		   strcmp(ch[n].name, "Outlaw") == 0 ||
+		   strcmp(ch[n].name, "Manager") == 0 ||
+		   strcmp(ch[n].name, "Lizard Youngster") == 0 ||
+		   strcmp(ch[n].name, "Lizard Youth") == 0 ||
+		   strcmp(ch[n].name, "Lizard Worker") == 0 ||
+		   strcmp(ch[n].name, "Lizard Fighter") == 0 ||
+		   strcmp(ch[n].name, "Lizard Warrior") == 0 ||
+		   strcmp(ch[n].name, "Lizard Mage") == 0 ||
+		   strcmp(ch[n].name, "Bartender") == 0 ||
+		   strcmp(ch[n].name, "Spellcaster") == 0 ||
+		   strcmp(ch[n].name, "Spellcaster Guard") == 0 ||
+		   strcmp(ch[n].name, "Keeper") == 0 ||
+		   strcmp(ch[n].name, "Knight") == 0 ||
+		   strcmp(ch[n].name, "Undead") == 0 ||
+		   strcmp(ch[n].name, "Spider") == 0 ||
+		   strcmp(ch[n].name, "Robber") == 0 ||
+		   strcmp(ch[n].name, "Undead Lord") == 0 ||
+		   strcmp(ch[n].name, "Lord") == 0 ||
+		   strcmp(ch[n].name, "Flame") == 0
+		   )
 		{
-			if(strcmp(ch[n].name, bad_names[i]) == 0)
-			{
-				continue;
-			}
+			continue;
 		}
 		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
 		       "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",

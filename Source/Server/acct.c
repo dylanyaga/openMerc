@@ -281,7 +281,7 @@ void list_all_player_characters()
 		{
 			continue;
 		}
-		printf("<li><a href=/cgi-imp/acct.cgi?step=19&cn=%d>%s</a></li>", n, player[n].name);
+		printf("<li><a href=/cgi-imp/acct.cgi?step=20&cn=%d>%s</a></li>", n, player[n].name);
 	}
 	printf("</ul>\n");
 }

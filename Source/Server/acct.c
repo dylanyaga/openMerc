@@ -722,7 +722,7 @@ void view_player(LIST *head)
 
 	if (player[cn].citem<0 || player[cn].citem>=MAXTITEM)
 	{
-		player[cn].citem = 0;
+		//player[cn].citem = 0;
 	}
 
 	printf("<tr><td>Current Item</td><td><input type=text name=citem value=\"%d\" size=10 maxlength=10> (%s)</td></tr>\n",
@@ -732,7 +732,7 @@ void view_player(LIST *head)
 	{
 		if (player[cn].worn[n]>=MAXTITEM)
 		{
-			player[cn].worn[n] = 0;
+			//player[cn].worn[n] = 0;
 		}
 		printf("<tr><td>%s</td><td><input type=text name=worn%d value=\"%d\" size=10 maxlength=10> (%s)</td></tr>\n",
 		       weartext[n], n, player[cn].worn[n], player[cn].worn[n] ? it[player[cn].worn[n]].name : "none");
@@ -742,7 +742,7 @@ void view_player(LIST *head)
 	{
 		if (player[cn].item[n]<0 || player[cn].item[n]>=MAXTITEM)
 		{
-			player[cn].item[n] = 0;
+			//	player[cn].item[n] = 0;
 		}
 		printf("<tr><td>Item %d</td><td><input type=text name=item%d value=\"%d\" size=10 maxlength=10> (%s)</td></tr>\n",
 		       n, n, player[cn].item[n], player[cn].item[n] ? it[player[cn].item[n]].name : "none");

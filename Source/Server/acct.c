@@ -2031,7 +2031,29 @@ void list_named_characters(LIST *head)    // excludes grolms, gargs, icegargs. d
 		   strcmp(ch[n].name, "Tower Seyan'Du") == 0  ||
 		   strcmp(ch[n].name, "Tower Warrior") == 0  ||
 		   strcmp(ch[n].name, "Tower Sorceress") == 0  ||
-		   strcmp(ch[n].name, "Golem") == 0
+		   strcmp(ch[n].name, "Golem") == 0 ||
+		   strcmp(ch[n].name, "Ghost") == 0 ||
+		   strcmp(ch[n].name, "Gatekeeper") == 0 ||
+		   strcmp(ch[n].name, "Skeleton") == 0 ||
+		   strcmp(ch[n].name, "Outlaw") == 0 ||
+		   strcmp(ch[n].name, "Manager") == 0 ||
+		   strcmp(ch[n].name, "Lizard Youngster") == 0 ||
+		   strcmp(ch[n].name, "Lizard Youth") == 0 ||
+		   strcmp(ch[n].name, "Lizard Worker") == 0 ||
+		   strcmp(ch[n].name, "Lizard Fighter") == 0 ||
+		   strcmp(ch[n].name, "Lizard Warrior") == 0 ||
+		   strcmp(ch[n].name, "Lizard Mage") == 0 ||
+		   strcmp(ch[n].name, "Bartender") == 0 ||
+		   strcmp(ch[n].name, "Spellcaster") == 0 ||
+		   strcmp(ch[n].name, "Spellcaster Guard") == 0 ||
+		   strcmp(ch[n].name, "Keeper") == 0 ||
+		   strcmp(ch[n].name, "Knight") == 0 ||
+		   strcmp(ch[n].name, "Undead") == 0 ||
+		   strcmp(ch[n].name, "Spider") == 0 ||
+		   strcmp(ch[n].name, "Robber") == 0 ||
+		   strcmp(ch[n].name, "Undead Lord") == 0 ||
+		   strcmp(ch[n].name, "Lord") == 0 ||
+		   strcmp(ch[n].name, "Flame") == 0
 		   )
 		{
 			continue;

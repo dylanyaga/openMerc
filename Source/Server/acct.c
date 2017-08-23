@@ -2055,11 +2055,12 @@ static char *bad_names[bad_name_count] = {
 void list_named_characters(LIST *head)    // excludes grolms, gargs, icegargs. decides by sprite-nr
 {
 	int n;
-
+	int i;
 	printf("<table>\n");
 
 	for (n = 0; n<MAXTCHARS; n++)
 	{
+		int found = 0;
 		if (ch[n].used==USE_EMPTY)
 		{
 			continue;
@@ -2072,12 +2073,16 @@ void list_named_characters(LIST *head)    // excludes grolms, gargs, icegargs. d
 		{
 			continue;
 		}
-		for(int i = 0; i < bad_name_count; i++)
+		for(i = 0; i < bad_name_count; i++)
 		{
 			if(strcmp(ch[n].name, bad_names[i]) == 0)
 			{
-				continue;
+				found = 1;
 			}
+		}
+		if(found == 1)
+		{
+			continue;
 		}
 		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
 		       "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",

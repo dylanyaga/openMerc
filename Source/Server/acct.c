@@ -23,6 +23,7 @@
 
 struct character *ch;
 struct character *player;
+struct item *items;
 struct item *it;
 struct global *globs;
 
@@ -134,6 +135,29 @@ static int load(void)
 	close(handle);
 // DY Add player open
 
+// DY add item open
+	handle = open(DATDIR "/item.dat", O_RDWR);
+	if (handle==-1)
+	{
+		//xlog("Building items");
+		//handle = open(DATDIR "/item.dat", O_RDWR | O_CREAT, 0600);
+		perror(DATDIR "/item.dat");
+		return( -1);
+	}
+	if (!extend(handle, ITEMSIZE, sizeof(struct item), NULL))
+	{
+		return( -1);
+	}
+
+
+	items = mmap(NULL, ITEMSIZE, PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
+	if (items==(void*)-1)
+	{
+		return( -1);
+	}
+	close(handle);
+// DY add item open
+
 	handle = open(DATDIR "/titem.dat", O_RDWR);
 	if (handle==-1)
 	{
@@ -174,6 +198,10 @@ static void unload(void)
 	if (munmap(player, CHARSIZE))
 	{
 		perror("munmap(player)");
+	}
+	if (munmap(items, ITEMSIZE))
+	{
+		perror("munmap(items)");
 	}
 	if (munmap(it, TITEMSIZE))
 	{
@@ -760,7 +788,7 @@ void view_player(LIST *head)
 	}
 
 	printf("<tr><td>Current Item</td><td><input type=text name=citem value=\"%d\" size=10 maxlength=10> (%s)</td></tr>\n",
-	       player[cn].citem, player[cn].citem ? it[player[cn].citem].name : "none");
+	       player[cn].citem, player[cn].citem ? items[player[cn].citem].name : "none");
 
 	for (n = 0; n<12; n++)
 	{
@@ -769,7 +797,7 @@ void view_player(LIST *head)
 			//player[cn].worn[n] = 0;
 		}
 		printf("<tr><td>%s</td><td><input type=text name=worn%d value=\"%d\" size=10 maxlength=10> (%s)</td></tr>\n",
-		       weartext[n], n, player[cn].worn[n], player[cn].worn[n] ? it[player[cn].worn[n]].name : "none");
+		       weartext[n], n, player[cn].worn[n], player[cn].worn[n] ? items[player[cn].worn[n]].name : "none");
 	}
 
 	for (n = 0; n<40; n++)
@@ -779,7 +807,7 @@ void view_player(LIST *head)
 			//	player[cn].item[n] = 0;
 		}
 		printf("<tr><td>Item %d</td><td><input type=text name=item%d value=\"%d\" size=10 maxlength=10> (%s)</td></tr>\n",
-		       n, n, player[cn].item[n], player[cn].item[n] ? it[player[cn].item[n]].name : "none");
+		       n, n, player[cn].item[n], player[cn].item[n] ? items[player[cn].item[n]].name : "none");
 	}
 
 	printf("<tr><td>Driver Data:</td></tr>\n");

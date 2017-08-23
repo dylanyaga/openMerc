@@ -277,6 +277,10 @@ void list_all_player_characters()
 	printf("<ul>\n");
 	for (n = 1; n<MAXCHARS; n++)
 	{
+		if (!(player[n].flags & (CF_PLAYER)))
+		{
+			continue;
+		}
 		printf("<li>%s</li>", player[n].name);
 	}
 	printf("</ul>\n");

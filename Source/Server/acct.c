@@ -281,7 +281,7 @@ void list_all_player_characters()
 		{
 			continue;
 		}
-		printf("<li><a href=/cgi-imp/acct.cgi?step=13&cn=%d>%s</a></li>", n, player[n].name);
+		printf("<li><a href=/cgi-imp/acct.cgi?step=19&cn=%d>%s</a></li>", n, player[n].name);
 	}
 	printf("</ul>\n");
 }
@@ -310,7 +310,7 @@ void copy_character(LIST *head)
 
 	for (n = 1; n<MAXTCHARS; n++)
 	{
-		if (ch[n].used==USE_EMPTY)
+		if (target[n].used==USE_EMPTY)
 		{
 			break;
 		}
@@ -320,27 +320,27 @@ void copy_character(LIST *head)
 		printf("MAXTCHARS reached!\n");
 		return;
 	}
-	ch[n] = ch[cn];
+	target[n] = target[cn];
 
 	printf("Done. Here is your new, copied monster\n");
 	printf("<table>\n"); // show copied monster for direct access.
 
 
-//                if (ch[n].used==USE_EMPTY) continue;
+//                if (target[n].used==USE_EMPTY) continue;
 	printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
 	       "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",
 	       n, n,
-	       (ch[n].flags & CF_RESPAWN) ? "<b>" : "",
-	       ch[n].name,
-	       (ch[n].flags & CF_RESPAWN) ? "</b>" : "",
-	       ch[n].x, ch[n].y, ch[n].points_tot >> 10, ch[n].alignment, n, n);
+	       (target[n].flags & CF_RESPAWN) ? "<b>" : "",
+	       target[n].name,
+	       (target[n].flags & CF_RESPAWN) ? "</b>" : "",
+	       target[n].x, target[n].y, target[n].points_tot >> 10, target[n].alignment, n, n);
 
 	printf("</table>\n");
 
 
 }
 
-void view_character(LIST *head)
+void view_character(LIST *head, character target)
 {
 	int cn, n;
 	char *tmp;
@@ -365,65 +365,65 @@ void view_character(LIST *head)
 	printf("<form method=post action=/cgi-imp/acct.cgi>\n");
 	printf("<table>\n");
 	printf("<tr><td>Name:</td><td><input type=text name=name value=\"%s\" size=35 maxlength=35></td></tr>\n",
-	       ch[cn].name);
+	       target[cn].name);
 	printf("<tr><td>Reference:</td><td><input type=text name=reference value=\"%s\" size=35 maxlength=35></td></tr>\n",
-	       ch[cn].reference);
+	       target[cn].reference);
 	printf("<tr><td>Description:</td><td><input type=text name=description value=\"%s\" size=35 maxlength=195></td></tr>\n",
-	       ch[cn].description);
+	       target[cn].description);
 
 	printf("<tr><td valign=top>Kindred:</td><td>\n");
 	printf("Mercenary <input type=checkbox name=kindred value=%d %s><br>\n",
-	       KIN_MERCENARY, (ch[cn].kindred & KIN_MERCENARY) ? "checked" : "");
+	       KIN_MERCENARY, (target[cn].kindred & KIN_MERCENARY) ? "checked" : "");
 	printf("Sorcerer-Mercenary <input type=checkbox name=kindred value=%d %s><br>\n\n",
-	       KIN_SORCERER, (ch[cn].kindred & KIN_SORCERER) ? "checked" : "");
+	       KIN_SORCERER, (target[cn].kindred & KIN_SORCERER) ? "checked" : "");
 	printf("Warrior-Mercenary <input type=checkbox name=kindred value=%d %s><br>\n",
-	       KIN_WARRIOR, (ch[cn].kindred & KIN_WARRIOR) ? "checked" : "");
+	       KIN_WARRIOR, (target[cn].kindred & KIN_WARRIOR) ? "checked" : "");
 	printf("Templar <input type=checkbox name=kindred value=%d %s><br>\n",
-	       KIN_TEMPLAR, (ch[cn].kindred & KIN_TEMPLAR) ? "checked" : "");
+	       KIN_TEMPLAR, (target[cn].kindred & KIN_TEMPLAR) ? "checked" : "");
 	printf("Arch-Templar <input type=checkbox name=kindred value=%d %s><br>\n",
-	       KIN_ARCHTEMPLAR, (ch[cn].kindred & KIN_ARCHTEMPLAR) ? "checked" : "");
+	       KIN_ARCHTEMPLAR, (target[cn].kindred & KIN_ARCHTEMPLAR) ? "checked" : "");
 	printf("Harakim <input type=checkbox name=kindred value=%d %s><br>\n",
-	       KIN_HARAKIM, (ch[cn].kindred & KIN_HARAKIM) ? "checked" : "");
+	       KIN_HARAKIM, (target[cn].kindred & KIN_HARAKIM) ? "checked" : "");
 	printf("Arch-Harakim <input type=checkbox name=kindred value=%d %s><br>\n",
-	       KIN_ARCHHARAKIM, (ch[cn].kindred & KIN_ARCHHARAKIM) ? "checked" : "");
+	       KIN_ARCHHARAKIM, (target[cn].kindred & KIN_ARCHHARAKIM) ? "checked" : "");
 	printf("Seyan'Du <input type=checkbox name=kindred value=%d %s><br>\n",
-	       KIN_SEYAN_DU, (ch[cn].kindred & KIN_SEYAN_DU) ? "checked" : "");
+	       KIN_SEYAN_DU, (target[cn].kindred & KIN_SEYAN_DU) ? "checked" : "");
 	printf("Purple <input type=checkbox name=kindred value=%d %s><br>\n",
-	       KIN_PURPLE, (ch[cn].kindred & KIN_PURPLE) ? "checked" : "");
+	       KIN_PURPLE, (target[cn].kindred & KIN_PURPLE) ? "checked" : "");
 	printf("Monster <input type=checkbox name=kindred value=%d %s><br>\n",
-	       KIN_MONSTER, (ch[cn].kindred & KIN_MONSTER) ? "checked" : "");
+	       KIN_MONSTER, (target[cn].kindred & KIN_MONSTER) ? "checked" : "");
 	printf("Male <input type=checkbox name=kindred value=%d %s><br>\n",
-	       KIN_MALE, (ch[cn].kindred & KIN_MALE) ? "checked" : "");
+	       KIN_MALE, (target[cn].kindred & KIN_MALE) ? "checked" : "");
 	printf("Female <input type=checkbox name=kindred value=%d %s><br>\n",
-	       KIN_FEMALE, (ch[cn].kindred & KIN_FEMALE) ? "checked" : "");
+	       KIN_FEMALE, (target[cn].kindred & KIN_FEMALE) ? "checked" : "");
 	printf("</td></tr>\n");
 
 	printf("<tr><td valign=top>Sprite base:</td><td><input type=text name=sprite value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       ch[cn].sprite);
+	       target[cn].sprite);
 
 	printf("<tr><td valign=top>Sound base:</td><td><input type=text name=sound value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       ch[cn].sound);
+	       target[cn].sound);
 
 	printf("<tr><td valign=top>Class:</td><td><input type=text name=class value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       ch[cn].class);
+	       target[cn].class);
 
 	printf("<tr><td valign=top>Flags:</td><td>\n");
 	printf("Infrared <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       CF_INFRARED, (ch[cn].flags & CF_INFRARED) ? "checked" : "");
+	       CF_INFRARED, (target[cn].flags & CF_INFRARED) ? "checked" : "");
 	printf("Undead <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       CF_UNDEAD, (ch[cn].flags & CF_UNDEAD) ? "checked" : "");
+	       CF_UNDEAD, (target[cn].flags & CF_UNDEAD) ? "checked" : "");
 	printf("Respawn <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       CF_RESPAWN, (ch[cn].flags & CF_RESPAWN) ? "checked" : "");
+	       CF_RESPAWN, (target[cn].flags & CF_RESPAWN) ? "checked" : "");
 	printf("No-Sleep <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       CF_NOSLEEP, (ch[cn].flags & CF_NOSLEEP) ? "checked" : "");
+	       CF_NOSLEEP, (target[cn].flags & CF_NOSLEEP) ? "checked" : "");
 	printf("Merchant <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       CF_MERCHANT, (ch[cn].flags & CF_MERCHANT) ? "checked" : "");
+	       CF_MERCHANT, (target[cn].flags & CF_MERCHANT) ? "checked" : "");
 	printf("Simple Animation <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       CF_SIMPLE, (ch[cn].flags & CF_SIMPLE) ? "checked" : "");
+	       CF_SIMPLE, (target[cn].flags & CF_SIMPLE) ? "checked" : "");
 	printf("</td></tr>\n");
 
 	printf("<tr><td valign=top>Alignment</td><td><input type=text name=alignment value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       ch[cn].alignment);
+	       target[cn].alignment);
 
 	printf("<tr><td colspan=2><table>\n");
 
@@ -432,32 +432,32 @@ void view_character(LIST *head)
 	for (n = 0; n<5; n++)
 	{
 		printf("<tr><td>%s</td>\n", at_name[n]);
-		printf("<td><input type=text name=attrib%d_0 value=\"%d\" size=10 maxlength=10></td>\n", n, ch[cn].attrib[n][0]);
-		printf("<td><input type=text name=attrib%d_1 value=\"%d\" size=10 maxlength=10></td>\n", n, ch[cn].attrib[n][1]);
-		printf("<td><input type=text name=attrib%d_2 value=\"%d\" size=10 maxlength=10></td>\n", n, ch[cn].attrib[n][2]);
-		printf("<td><input type=text name=attrib%d_3 value=\"%d\" size=10 maxlength=10></td>\n", n, ch[cn].attrib[n][3]);
+		printf("<td><input type=text name=attrib%d_0 value=\"%d\" size=10 maxlength=10></td>\n", n, target[cn].attrib[n][0]);
+		printf("<td><input type=text name=attrib%d_1 value=\"%d\" size=10 maxlength=10></td>\n", n, target[cn].attrib[n][1]);
+		printf("<td><input type=text name=attrib%d_2 value=\"%d\" size=10 maxlength=10></td>\n", n, target[cn].attrib[n][2]);
+		printf("<td><input type=text name=attrib%d_3 value=\"%d\" size=10 maxlength=10></td>\n", n, target[cn].attrib[n][3]);
 		printf("</tr>\n");
 	}
 
 	printf("<tr><td>Hitpoints</td>\n");
-	printf("<td><input type=text name=hp_0 value=\"%d\" size=10 maxlength=10></td>\n", ch[cn].hp[0]);
-	printf("<td><input type=text name=hp_1 value=\"%d\" size=10 maxlength=10></td>\n", ch[cn].hp[1]);
-	printf("<td><input type=text name=hp_2 value=\"%d\" size=10 maxlength=10></td>\n", ch[cn].hp[2]);
-	printf("<td><input type=text name=hp_3 value=\"%d\" size=10 maxlength=10></td>\n", ch[cn].hp[3]);
+	printf("<td><input type=text name=hp_0 value=\"%d\" size=10 maxlength=10></td>\n", target[cn].hp[0]);
+	printf("<td><input type=text name=hp_1 value=\"%d\" size=10 maxlength=10></td>\n", target[cn].hp[1]);
+	printf("<td><input type=text name=hp_2 value=\"%d\" size=10 maxlength=10></td>\n", target[cn].hp[2]);
+	printf("<td><input type=text name=hp_3 value=\"%d\" size=10 maxlength=10></td>\n", target[cn].hp[3]);
 	printf("</tr>\n");
 
 	printf("<tr><td>Endurance</td>\n");
-	printf("<td><input type=text name=end_0 value=\"%d\" size=10 maxlength=10></td>\n", ch[cn].end[0]);
-	printf("<td><input type=text name=end_1 value=\"%d\" size=10 maxlength=10></td>\n", ch[cn].end[1]);
-	printf("<td><input type=text name=end_2 value=\"%d\" size=10 maxlength=10></td>\n", ch[cn].end[2]);
-	printf("<td><input type=text name=end_3 value=\"%d\" size=10 maxlength=10></td>\n", ch[cn].end[3]);
+	printf("<td><input type=text name=end_0 value=\"%d\" size=10 maxlength=10></td>\n", target[cn].end[0]);
+	printf("<td><input type=text name=end_1 value=\"%d\" size=10 maxlength=10></td>\n", target[cn].end[1]);
+	printf("<td><input type=text name=end_2 value=\"%d\" size=10 maxlength=10></td>\n", target[cn].end[2]);
+	printf("<td><input type=text name=end_3 value=\"%d\" size=10 maxlength=10></td>\n", target[cn].end[3]);
 	printf("</tr>\n");
 
 	printf("<tr><td>Mana</td>\n");
-	printf("<td><input type=text name=mana_0 value=\"%d\" size=10 maxlength=10></td>\n", ch[cn].mana[0]);
-	printf("<td><input type=text name=mana_1 value=\"%d\" size=10 maxlength=10></td>\n", ch[cn].mana[1]);
-	printf("<td><input type=text name=mana_2 value=\"%d\" size=10 maxlength=10></td>\n", ch[cn].mana[2]);
-	printf("<td><input type=text name=mana_3 value=\"%d\" size=10 maxlength=10></td>\n", ch[cn].mana[3]);
+	printf("<td><input type=text name=mana_0 value=\"%d\" size=10 maxlength=10></td>\n", target[cn].mana[0]);
+	printf("<td><input type=text name=mana_1 value=\"%d\" size=10 maxlength=10></td>\n", target[cn].mana[1]);
+	printf("<td><input type=text name=mana_2 value=\"%d\" size=10 maxlength=10></td>\n", target[cn].mana[2]);
+	printf("<td><input type=text name=mana_3 value=\"%d\" size=10 maxlength=10></td>\n", target[cn].mana[3]);
 	printf("</tr>\n");
 
 	for (n = 0; n<50; n++)
@@ -467,66 +467,66 @@ void view_character(LIST *head)
 			continue;
 		}
 		printf("<tr><td>%s</td>\n", skilltab[n].name);
-		printf("<td><input type=text name=skill%d_0 value=\"%d\" size=10 maxlength=10></td>\n", n, ch[cn].skill[n][0]);
-		printf("<td><input type=text name=skill%d_1 value=\"%d\" size=10 maxlength=10></td>\n", n, ch[cn].skill[n][1]);
-		printf("<td><input type=text name=skill%d_2 value=\"%d\" size=10 maxlength=10></td>\n", n, ch[cn].skill[n][2]);
-		printf("<td><input type=text name=skill%d_3 value=\"%d\" size=10 maxlength=10></td>\n", n, ch[cn].skill[n][3]);
+		printf("<td><input type=text name=skill%d_0 value=\"%d\" size=10 maxlength=10></td>\n", n, target[cn].skill[n][0]);
+		printf("<td><input type=text name=skill%d_1 value=\"%d\" size=10 maxlength=10></td>\n", n, target[cn].skill[n][1]);
+		printf("<td><input type=text name=skill%d_2 value=\"%d\" size=10 maxlength=10></td>\n", n, target[cn].skill[n][2]);
+		printf("<td><input type=text name=skill%d_3 value=\"%d\" size=10 maxlength=10></td>\n", n, target[cn].skill[n][3]);
 		printf("</tr>\n");
 	}
 
 	printf("</table></td></tr>\n");
 
 	printf("<tr><td valign=top>Speed Mod</td><td><input type=text name=speed_mod value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       ch[cn].speed_mod);
+	       target[cn].speed_mod);
 	printf("<tr><td valign=top>Weapon Bonus</td><td><input type=text name=weapon_bonus value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       ch[cn].weapon_bonus);
+	       target[cn].weapon_bonus);
 	printf("<tr><td valign=top>Armor Bonus</td><td><input type=text name=armor_bonus value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       ch[cn].armor_bonus);
+	       target[cn].armor_bonus);
 	printf("<tr><td valign=top>Gethit Bonus</td><td><input type=text name=gethit_bonus value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       ch[cn].gethit_bonus);
+	       target[cn].gethit_bonus);
 	printf("<tr><td valign=top>Light Bonus</td><td><input type=text name=light_bonus value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       ch[cn].light_bonus);
+	       target[cn].light_bonus);
 
 	printf("<tr><td>EXP left:</td><td><input type=text name=points value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       ch[cn].points);
+	       target[cn].points);
 	printf("<tr><td>EXP total:</td><td><input type=text name=points_tot value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       ch[cn].points_tot);
+	       target[cn].points_tot);
 
 	printf("<tr><td>Position X:</td><td><input type=text name=x value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       ch[cn].x);
+	       target[cn].x);
 	printf("<tr><td>Position Y:</td><td><input type=text name=y value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       ch[cn].y);
+	       target[cn].y);
 	printf("<tr><td>Direction:</td><td><input type=text name=dir value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       ch[cn].dir);
+	       target[cn].dir);
 	printf("<tr><td>Gold:</td><td><input type=text name=gold value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       ch[cn].gold);
+	       target[cn].gold);
 
-	if (ch[cn].citem<0 || ch[cn].citem>=MAXTITEM)
+	if (target[cn].citem<0 || target[cn].citem>=MAXTITEM)
 	{
-		ch[cn].citem = 0;
+		target[cn].citem = 0;
 	}
 
 	printf("<tr><td>Current Item</td><td><input type=text name=citem value=\"%d\" size=10 maxlength=10> (%s)</td></tr>\n",
-	       ch[cn].citem, ch[cn].citem ? it[ch[cn].citem].name : "none");
+	       target[cn].citem, target[cn].citem ? it[target[cn].citem].name : "none");
 
 	for (n = 0; n<12; n++)
 	{
-		if (ch[cn].worn[n]>=MAXTITEM)
+		if (target[cn].worn[n]>=MAXTITEM)
 		{
-			ch[cn].worn[n] = 0;
+			target[cn].worn[n] = 0;
 		}
 		printf("<tr><td>%s</td><td><input type=text name=worn%d value=\"%d\" size=10 maxlength=10> (%s)</td></tr>\n",
-		       weartext[n], n, ch[cn].worn[n], ch[cn].worn[n] ? it[ch[cn].worn[n]].name : "none");
+		       weartext[n], n, target[cn].worn[n], target[cn].worn[n] ? it[target[cn].worn[n]].name : "none");
 	}
 
 	for (n = 0; n<40; n++)
 	{
-		if (ch[cn].item[n]<0 || ch[cn].item[n]>=MAXTITEM)
+		if (target[cn].item[n]<0 || target[cn].item[n]>=MAXTITEM)
 		{
-			ch[cn].item[n] = 0;
+			target[cn].item[n] = 0;
 		}
 		printf("<tr><td>Item %d</td><td><input type=text name=item%d value=\"%d\" size=10 maxlength=10> (%s)</td></tr>\n",
-		       n, n, ch[cn].item[n], ch[cn].item[n] ? it[ch[cn].item[n]].name : "none");
+		       n, n, target[cn].item[n], target[cn].item[n] ? it[target[cn].item[n]].name : "none");
 	}
 
 	printf("<tr><td>Driver Data:</td></tr>\n");
@@ -537,7 +537,7 @@ void view_character(LIST *head)
 			continue;
 		}
 		printf("<tr><td>[%3d] %s</td><td><input type=text name=drdata%d value=\"%d\" size=35 maxlength=75></td></tr>\n",
-		       n, data_name[n], n, ch[cn].data[n]);
+		       n, data_name[n], n, target[cn].data[n]);
 	}
 
 	printf("<tr><td>Driver Texts:</td></tr>\n");
@@ -548,7 +548,7 @@ void view_character(LIST *head)
 			continue;
 		}
 		printf("<tr><td>%s</td><td><input type=text name=text_%d value=\"%s\" size=35 maxlength=158></td></tr>\n",
-		       text_name[n], n, ch[cn].text[n]);
+		       text_name[n], n, target[cn].text[n]);
 	}
 
 	printf("<tr><td><input type=submit value=Update></td><td> </td></tr>\n");
@@ -873,9 +873,9 @@ void delete_character(LIST *head)
 		return;
 	}
 
-	ch[cn].used = USE_EMPTY;
+	target[cn].used = USE_EMPTY;
 
-	if (ch[cn].flags & CF_RESPAWN)
+	if (target[cn].flags & CF_RESPAWN)
 	{
 		globs->reset_char = cn;
 	}
@@ -921,14 +921,14 @@ void update_character(LIST *head)
 		return;
 	}
 
-	bzero(&ch[cn], sizeof(struct character));
-	ch[cn].used = USE_ACTIVE;
+	bzero(&target[cn], sizeof(struct character));
+	target[cn].used = USE_ACTIVE;
 
 	tmp = find_val(head, "name");
 	if (tmp)
 	{
-		strncpy(ch[cn].name, tmp, 35);
-		ch[cn].name[35] = 0;
+		strncpy(target[cn].name, tmp, 35);
+		target[cn].name[35] = 0;
 	}
 	else
 	{
@@ -939,8 +939,8 @@ void update_character(LIST *head)
 	tmp = find_val(head, "reference");
 	if (tmp)
 	{
-		strncpy(ch[cn].reference, tmp, 35);
-		ch[cn].reference[35] = 0;
+		strncpy(target[cn].reference, tmp, 35);
+		target[cn].reference[35] = 0;
 	}
 	else
 	{
@@ -951,8 +951,8 @@ void update_character(LIST *head)
 	tmp = find_val(head, "description");
 	if (tmp)
 	{
-		strncpy(ch[cn].description, tmp, 195);
-		ch[cn].description[195] = 0;
+		strncpy(target[cn].description, tmp, 195);
+		target[cn].description[195] = 0;
 	}
 	else
 	{
@@ -967,13 +967,13 @@ void update_character(LIST *head)
 		{
 			val |= atoi(tmps[n]);
 		}
-		ch[cn].kindred = val;
+		target[cn].kindred = val;
 	}
 
 	tmp = find_val(head, "sprite");
 	if (tmp)
 	{
-		ch[cn].sprite = atoi(tmp);
+		target[cn].sprite = atoi(tmp);
 	}
 	else
 	{
@@ -984,7 +984,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "sound");
 	if (tmp)
 	{
-		ch[cn].sound = atoi(tmp);
+		target[cn].sound = atoi(tmp);
 	}
 	else
 	{
@@ -995,7 +995,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "class");
 	if (tmp)
 	{
-		ch[cn].class = atoi(tmp);
+		target[cn].class = atoi(tmp);
 	}
 	else
 	{
@@ -1012,12 +1012,12 @@ void update_character(LIST *head)
 			lval |= atoll(tmps[n]);
 		}
 	}
-	ch[cn].flags = lval;
+	target[cn].flags = lval;
 
 	tmp = find_val(head, "alignment");
 	if (tmp)
 	{
-		ch[cn].alignment = atoi(tmp);
+		target[cn].alignment = atoi(tmp);
 	}
 	else
 	{
@@ -1031,11 +1031,11 @@ void update_character(LIST *head)
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			ch[cn].data[n] = atoi(tmp);
+			target[cn].data[n] = atoi(tmp);
 		}
 		else
 		{
-			ch[cn].data[n] = 0;
+			target[cn].data[n] = 0;
 		}
 	}
 
@@ -1045,13 +1045,13 @@ void update_character(LIST *head)
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			strncpy(ch[cn].text[n], tmp, 158);
+			strncpy(target[cn].text[n], tmp, 158);
 		}
 		else
 		{
-			ch[cn].text[n][0] = 0;
+			target[cn].text[n][0] = 0;
 		}
-		ch[cn].text[n][159] = 0;
+		target[cn].text[n][159] = 0;
 	}
 
 	for (n = 0; n<5; n++)
@@ -1060,7 +1060,7 @@ void update_character(LIST *head)
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			ch[cn].attrib[n][0] = atoi(tmp);
+			target[cn].attrib[n][0] = atoi(tmp);
 		}
 		else
 		{
@@ -1072,7 +1072,7 @@ void update_character(LIST *head)
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			ch[cn].attrib[n][1] = atoi(tmp);
+			target[cn].attrib[n][1] = atoi(tmp);
 		}
 		else
 		{
@@ -1084,7 +1084,7 @@ void update_character(LIST *head)
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			ch[cn].attrib[n][2] = atoi(tmp);
+			target[cn].attrib[n][2] = atoi(tmp);
 		}
 		else
 		{
@@ -1096,7 +1096,7 @@ void update_character(LIST *head)
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			ch[cn].attrib[n][3] = atoi(tmp);
+			target[cn].attrib[n][3] = atoi(tmp);
 		}
 		else
 		{
@@ -1108,7 +1108,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "hp_0");
 	if (tmp)
 	{
-		ch[cn].hp[0] = atoi(tmp);
+		target[cn].hp[0] = atoi(tmp);
 	}
 	else
 	{
@@ -1119,7 +1119,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "hp_1");
 	if (tmp)
 	{
-		ch[cn].hp[1] = atoi(tmp);
+		target[cn].hp[1] = atoi(tmp);
 	}
 	else
 	{
@@ -1130,7 +1130,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "hp_2");
 	if (tmp)
 	{
-		ch[cn].hp[2] = atoi(tmp);
+		target[cn].hp[2] = atoi(tmp);
 	}
 	else
 	{
@@ -1141,7 +1141,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "hp_3");
 	if (tmp)
 	{
-		ch[cn].hp[3] = atoi(tmp);
+		target[cn].hp[3] = atoi(tmp);
 	}
 	else
 	{
@@ -1152,7 +1152,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "end_0");
 	if (tmp)
 	{
-		ch[cn].end[0] = atoi(tmp);
+		target[cn].end[0] = atoi(tmp);
 	}
 	else
 	{
@@ -1163,7 +1163,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "end_1");
 	if (tmp)
 	{
-		ch[cn].end[1] = atoi(tmp);
+		target[cn].end[1] = atoi(tmp);
 	}
 	else
 	{
@@ -1174,7 +1174,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "end_2");
 	if (tmp)
 	{
-		ch[cn].end[2] = atoi(tmp);
+		target[cn].end[2] = atoi(tmp);
 	}
 	else
 	{
@@ -1185,7 +1185,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "end_3");
 	if (tmp)
 	{
-		ch[cn].end[3] = atoi(tmp);
+		target[cn].end[3] = atoi(tmp);
 	}
 	else
 	{
@@ -1196,7 +1196,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "mana_0");
 	if (tmp)
 	{
-		ch[cn].mana[0] = atoi(tmp);
+		target[cn].mana[0] = atoi(tmp);
 	}
 	else
 	{
@@ -1207,7 +1207,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "mana_1");
 	if (tmp)
 	{
-		ch[cn].mana[1] = atoi(tmp);
+		target[cn].mana[1] = atoi(tmp);
 	}
 	else
 	{
@@ -1218,7 +1218,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "mana_2");
 	if (tmp)
 	{
-		ch[cn].mana[2] = atoi(tmp);
+		target[cn].mana[2] = atoi(tmp);
 	}
 	else
 	{
@@ -1229,7 +1229,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "mana_3");
 	if (tmp)
 	{
-		ch[cn].mana[3] = atoi(tmp);
+		target[cn].mana[3] = atoi(tmp);
 	}
 	else
 	{
@@ -1244,51 +1244,51 @@ void update_character(LIST *head)
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			ch[cn].skill[n][0] = atoi(tmp);
+			target[cn].skill[n][0] = atoi(tmp);
 		}
 		else
 		{
-			ch[cn].skill[n][0] = 0;
+			target[cn].skill[n][0] = 0;
 		}
 
 		sprintf(buf, "skill%d_1", n);
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			ch[cn].skill[n][1] = atoi(tmp);
+			target[cn].skill[n][1] = atoi(tmp);
 		}
 		else
 		{
-			ch[cn].skill[n][1] = 0;
+			target[cn].skill[n][1] = 0;
 		}
 
 		sprintf(buf, "skill%d_2", n);
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			ch[cn].skill[n][2] = atoi(tmp);
+			target[cn].skill[n][2] = atoi(tmp);
 		}
 		else
 		{
-			ch[cn].skill[n][2] = 0;
+			target[cn].skill[n][2] = 0;
 		}
 
 		sprintf(buf, "skill%d_3", n);
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			ch[cn].skill[n][3] = atoi(tmp);
+			target[cn].skill[n][3] = atoi(tmp);
 		}
 		else
 		{
-			ch[cn].skill[n][3] = 0;
+			target[cn].skill[n][3] = 0;
 		}
 	}
 
 	tmp = find_val(head, "speed_mod");
 	if (tmp)
 	{
-		ch[cn].speed_mod = atoi(tmp);
+		target[cn].speed_mod = atoi(tmp);
 	}
 	else
 	{
@@ -1299,7 +1299,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "weapon_bonus");
 	if (tmp)
 	{
-		ch[cn].weapon_bonus = atoi(tmp);
+		target[cn].weapon_bonus = atoi(tmp);
 	}
 	else
 	{
@@ -1310,7 +1310,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "light_bonus");
 	if (tmp)
 	{
-		ch[cn].light_bonus = atoi(tmp);
+		target[cn].light_bonus = atoi(tmp);
 	}
 	else
 	{
@@ -1321,7 +1321,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "armor_bonus");
 	if (tmp)
 	{
-		ch[cn].armor_bonus = atoi(tmp);
+		target[cn].armor_bonus = atoi(tmp);
 	}
 	else
 	{
@@ -1332,7 +1332,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "points");
 	if (tmp)
 	{
-		ch[cn].points = atoi(tmp);
+		target[cn].points = atoi(tmp);
 	}
 	else
 	{
@@ -1343,7 +1343,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "points_tot");
 	if (tmp)
 	{
-		ch[cn].points_tot = atoi(tmp);
+		target[cn].points_tot = atoi(tmp);
 	}
 	else
 	{
@@ -1354,7 +1354,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "x");
 	if (tmp)
 	{
-		ch[cn].x = atoi(tmp);
+		target[cn].x = atoi(tmp);
 	}
 	else
 	{
@@ -1365,7 +1365,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "y");
 	if (tmp)
 	{
-		ch[cn].y = atoi(tmp);
+		target[cn].y = atoi(tmp);
 	}
 	else
 	{
@@ -1376,7 +1376,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "dir");
 	if (tmp)
 	{
-		ch[cn].dir = atoi(tmp);
+		target[cn].dir = atoi(tmp);
 	}
 	else
 	{
@@ -1387,7 +1387,7 @@ void update_character(LIST *head)
 	tmp = find_val(head, "gold");
 	if (tmp)
 	{
-		ch[cn].gold = atoi(tmp);
+		target[cn].gold = atoi(tmp);
 	}
 	else
 	{
@@ -1401,7 +1401,7 @@ void update_character(LIST *head)
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			ch[cn].worn[n] = atoi(tmp);
+			target[cn].worn[n] = atoi(tmp);
 		}
 	}
 
@@ -1411,14 +1411,14 @@ void update_character(LIST *head)
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			ch[cn].item[n] = atoi(tmp);
+			target[cn].item[n] = atoi(tmp);
 		}
 	}
 
 	tmp = find_val(head, "citem");
 	if (tmp)
 	{
-		ch[cn].citem = atoi(tmp);
+		target[cn].citem = atoi(tmp);
 	}
 	else
 	{
@@ -1426,14 +1426,14 @@ void update_character(LIST *head)
 		return;
 	}
 
-	if (ch[cn].flags & CF_RESPAWN)
+	if (target[cn].flags & CF_RESPAWN)
 	{
 		globs->reset_char = cn;
 	}
 
-	if (!ch[cn].data[29] && (ch[cn].flags & CF_RESPAWN))
+	if (!target[cn].data[29] && (target[cn].flags & CF_RESPAWN))
 	{
-		ch[cn].data[29] = ch[cn].x + ch[cn].y * MAPX;
+		target[cn].data[29] = target[cn].x + target[cn].y * MAPX;
 	}
 
 	printf("Done.\n");
@@ -1956,21 +1956,21 @@ void list_characters(LIST *head)    // excludes grolms, gargs, icegargs. decides
 
 	for (n = 0; n<MAXTCHARS; n++)
 	{
-		if (ch[n].used==USE_EMPTY)
+		if (target[n].used==USE_EMPTY)
 		{
 			continue;
 		}
-		if (ch[n].sprite==12240 || ch[n].sprite==18384 || ch[n].sprite==21456)
+		if (target[n].sprite==12240 || target[n].sprite==18384 || target[n].sprite==21456)
 		{
 			continue;
 		}
 		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
 		       "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",
 		       n, n,
-		       (ch[n].flags & CF_RESPAWN) ? "<b>" : "",
-		       ch[n].name,
-		       (ch[n].flags & CF_RESPAWN) ? "</b>" : "",
-		       ch[n].x, ch[n].y, ch[n].points_tot >> 10, ch[n].alignment, n, n);
+		       (target[n].flags & CF_RESPAWN) ? "<b>" : "",
+		       target[n].name,
+		       (target[n].flags & CF_RESPAWN) ? "</b>" : "",
+		       target[n].x, target[n].y, target[n].points_tot >> 10, target[n].alignment, n, n);
 	}
 
 	printf("</table>\n");
@@ -1984,21 +1984,21 @@ void list_characters2(LIST *head)       // listing grolms,gargs,icegargs only, d
 
 	for (n = 0; n<MAXTCHARS; n++)
 	{
-		if (ch[n].used==USE_EMPTY)
+		if (target[n].used==USE_EMPTY)
 		{
 			continue;
 		}
-		if (!(ch[n].sprite==12240 || ch[n].sprite==18384 || ch[n].sprite==21456))
+		if (!(target[n].sprite==12240 || target[n].sprite==18384 || target[n].sprite==21456))
 		{
 			continue;
 		}
 		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
 		       "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",
 		       n, n,
-		       (ch[n].flags & CF_RESPAWN) ? "<b>" : "",
-		       ch[n].name,
-		       (ch[n].flags & CF_RESPAWN) ? "</b>" : "",
-		       ch[n].x, ch[n].y, ch[n].points_tot >> 10, ch[n].alignment, n, n);
+		       (target[n].flags & CF_RESPAWN) ? "<b>" : "",
+		       target[n].name,
+		       (target[n].flags & CF_RESPAWN) ? "</b>" : "",
+		       target[n].x, target[n].y, target[n].points_tot >> 10, target[n].alignment, n, n);
 	}
 
 	printf("</table>\n");
@@ -2012,25 +2012,25 @@ void list_characters_good(LIST *head)    // excludes grolms, gargs, icegargs. de
 
 	for (n = 0; n<MAXTCHARS; n++)
 	{
-		if (ch[n].used==USE_EMPTY)
+		if (target[n].used==USE_EMPTY)
 		{
 			continue;
 		}
-		if (ch[n].sprite==12240 || ch[n].sprite==18384 || ch[n].sprite==21456)
+		if (target[n].sprite==12240 || target[n].sprite==18384 || target[n].sprite==21456)
 		{
 			continue;
 		}
-		if(ch[n].alignment < 0)
+		if(target[n].alignment < 0)
 		{
 			continue;
 		}
 		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
 		       "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",
 		       n, n,
-		       (ch[n].flags & CF_RESPAWN) ? "<b>" : "",
-		       ch[n].name,
-		       (ch[n].flags & CF_RESPAWN) ? "</b>" : "",
-		       ch[n].x, ch[n].y, ch[n].points_tot >> 10, ch[n].alignment, n, n);
+		       (target[n].flags & CF_RESPAWN) ? "<b>" : "",
+		       target[n].name,
+		       (target[n].flags & CF_RESPAWN) ? "</b>" : "",
+		       target[n].x, target[n].y, target[n].points_tot >> 10, target[n].alignment, n, n);
 	}
 
 	printf("</table>\n");
@@ -2044,21 +2044,21 @@ void list_characters_non_monster(LIST *head)    // excludes grolms, gargs, icega
 
 	for (n = 0; n<MAXTCHARS; n++)
 	{
-		if (ch[n].used==USE_EMPTY)
+		if (target[n].used==USE_EMPTY)
 		{
 			continue;
 		}
-		if(ch[n].kindred & KIN_MONSTER)
+		if(target[n].kindred & KIN_MONSTER)
 		{
 			continue;
 		}
 		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
 		       "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",
 		       n, n,
-		       (ch[n].flags & CF_RESPAWN) ? "<b>" : "",
-		       ch[n].name,
-		       (ch[n].flags & CF_RESPAWN) ? "</b>" : "",
-		       ch[n].x, ch[n].y, ch[n].points_tot >> 10, ch[n].alignment, n, n);
+		       (target[n].flags & CF_RESPAWN) ? "<b>" : "",
+		       target[n].name,
+		       (target[n].flags & CF_RESPAWN) ? "</b>" : "",
+		       target[n].x, target[n].y, target[n].points_tot >> 10, target[n].alignment, n, n);
 	}
 
 	printf("</table>\n");
@@ -2133,21 +2133,21 @@ void list_named_characters(LIST *head)    // excludes grolms, gargs, icegargs. d
 	for (n = 0; n<MAXTCHARS; n++)
 	{
 		int found = 0;
-		if (ch[n].used==USE_EMPTY)
+		if (target[n].used==USE_EMPTY)
 		{
 			continue;
 		}
-		if (ch[n].sprite==12240 ||
-		    ch[n].sprite==18384 ||
-		    ch[n].sprite==21456 ||
-		    ch[n].sprite==14288 ||
-		    ch[n].sprite==31696)
+		if (target[n].sprite==12240 ||
+		    target[n].sprite==18384 ||
+		    target[n].sprite==21456 ||
+		    target[n].sprite==14288 ||
+		    target[n].sprite==31696)
 		{
 			continue;
 		}
 		for(i = 0; i < bad_name_count; i++)
 		{
-			if(strcmp(ch[n].name, bad_names[i]) == 0)
+			if(strcmp(target[n].name, bad_names[i]) == 0)
 			{
 				found = 1;
 			}
@@ -2159,10 +2159,10 @@ void list_named_characters(LIST *head)    // excludes grolms, gargs, icegargs. d
 		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
 		       "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",
 		       n, n,
-		       (ch[n].flags & CF_RESPAWN) ? "<b>" : "",
-		       ch[n].name,
-		       (ch[n].flags & CF_RESPAWN) ? "</b>" : "",
-		       ch[n].x, ch[n].y, ch[n].points_tot >> 10, ch[n].alignment, n, n);
+		       (target[n].flags & CF_RESPAWN) ? "<b>" : "",
+		       target[n].name,
+		       (target[n].flags & CF_RESPAWN) ? "</b>" : "",
+		       target[n].x, target[n].y, target[n].points_tot >> 10, target[n].alignment, n, n);
 	}
 
 	printf("</table>\n");
@@ -2176,17 +2176,17 @@ void list_new_characters(LIST *head)        // listing characters with high IDs
 
 	for (n = 1012; n<MAXTCHARS; n++)
 	{
-		if (ch[n].used==USE_EMPTY)
+		if (target[n].used==USE_EMPTY)
 		{
 			continue;
 		}
 		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
 		       "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",
 		       n, n,
-		       (ch[n].flags & CF_RESPAWN) ? "<b>" : "",
-		       ch[n].name,
-		       (ch[n].flags & CF_RESPAWN) ? "</b>" : "",
-		       ch[n].x, ch[n].y, ch[n].points_tot >> 10, ch[n].alignment, n, n);
+		       (target[n].flags & CF_RESPAWN) ? "<b>" : "",
+		       target[n].name,
+		       (target[n].flags & CF_RESPAWN) ? "</b>" : "",
+		       target[n].x, target[n].y, target[n].points_tot >> 10, target[n].alignment, n, n);
 	}
 
 	printf("</table>\n");
@@ -2317,14 +2317,14 @@ int main(int argc, char *args[])
 		}
 	}
 
-	ch[1].used = USE_ACTIVE;
-	strcpy(ch[1].name, "Blank Template");
+	target[1].used = USE_ACTIVE;
+	strcpy(target[1].name, "Blank Template");
 
 	it[1].used = USE_ACTIVE;
 	strcpy(it[1].name, "Blank Template");
 
 	/* for (n=1; n<MAXTCHARS; n++) {
-	        if (ch[n].used==USE_EMPTY) continue;
+	        if (target[n].used==USE_EMPTY) continue;
 	   } */
 
 /*      for (n=1; n<MAXTITEM; n++) {
@@ -2341,7 +2341,7 @@ int main(int argc, char *args[])
 		delete_character(head);
 		break;
 	case    13:
-		view_character(head);
+		view_character(head, ch);
 		break;
 	case    14:
 		update_character(head);
@@ -2360,6 +2360,9 @@ int main(int argc, char *args[])
 		break;
 	case 19:
 		list_all_player_characters();
+		break;
+	case 20:
+		view_character(head, player);
 		break;
 	case    21:
 		list_objects(head);

@@ -86,7 +86,7 @@ static int load(void)
 		return(-1);
 	}
 
-	player = mmap(NULL, CHARSIZE, PROT_READ, MAP_SHARED, handle, 0);
+	player = mmap(NULL, CHARSIZE, PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
 	if (player==(void*)-1)
 	{
 		fprintf(stderr, "cannot mmap char.dat.\n");

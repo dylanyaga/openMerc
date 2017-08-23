@@ -2013,7 +2013,7 @@ void list_named_characters(LIST *head)    // excludes grolms, gargs, icegargs. d
 		{
 			continue;
 		}
-		std::string[] bad_names = {"Guard",
+		const char *bad_names[] = {"Guard",
 			                   "Janitor",
 			                   "Peacekeeper",
 			                   "Merchant",

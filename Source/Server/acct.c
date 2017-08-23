@@ -62,7 +62,7 @@ int extend(int handle, long sizereq, size_t sizeone, void*templ)
 	length = lseek(handle, 0L, SEEK_END);
 	if (length < sizereq)
 	{
-		xlog("Current size = %ldK, extending to %ldK", length / 1024, sizereq / 1024);
+		// xlog("Current size = %ldK, extending to %ldK", length / 1024, sizereq / 1024);
 		buffer = templ;
 		if (buffer == NULL)
 		{

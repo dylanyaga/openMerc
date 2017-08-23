@@ -19,10 +19,11 @@
 #include "data.h"
 #include "driver.h"
 
-#define MAPSIZE    (sizeof(struct map)*MAPX*MAPY)
-#define CHARSIZE   (sizeof(struct character)*MAXCHARS)
-#define ITEMSIZE   (sizeof(struct item)*MAXITEM)
-#define EFFECTSIZE (sizeof(struct effect)*MAXEFFECT)
+// All in data.h
+// #define MAPSIZE    (sizeof(struct map)*MAPX*MAPY)
+// #define CHARSIZE   (sizeof(struct character)*MAXCHARS)
+// #define ITEMSIZE   (sizeof(struct item)*MAXITEM)
+// #define EFFECTSIZE (sizeof(struct effect)*MAXEFFECT)
 
 struct map *map;
 struct character *ch;

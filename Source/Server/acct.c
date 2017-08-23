@@ -22,6 +22,7 @@
 /* CS, 991113: TCHARSIZE and TITEMSIZE now in data.h */
 
 struct character *ch;
+struct character *player;
 struct item *it;
 struct global *globs;
 
@@ -77,6 +78,23 @@ static int load(void)
 	}
 	close(handle);
 
+// DY Add player open
+	handle = open(DATDIR "/char.dat", O_RDWR);
+	if (handle==-1)
+	{
+		fprintf(stderr, "char.dat does not exist.\n");
+		return(-1);
+	}
+
+	player = mmap(NULL, CHARSIZE, PROT_READ, MAP_SHARED, handle, 0);
+	if (player==(void*)-1)
+	{
+		fprintf(stderr, "cannot mmap char.dat.\n");
+		return(-1);
+	}
+	close(handle);
+// DY Add player open
+
 	handle = open(DATDIR "/titem.dat", O_RDWR);
 	if (handle==-1)
 	{
@@ -111,6 +129,10 @@ static int load(void)
 static void unload(void)
 {
 	if (munmap(ch, TCHARSIZE))
+	{
+		perror("munmap(ch)");
+	}
+	if (munmap(ch, CHARSIZE))
 	{
 		perror("munmap(ch)");
 	}
@@ -242,6 +264,17 @@ static char *data_name[100] = {
 	"Unused",       //98
 	"Reserved"      //99
 };
+
+
+void list_all_player_characters()
+{
+	printf("<ul>\n");
+	for (n = 1; n<MAXCHARS && shown<50; n++)
+	{
+		printf("<li>%s</li>", players[n].name);
+	}
+	printf("</ul>\n");
+}
 
 void copy_character(LIST *head)
 {
@@ -2315,6 +2348,9 @@ int main(int argc, char *args[])
 	case 18:
 		list_characters_non_monster(head);
 		break;
+	case 19:
+		list_all_player_characters();
+		break;
 	case    21:
 		list_objects(head);
 		break;
@@ -2348,6 +2384,7 @@ int main(int argc, char *args[])
 		printf("<a href=/cgi-imp/acct.cgi?step=16>Characters (only with Positive Alignment) </a><br>\n");
 		printf("<a href=/cgi-imp/acct.cgi?step=17>Characters (only Named) </a><br>\n");
 		printf("<a href=/cgi-imp/acct.cgi?step=18>Characters (Non Monster) </a><br>\n");
+		printf("<a href=/cgi-imp/acct.cgi?step=19>All Player Characters </a><br>\n");
 		printf("<a href=/cgi-imp/acct.cgi?step=41>Characters (only Grolms, Gargoyles, Icegargs) </a><br><br>\n");
 		printf("This list includes only characters with high IDs for fast access<br>\n");
 		printf("<a href=/cgi-imp/acct.cgi?step=51>New characters (only if they got a high ID)</a><br><br>\n");
@@ -2361,13 +2398,7 @@ int main(int argc, char *args[])
 	printf("</td></tr></table>\n");
 
 	printf("<hr width=80%% color=\"#808000\"><br>\n");
-	printf("<table width=\"100%%\"><tr>\n");
-
-	printf("<td align=center><a href=/cgi-imp/acct.cgi>Back to main page</a></td>\n");
-
-	printf("<td align=right><table><tr><td>\n");
-
-	printf("</td></tr></table></td></tr></table>\n");
+	printf("<a href=/cgi-imp/acct.cgi>Back to main page</a>\n");
 	printf("<hr width=80%% color=\"#808000\"><br>\n");
 	printf("<font size=-1>All material on this server is based on the Mercenaries of Astonia engine by Daniel Brockhaus.</font></center>\n");
 	printf("</body></html>\n");

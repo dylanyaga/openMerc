@@ -889,7 +889,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("NAME not specified.\n")
+		printf("NAME not specified.\n");
 		return;
 	}
 
@@ -901,7 +901,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("REFERENCE not specified.\n")
+		printf("REFERENCE not specified.\n");
 		return;
 	}
 
@@ -913,7 +913,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("DESCRIPTION not specified.\n")
+		printf("DESCRIPTION not specified.\n");
 		return;
 	}
 
@@ -934,7 +934,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("SPRITE not specified.\n")
+		printf("SPRITE not specified.\n");
 		return;
 	}
 
@@ -945,7 +945,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("SOUND not specified.\n")
+		printf("SOUND not specified.\n");
 		return;
 	}
 
@@ -956,7 +956,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("CLASS not specified.\n")
+		printf("CLASS not specified.\n");
 		return;
 	}
 
@@ -978,7 +978,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("ALIGNMENT not specified.\n")
+		printf("ALIGNMENT not specified.\n");
 		return;
 	}
 
@@ -1069,7 +1069,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("HP_0 not specified.\n")
+		printf("HP_0 not specified.\n");
 		return;
 	}
 
@@ -1080,7 +1080,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("HP_1 not specified.\n")
+		printf("HP_1 not specified.\n");
 		return;
 	}
 
@@ -1091,7 +1091,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("HP_2 not specified.\n")
+		printf("HP_2 not specified.\n");
 		return;
 	}
 
@@ -1102,7 +1102,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("HP_3 not specified.\n")
+		printf("HP_3 not specified.\n");
 		return;
 	}
 
@@ -1113,7 +1113,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("END_0 not specified.\n")
+		printf("END_0 not specified.\n");
 		return;
 	}
 
@@ -1124,7 +1124,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("END_1 not specified.\n")
+		printf("END_1 not specified.\n");
 		return;
 	}
 
@@ -1135,7 +1135,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("END_2 not specified.\n")
+		printf("END_2 not specified.\n");
 		return;
 	}
 
@@ -1146,7 +1146,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("END_3 not specified.\n")
+		printf("END_3 not specified.\n");
 		return;
 	}
 
@@ -1157,7 +1157,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("MANA_0 not specified.\n")
+		printf("MANA_0 not specified.\n");
 		return;
 	}
 
@@ -1168,7 +1168,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("MANA_1 not specified.\n")
+		printf("MANA_1 not specified.\n");
 		return;
 	}
 
@@ -1179,7 +1179,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("MANA_2 not specified.\n")
+		printf("MANA_2 not specified.\n");
 		return;
 	}
 
@@ -1190,7 +1190,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("MANA_3 not specified.\n")
+		printf("MANA_3 not specified.\n");
 		return;
 	}
 
@@ -1249,7 +1249,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("SPEED_MOD not specified.\n")
+		printf("SPEED_MOD not specified.\n");
 		return;
 	}
 
@@ -1260,7 +1260,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("WEAPON_BONUS not specified.\n")
+		printf("WEAPON_BONUS not specified.\n");
 		return;
 	}
 
@@ -1271,7 +1271,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("LIGHT_BONUS not specified.\n")
+		printf("LIGHT_BONUS not specified.\n");
 		return;
 	}
 
@@ -1282,7 +1282,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("ARMOR_BONUS not specified.\n")
+		printf("ARMOR_BONUS not specified.\n");
 		return;
 	}
 
@@ -1293,7 +1293,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("POINTS not specified.\n")
+		printf("POINTS not specified.\n");
 		return;
 	}
 
@@ -1304,7 +1304,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("POINTS_TOT not specified.\n")
+		printf("POINTS_TOT not specified.\n");
 		return;
 	}
 
@@ -1315,7 +1315,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("X not specified.\n")
+		printf("X not specified.\n");
 		return;
 	}
 
@@ -1326,7 +1326,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("Y not specified.\n")
+		printf("Y not specified.\n");
 		return;
 	}
 
@@ -1337,7 +1337,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("DIR not specified.\n")
+		printf("DIR not specified.\n");
 		return;
 	}
 
@@ -1348,7 +1348,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("GOLD not specified.\n")
+		printf("GOLD not specified.\n");
 		return;
 	}
 
@@ -1379,7 +1379,7 @@ void update_character(LIST *head)
 	}
 	else
 	{
-		printf("CITEM not specified.\n")
+		printf("CITEM not specified.\n");
 		return;
 	}
 
@@ -1393,7 +1393,7 @@ void update_character(LIST *head)
 		ch[cn].data[29] = ch[cn].x + ch[cn].y * MAPX;
 	}
 
-	printf("Done.\n")
+	printf("Done.\n");
 }
 
 void update_object(LIST *head)
@@ -1409,7 +1409,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("IN not specified.\n")
+		printf("IN not specified.\n");
 		return;
 	}
 
@@ -1424,7 +1424,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("NAME not specified.\n")
+		printf("NAME not specified.\n");
 		return;
 	}
 
@@ -1436,7 +1436,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("REFERENCE not specified.\n")
+		printf("REFERENCE not specified.\n");
 		return;
 	}
 
@@ -1448,7 +1448,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("DESCRIPTION not specified.\n")
+		printf("DESCRIPTION not specified.\n");
 		return;
 	}
 
@@ -1470,7 +1470,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("DRIVER not specified.\n")
+		printf("DRIVER not specified.\n");
 		return;
 	}
 
@@ -1491,7 +1491,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("LIGHT_1 not specified.\n")
+		printf("LIGHT_1 not specified.\n");
 		return;
 	}
 
@@ -1502,7 +1502,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("LIGHT_2 not specified.\n")
+		printf("LIGHT_2 not specified.\n");
 		return;
 	}
 
@@ -1513,7 +1513,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("VALUE not specified.\n")
+		printf("VALUE not specified.\n");
 		return;
 	}
 
@@ -1573,7 +1573,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("HP_0 not specified.\n")
+		printf("HP_0 not specified.\n");
 		return;
 	}
 
@@ -1584,7 +1584,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("HP_1 not specified.\n")
+		printf("HP_1 not specified.\n");
 		return;
 	}
 
@@ -1595,7 +1595,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("HP_2 not specified.\n")
+		printf("HP_2 not specified.\n");
 		return;
 	}
 
@@ -1606,7 +1606,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("END_0 not specified.\n")
+		printf("END_0 not specified.\n");
 		return;
 	}
 
@@ -1617,7 +1617,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("END_1 not specified.\n")
+		printf("END_1 not specified.\n");
 		return;
 	}
 
@@ -1628,7 +1628,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("END_2 not specified.\n")
+		printf("END_2 not specified.\n");
 		return;
 	}
 
@@ -1639,7 +1639,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("MANA_0 not specified.\n")
+		printf("MANA_0 not specified.\n");
 		return;
 	}
 
@@ -1650,7 +1650,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("MANA_1 not specified.\n")
+		printf("MANA_1 not specified.\n");
 		return;
 	}
 
@@ -1661,7 +1661,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("MANA_2 not specified.\n")
+		printf("MANA_2 not specified.\n");
 		return;
 	}
 
@@ -1708,7 +1708,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("ARMOR_1 not specified.\n")
+		printf("ARMOR_1 not specified.\n");
 		return;
 	}
 
@@ -1719,7 +1719,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("ARMOR_2 not specified.\n")
+		printf("ARMOR_2 not specified.\n");
 		return;
 	}
 
@@ -1730,7 +1730,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("WEAPON_1 not specified.\n")
+		printf("WEAPON_1 not specified.\n");
 		return;
 	}
 
@@ -1741,7 +1741,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("WEAPON_2 not specified.\n")
+		printf("WEAPON_2 not specified.\n");
 		return;
 	}
 
@@ -1752,7 +1752,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("GETHIT_DAM_1 not specified.\n")
+		printf("GETHIT_DAM_1 not specified.\n");
 		return;
 	}
 
@@ -1763,7 +1763,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("GETHIT_DAM_2 not specified.\n")
+		printf("GETHIT_DAM_2 not specified.\n");
 		return;
 	}
 
@@ -1774,7 +1774,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("MAX_AGE_1 not specified.\n")
+		printf("MAX_AGE_1 not specified.\n");
 		return;
 	}
 
@@ -1785,7 +1785,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("MAX_AGE_2 not specified.\n")
+		printf("MAX_AGE_2 not specified.\n");
 		return;
 	}
 
@@ -1796,7 +1796,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("MAX_DAMAGE not specified.\n")
+		printf("MAX_DAMAGE not specified.\n");
 		return;
 	}
 
@@ -1807,7 +1807,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("DURATION not specified.\n")
+		printf("DURATION not specified.\n");
 		return;
 	}
 
@@ -1818,7 +1818,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("COST not specified.\n")
+		printf("COST not specified.\n");
 		return;
 	}
 
@@ -1829,7 +1829,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("POWER not specified.\n")
+		printf("POWER not specified.\n");
 		return;
 	}
 
@@ -1840,7 +1840,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("SPR_OVR not specified.\n")
+		printf("SPR_OVR not specified.\n");
 		return;
 	}
 
@@ -1851,7 +1851,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("MIN_RANK not specified.\n")
+		printf("MIN_RANK not specified.\n");
 		return;
 	}
 
@@ -1862,7 +1862,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("SPRITE_1 not specified.\n")
+		printf("SPRITE_1 not specified.\n");
 		return;
 	}
 
@@ -1873,7 +1873,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("SPRITE_2 not specified.\n")
+		printf("SPRITE_2 not specified.\n");
 		return;
 	}
 
@@ -1884,7 +1884,7 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("STATUS_1 not specified.\n")
+		printf("STATUS_1 not specified.\n");
 		return;
 	}
 
@@ -1895,13 +1895,13 @@ void update_object(LIST *head)
 	}
 	else
 	{
-		printf("STATUS_2 not specified.\n")
+		printf("STATUS_2 not specified.\n");
 		return;
 	}
 
 	globs->reset_item = in;
 
-	printf("Done.\n")
+	printf("Done.\n");
 }
 
 
@@ -1909,7 +1909,7 @@ void list_characters(LIST *head)    // excludes grolms, gargs, icegargs. decides
 {
 	int n;
 
-	printf("<table>\n")
+	printf("<table>\n");
 
 	for (n = 0; n<MAXTCHARS; n++)
 	{
@@ -1930,14 +1930,14 @@ void list_characters(LIST *head)    // excludes grolms, gargs, icegargs. decides
 		       ch[n].x, ch[n].y, ch[n].points_tot >> 10, ch[n].alignment, n, n);
 	}
 
-	printf("</table>\n")
+	printf("</table>\n");
 }
 
 void list_characters2(LIST *head)       // listing grolms,gargs,icegargs only, desides by sprite-nr
 {
 	int n;
 
-	printf("<table>\n")
+	printf("<table>\n");
 
 	for (n = 0; n<MAXTCHARS; n++)
 	{
@@ -1958,14 +1958,14 @@ void list_characters2(LIST *head)       // listing grolms,gargs,icegargs only, d
 		       ch[n].x, ch[n].y, ch[n].points_tot >> 10, ch[n].alignment, n, n);
 	}
 
-	printf("</table>\n")
+	printf("</table>\n");
 }
 
 void list_characters_good(LIST *head)    // excludes grolms, gargs, icegargs. decides by sprite-nr
 {
 	int n;
 
-	printf("<table>\n")
+	printf("<table>\n");
 
 	for (n = 0; n<MAXTCHARS; n++)
 	{
@@ -1990,14 +1990,14 @@ void list_characters_good(LIST *head)    // excludes grolms, gargs, icegargs. de
 		       ch[n].x, ch[n].y, ch[n].points_tot >> 10, ch[n].alignment, n, n);
 	}
 
-	printf("</table>\n")
+	printf("</table>\n");
 }
 
 void list_named_characters(LIST *head)    // excludes grolms, gargs, icegargs. decides by sprite-nr
 {
 	int n;
 
-	printf("<table>\n")
+	printf("<table>\n");
 
 	for (n = 0; n<MAXTCHARS; n++)
 	{

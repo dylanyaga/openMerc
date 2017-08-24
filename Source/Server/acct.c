@@ -14,6 +14,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <sys/mman.h>
+#include <errno.h>
 #include "cgi-lib.h" /* include the cgi-lib.h header file */
 #include "html-lib.h" /* include the html-lib.h header file */
 #include "gendefs.h"
@@ -88,7 +89,7 @@ int extend(int handle, long sizereq, size_t sizeone, void*templ)
 }
 
 
-static int load(void)
+static int web_load(void)
 {
 	int handle, flag = 0;
 	struct map tmap;
@@ -312,7 +313,7 @@ static int load(void)
    }*/
 
 
-static void unload(void)
+static void web_unload(void)
 {
 	xlog("Unloading data files");
 
@@ -2856,12 +2857,12 @@ int main(int argc, char *args[])
 	printf("<hr width=80%% color=\"#808000\"><br>\n");
 	printf("<table width=\"80%%\"><tr><td>\n");
 
-	load();
+	web_load();
 
 	#ifdef RESET_CHAR_KLUDGE
 	n = atoi(args[1]);
 	globs->reset_char = n;
-	unload();
+	web_unload();
 	exit(0);
 	#endif
 
@@ -2963,7 +2964,7 @@ int main(int argc, char *args[])
 		break;
 	}
 
-	unload();
+	web_unload();
 
 	printf("</td></tr></table>\n");
 

@@ -18,6 +18,8 @@
 #include "html-lib.h" /* include the html-lib.h header file */
 #include "gendefs.h"
 #include "data.h"
+#include "funcs.h"
+
 
 /* CS, 991113: TCHARSIZE and TITEMSIZE now in data.h */
 
@@ -63,7 +65,7 @@ int extend(int handle, long sizereq, size_t sizeone, void*templ)
 	length = lseek(handle, 0L, SEEK_END);
 	if (length < sizereq)
 	{
-		// xlog("Current size = %ldK, extending to %ldK", length / 1024, sizereq / 1024);
+		xlog("Current size = %ldK, extending to %ldK", length / 1024, sizereq / 1024);
 		buffer = templ;
 		if (buffer == NULL)
 		{
@@ -85,41 +87,21 @@ int extend(int handle, long sizereq, size_t sizeone, void*templ)
 	return(1); // success
 }
 
+
 static int load(void)
 {
-	int handle;
-	char cwd[128];
+	int handle, flag = 0;
+	struct map tmap;
 
-	handle = open(DATDIR "/tchar.dat", O_RDWR);
-	if (handle==-1)
-	{
-		if (getcwd(cwd, sizeof(cwd)) != NULL)
-		{
-			fprintf(stderr, "cwd: %s\n", cwd);
-		}
-		perror(DATDIR "/tchar.dat");
-		return(-1);
-	}
-	if (!extend(handle, TCHARSIZE, sizeof(struct character), NULL))
-	{
-		return( -1);
-	}
+	/** CHAR **/
+	xlog("Loading CHAR: Item size=%d, file size=%dK",
+	     sizeof(struct character), CHARSIZE >> 10);
 
-	ch = mmap(NULL, TCHARSIZE, PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
-	if (ch==(void*)-1)
-	{
-		fprintf(stderr, "cannot mmap tchar.dat.\n");
-		return(-1);
-	}
-	close(handle);
-
-// DY Add player open
 	handle = open(DATDIR "/char.dat", O_RDWR);
 	if (handle==-1)
 	{
-		perror(DATDIR "/char.dat");
-
-		return(-1);
+		xlog("Building characters");
+		handle = open(DATDIR "/char.dat", O_RDWR | O_CREAT, 0600);
 	}
 	if (!extend(handle, CHARSIZE, sizeof(struct character), NULL))
 	{
@@ -129,20 +111,41 @@ static int load(void)
 	player = mmap(NULL, CHARSIZE, PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
 	if (player==(void*)-1)
 	{
-		fprintf(stderr, "cannot mmap char.dat.\n");
 		return( -1);
 	}
 	close(handle);
-// DY Add player open
 
-// DY add item open
+	/** TCHAR **/
+	xlog("Loading TCHAR: Item size=%d, file size=%dK",
+	     sizeof(struct character), TCHARSIZE >> 10);
+
+	handle = open(DATDIR "/tchar.dat", O_RDWR);
+	if (handle==-1)
+	{
+		xlog("Building tcharacters");
+		handle = open(DATDIR "/tchar.dat", O_RDWR | O_CREAT, 0600);
+	}
+	if (!extend(handle, TCHARSIZE, sizeof(struct character), NULL))
+	{
+		return( -1);
+	}
+
+	ch = mmap(NULL, TCHARSIZE, PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
+	if (ch==(void*)-1)
+	{
+		return( -1);
+	}
+	close(handle);
+
+	/** ITEM **/
+	xlog("Loading ITEM: Item size=%d, file size=%dK",
+	     sizeof(struct item), ITEMSIZE >> 10);
+
 	handle = open(DATDIR "/item.dat", O_RDWR);
 	if (handle==-1)
 	{
-		//xlog("Building items");
-		//handle = open(DATDIR "/item.dat", O_RDWR | O_CREAT, 0600);
-		perror(DATDIR "/item.dat");
-		return( -1);
+		xlog("Building items");
+		handle = open(DATDIR "/item.dat", O_RDWR | O_CREAT, 0600);
 	}
 	if (!extend(handle, ITEMSIZE, sizeof(struct item), NULL))
 	{
@@ -156,25 +159,40 @@ static int load(void)
 		return( -1);
 	}
 	close(handle);
-// DY add item open
+
+	/** TITEM **/
+	xlog("Loading TITEM: Item size=%d, file size=%dK",
+	     sizeof(struct item), TITEMSIZE >> 10);
 
 	handle = open(DATDIR "/titem.dat", O_RDWR);
 	if (handle==-1)
 	{
-		fprintf(stderr, "titem.dat does not exist.\n");
-		return(-1);
+		xlog("Building titems");
+		handle = open(DATDIR "/titem.dat", O_RDWR | O_CREAT, 0600);
+	}
+	if (!extend(handle, TITEMSIZE, sizeof(struct item), NULL))
+	{
+		return( -1);
 	}
 
 	it = mmap(NULL, TITEMSIZE, PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
 	if (it==(void*)-1)
 	{
-		fprintf(stderr, "cannot mmap titem.dat.\n");
-		return(-1);
+		return( -1);
 	}
 	close(handle);
 
+	/** GLOBS **/
+	xlog("Loading GLOBS: Item size=%d, file size=%db",
+	     sizeof(struct global), sizeof(struct global));
+
 	handle = open(DATDIR "/global.dat", O_RDWR);
 	if (handle==-1)
+	{
+		xlog("Building globals");
+		handle = open(DATDIR "/global.dat", O_RDWR | O_CREAT, 0600);
+	}
+	if (!extend(handle, GLOBSIZE, sizeof(struct global), NULL))
 	{
 		return( -1);
 	}
@@ -189,32 +207,174 @@ static int load(void)
 	return(0);
 }
 
+/*static int load(void)
+   {
+        int handle;
+        char cwd[128];
+
+        handle = open(DATDIR "/tchar.dat", O_RDWR);
+        if (handle==-1)
+        {
+                if (getcwd(cwd, sizeof(cwd)) != NULL)
+                {
+                        fprintf(stderr, "cwd: %s\n", cwd);
+                }
+                perror(DATDIR "/tchar.dat");
+                return(-1);
+        }
+        if (!extend(handle, TCHARSIZE, sizeof(struct character), NULL))
+        {
+                return( -1);
+        }
+
+        ch = mmap(NULL, TCHARSIZE, PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
+        if (ch==(void*)-1)
+        {
+                fprintf(stderr, "cannot mmap tchar.dat.\n");
+                return(-1);
+        }
+        close(handle);
+
+   // DY Add player open
+        handle = open(DATDIR "/char.dat", O_RDWR);
+        if (handle==-1)
+        {
+                perror(DATDIR "/char.dat");
+
+                return(-1);
+        }
+        if (!extend(handle, CHARSIZE, sizeof(struct character), NULL))
+        {
+                return( -1);
+        }
+
+        player = mmap(NULL, CHARSIZE, PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
+        if (player==(void*)-1)
+        {
+                fprintf(stderr, "cannot mmap char.dat.\n");
+                return( -1);
+        }
+        close(handle);
+   // DY Add player open
+
+   // DY add item open
+        handle = open(DATDIR "/item.dat", O_RDWR);
+        if (handle==-1)
+        {
+                //xlog("Building items");
+                //handle = open(DATDIR "/item.dat", O_RDWR | O_CREAT, 0600);
+                perror(DATDIR "/item.dat");
+                return( -1);
+        }
+        if (!extend(handle, ITEMSIZE, sizeof(struct item), NULL))
+        {
+                return( -1);
+        }
+
+
+        items = mmap(NULL, ITEMSIZE, PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
+        if (items==(void*)-1)
+        {
+                return( -1);
+        }
+        close(handle);
+   // DY add item open
+
+        handle = open(DATDIR "/titem.dat", O_RDWR);
+        if (handle==-1)
+        {
+                fprintf(stderr, "titem.dat does not exist.\n");
+                return(-1);
+        }
+
+        it = mmap(NULL, TITEMSIZE, PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
+        if (it==(void*)-1)
+        {
+                fprintf(stderr, "cannot mmap titem.dat.\n");
+                return(-1);
+        }
+        close(handle);
+
+        handle = open(DATDIR "/global.dat", O_RDWR);
+        if (handle==-1)
+        {
+                return( -1);
+        }
+
+        globs = mmap(NULL, sizeof(struct global), PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
+        if (globs==(void*)-1)
+        {
+                return( -1);
+        }
+        close(handle);
+
+        return(0);
+   }*/
+
+
 static void unload(void)
 {
-	if (munmap(ch, TCHARSIZE))
-	{
-		perror("munmap(ch)");
-	}
+	xlog("Unloading data files");
+
 	if (munmap(player, CHARSIZE))
 	{
-		perror("munmap(player)");
+		xlog("ERROR: munmap(ch) %s", strerror(errno));
 	}
 	if (munmap(items, ITEMSIZE))
 	{
-		perror("munmap(items)");
+		xlog("ERROR: munmap(it) %s", strerror(errno));
+	}
+	if (munmap(ch, TCHARSIZE))
+	{
+		xlog("ERROR: munmap(ch_temp) %s", strerror(errno));
 	}
 	if (munmap(it, TITEMSIZE))
 	{
-		perror("munmap(it)");
+		xlog("ERROR: munmap(it_temp) %s", strerror(errno));
 	}
 	if (munmap(globs, sizeof(struct global)))
 	{
-		perror("munmap(globs)");
+		xlog("ERROR: munmap(globs) %s", strerror(errno));
 	}
 }
-
-static char *weartext[20] = {"Head",      "Neck", "Body", "Arms", "Belt", "Legs", "Feet", "Left Hand", "Right Hand", "Cloak",
-	                     "Left Ring", "Right Ring"};
+/*static void unload(void)
+   {
+        if (munmap(ch, TCHARSIZE))
+        {
+                perror("munmap(ch)");
+        }
+        if (munmap(player, CHARSIZE))
+        {
+                perror("munmap(player)");
+        }
+        if (munmap(items, ITEMSIZE))
+        {
+                perror("munmap(items)");
+        }
+        if (munmap(it, TITEMSIZE))
+        {
+                perror("munmap(it)");
+        }
+        if (munmap(globs, sizeof(struct global)))
+        {
+                perror("munmap(globs)");
+        }
+   }
+ */
+static char *weartext[20] = {
+	"Head",
+	"Neck",
+	"Body",
+	"Arms",
+	"Belt",
+	"Legs",
+	"Feet",
+	"Left Hand",
+	"Right Hand",
+	"Cloak",
+	"Left Ring",
+	"Right Ring"
+};
 
 static char *text_name[10] = {
 	"Killed Enemy $1", //0

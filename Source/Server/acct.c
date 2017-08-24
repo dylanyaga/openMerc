@@ -878,13 +878,14 @@ void view_character_player(LIST *head)
 		return;
 	}
 
-	if (cn<0 || cn>=MAXTCHARS)
+	if (cn<0 || cn>=MAXCHARS)
 	{
 		printf("Number out of bounds.\n");
 		return;
 	}
 
 	printf("<center><a href=/cgi-imp/acct.cgi?step=19>Back</a>|<a href=/cgi-imp/acct.cgi>Home</a></center><br><br>\n");
+	printf("<a href=/cgi-imp/acct.cgi?step=29&cn=%d>Save MOA</a><br>", cn);
 	printf("<form method=post action=/cgi-imp/acct.cgi>\n");
 	printf("<table>\n");
 	printf("<tr><td>Name:</td><td><input type=text name=name value=\"%s\" size=35 maxlength=35></td></tr>\n",
@@ -1141,7 +1142,58 @@ void view_character_player(LIST *head)
 	printf("<center><a href=/cgi-imp/acct.cgi?step=19>Back</a>|<a href=/cgi-imp/acct.cgi>Home</a></center><br><br>\n");
 }
 
+void save_character_player(LIST *head)
+{
+	int cn, n;
+	char *tmp;
 
+	tmp = find_val(head, "cn");
+	if (tmp)
+	{
+		cn = atoi(tmp);
+	}
+	else
+	{
+		printf("No number specified.\n");
+		return;
+	}
+
+	if (cn<0 || cn>=MAXCHARS)
+	{
+		printf("Number out of bounds.\n");
+		return;
+	}
+
+	int handle;
+	char buf[80];
+
+	int result = chdir("/home/merc");
+
+	if(result != 0)
+	{
+		printf("Unable to find /home/merc");
+		exit(1);
+	}
+	sprintf(buf, ".save/%s.moa", ch[cn].name);
+
+	handle = open(buf, O_WRONLY | O_TRUNC | O_CREAT, 0600);
+	if (handle==-1)
+	{
+		printf("Could not open file.\n");
+		perror(buf);
+		return(0);
+	}
+	write(handle, &cn, 4);
+	write(handle, &ch[cn].pass1, 4);
+	write(handle, &ch[cn].pass2, 4);
+	write(handle, ch[cn].name, 40);
+	write(handle, &ch[cn].temp, 4);
+	close(handle);
+	printf("Saved as %s.moa.\n", ch[cn].name);
+
+
+	return(1);
+}
 
 void copy_object(LIST *head)
 {
@@ -3878,6 +3930,9 @@ int main(int argc, char *args[])
 		break;
 	case 28:
 		view_item(head);
+		break;
+	case 29:
+		save_character_player(head);
 		break;
 	case    31:
 		list_object_drivers(head);

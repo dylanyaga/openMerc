@@ -26,8 +26,10 @@ structure:
 	sudo mkdir -p $(SERVERDIR)
 	sudo mkdir -p $(SERVERDIR)/.obj
 	sudo mkdir -p $(SERVERDIR)/.dat
+	sudo mkdir -p $(SERVERDIR)/.save
 	sudo cp .dat/*.* $(SERVERDIR)/.dat/
 	sudo chmod -R a+rwx $(SERVERDIR)/.dat/
+	sudo chmod a+rwx $(SERVERDIR)/.save
 	sudo mkdir -p $(CGIIMP)
 	sudo cp -R Web/* $(WEB)
 	sudo touch $(SERVERDIR)/server.log

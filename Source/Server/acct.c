@@ -3698,10 +3698,10 @@ void list_items(LIST *head)
 
 		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=28&in=%d>%30.30s</a></td>\n"
 		       "<td>price: %dG, %dS</td><td>data4: %d</td>\n"
-		       "<td><a href=/cgi-imp/acct.cgi?step=25&in=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=22&in=%d>Delete</a></td></tr>\n",
+		       /*"<td><a href=/cgi-imp/acct.cgi?step=25&in=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=22&in=%d>Delete</a></td></tr>\n"*/,
 		       n, n, it[n].name,
-		       it[n].value / 100, it[n].value % 100, it[n].data[4],
-		       n, n);
+		       it[n].value / 100, it[n].value % 100, it[n].data[4]/*,
+		                                                             n, n*/);
 	}
 
 	printf("</table>\n");

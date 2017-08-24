@@ -48,7 +48,7 @@ cgi/info.cgi: info.c gendefs.h data.h
 	sudo cp info.cgi $(CGIBIN)/info.cgi
 	sudo chmod a+rx $(CGIBIN)/info.cgi
 
-cgi/acct.cgi: acct.c gendefs.h data.h .obj/skill.o
+cgi/acct.cgi: acct.c gendefs.h data.h funcs.h .obj/skill.o
 	$(CC) $(CFLAGS) -Icgilib -o acct.cgi acct.c .obj/skill.o cgilib/cgi-lib.a
 	sudo cp acct.cgi $(CGIIMP)/acct.cgi
 	sudo chmod a+rx $(CGIIMP)/acct.cgi

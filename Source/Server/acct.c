@@ -1478,7 +1478,7 @@ void update_player_character(LIST *head)
 		return;
 	}
 
-	bzero(&player[cn], sizeof(struct playeraracter));
+	bzero(&player[cn], sizeof(struct character));
 	player[cn].used = USE_ACTIVE;
 
 	tmp = find_val(head, "name");

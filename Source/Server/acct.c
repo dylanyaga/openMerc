@@ -66,7 +66,7 @@ int extend(int handle, long sizereq, size_t sizeone, void*templ)
 	length = lseek(handle, 0L, SEEK_END);
 	if (length < sizereq)
 	{
-		printf("Current size = %ldK, extending to %ldK", length / 1024, sizereq / 1024);
+		fprintf(stderr, "Current size = %ldK, extending to %ldK", length / 1024, sizereq / 1024);
 		buffer = templ;
 		if (buffer == NULL)
 		{
@@ -78,7 +78,7 @@ int extend(int handle, long sizereq, size_t sizeone, void*templ)
 		}
 		for (; length < sizereq; length += sizeone)
 		{
-			write(handle, buffer, sizeone);
+			int success = write(handle, buffer, sizeone);
 		}
 		if (templ == NULL)
 		{
@@ -91,16 +91,16 @@ int extend(int handle, long sizereq, size_t sizeone, void*templ)
 
 static int web_load(void)
 {
-	int handle, flag = 0;
+	int handle = 0;
 
 	/** CHAR **/
-	printf("Loading CHAR: Item size=%d, file size=%dK",
-	       sizeof(struct character), CHARSIZE >> 10);
+	fprintf(stderr, "Loading CHAR: Item size=%d, file size=%dK",
+	        sizeof(struct character), CHARSIZE >> 10);
 
 	handle = open(DATDIR "/char.dat", O_RDWR);
 	if (handle==-1)
 	{
-		printf("Building characters");
+		fprintf(stderr, "Building characters");
 		handle = open(DATDIR "/char.dat", O_RDWR | O_CREAT, 0600);
 	}
 	if (!extend(handle, CHARSIZE, sizeof(struct character), NULL))
@@ -116,13 +116,13 @@ static int web_load(void)
 	close(handle);
 
 	/** TCHAR **/
-	printf("Loading TCHAR: Item size=%d, file size=%dK",
-	       sizeof(struct character), TCHARSIZE >> 10);
+	fprintf(stderr, "Loading TCHAR: Item size=%d, file size=%dK",
+	        sizeof(struct character), TCHARSIZE >> 10);
 
 	handle = open(DATDIR "/tchar.dat", O_RDWR);
 	if (handle==-1)
 	{
-		printf("Building tcharacters");
+		fprintf(stderr, "Building tcharacters");
 		handle = open(DATDIR "/tchar.dat", O_RDWR | O_CREAT, 0600);
 	}
 	if (!extend(handle, TCHARSIZE, sizeof(struct character), NULL))
@@ -138,13 +138,13 @@ static int web_load(void)
 	close(handle);
 
 	/** ITEM **/
-	printf("Loading ITEM: Item size=%d, file size=%dK",
-	       sizeof(struct item), ITEMSIZE >> 10);
+	fprintf(stderr, "Loading ITEM: Item size=%d, file size=%dK",
+	        sizeof(struct item), ITEMSIZE >> 10);
 
 	handle = open(DATDIR "/item.dat", O_RDWR);
 	if (handle==-1)
 	{
-		printf("Building items");
+		fprintf(stderr, "Building items");
 		handle = open(DATDIR "/item.dat", O_RDWR | O_CREAT, 0600);
 	}
 	if (!extend(handle, ITEMSIZE, sizeof(struct item), NULL))
@@ -161,13 +161,13 @@ static int web_load(void)
 	close(handle);
 
 	/** TITEM **/
-	printf("Loading TITEM: Item size=%d, file size=%dK",
-	       sizeof(struct item), TITEMSIZE >> 10);
+	fprintf(stderr, "Loading TITEM: Item size=%d, file size=%dK",
+	        sizeof(struct item), TITEMSIZE >> 10);
 
 	handle = open(DATDIR "/titem.dat", O_RDWR);
 	if (handle==-1)
 	{
-		printf("Building titems");
+		fprintf(stderr, "Building titems");
 		handle = open(DATDIR "/titem.dat", O_RDWR | O_CREAT, 0600);
 	}
 	if (!extend(handle, TITEMSIZE, sizeof(struct item), NULL))
@@ -183,13 +183,13 @@ static int web_load(void)
 	close(handle);
 
 	/** GLOBS **/
-	printf("Loading GLOBS: Item size=%d, file size=%db",
-	       sizeof(struct global), sizeof(struct global));
+	fprintf(stderr, "Loading GLOBS: Item size=%d, file size=%db",
+	        sizeof(struct global), sizeof(struct global));
 
 	handle = open(DATDIR "/global.dat", O_RDWR);
 	if (handle==-1)
 	{
-		printf("Building globals");
+		fprintf(stderr, "Building globals");
 		handle = open(DATDIR "/global.dat", O_RDWR | O_CREAT, 0600);
 	}
 	if (!extend(handle, GLOBSIZE, sizeof(struct global), NULL))
@@ -314,27 +314,27 @@ static int web_load(void)
 
 static void web_unload(void)
 {
-	printf("Unloading data files");
+	fprintf(stderr, "Unloading data files");
 
 	if (munmap(player, CHARSIZE))
 	{
-		printf("ERROR: munmap(ch) %s", strerror(errno));
+		fprintf(stderr, "ERROR: munmap(ch) %s", strerror(errno));
 	}
 	if (munmap(items, ITEMSIZE))
 	{
-		printf("ERROR: munmap(it) %s", strerror(errno));
+		fprintf(stderr, "ERROR: munmap(it) %s", strerror(errno));
 	}
 	if (munmap(ch, TCHARSIZE))
 	{
-		printf("ERROR: munmap(ch_temp) %s", strerror(errno));
+		fprintf(stderr, "ERROR: munmap(ch_temp) %s", strerror(errno));
 	}
 	if (munmap(it, TITEMSIZE))
 	{
-		printf("ERROR: munmap(it_temp) %s", strerror(errno));
+		fprintf(stderr, "ERROR: munmap(it_temp) %s", strerror(errno));
 	}
 	if (munmap(globs, sizeof(struct global)))
 	{
-		printf("ERROR: munmap(globs) %s", strerror(errno));
+		fprintf(stderr, "ERROR: munmap(globs) %s", strerror(errno));
 	}
 }
 /*static void unload(void)

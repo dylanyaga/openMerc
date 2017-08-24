@@ -927,6 +927,8 @@ void view_player(LIST *head)
 	       player[cn].reference);
 	printf("<tr><td>Description:</td><td><input type=text name=description value=\"%s\" size=35 maxlength=195></td></tr>\n",
 	       player[cn].description);
+	printf("<tr><td>Player:</td><td><input type=text name=player value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       player[cn].player);
 	printf("<tr><td>Pass1:</td><td><input type=text name=pass1 value=\"%d\" size=10 maxlength=10></td></tr>\n",
 	       player[cn].pass1);
 	printf("<tr><td>Pass2:</td><td><input type=text name=pass2 value=\"%d\" size=10 maxlength=10></td></tr>\n",
@@ -1520,6 +1522,18 @@ void update_player_character(LIST *head)
 		printf("DESCRIPTION not specified.\n");
 		return;
 	}
+
+	tmp = find_val(head, "player");
+	if (tmp)
+	{
+		player[cn].player = atoi(tmp);
+	}
+	else
+	{
+		printf("PLAYER not specified.\n");
+		return;
+	}
+
 
 	tmp = find_val(head, "pass1");
 	if (tmp)

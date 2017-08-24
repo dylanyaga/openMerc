@@ -2025,16 +2025,6 @@ void update_player_character(LIST *head)
 		return;
 	}
 
-	if (player[cn].flags & CF_RESPAWN)
-	{
-		globs->reset_char = cn;
-	}
-
-	if (!player[cn].data[29] && (player[cn].flags & CF_RESPAWN))
-	{
-		player[cn].data[29] = player[cn].x + player[cn].y * MAPX;
-	}
-
 	printf("Done.\n");
 }
 

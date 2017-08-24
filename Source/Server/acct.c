@@ -843,20 +843,47 @@ void view_player(LIST *head)
 	       player[cn].class);
 
 	printf("<tr><td valign=top>Flags:</td><td>\n");
-	printf("Infrared <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       CF_INFRARED, (player[cn].flags & CF_INFRARED) ? "checked" : "");
-	printf("Undead <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       CF_UNDEAD, (player[cn].flags & CF_UNDEAD) ? "checked" : "");
-	printf("Respawn <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       CF_RESPAWN, (player[cn].flags & CF_RESPAWN) ? "checked" : "");
-	printf("No-Sleep <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       CF_NOSLEEP, (player[cn].flags & CF_NOSLEEP) ? "checked" : "");
-	printf("Merchant <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       CF_MERCHANT, (player[cn].flags & CF_MERCHANT) ? "checked" : "");
-	printf("Simple Animation <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       CF_SIMPLE, (player[cn].flags & CF_SIMPLE) ? "checked" : "");
-	printf("Player <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       CF_PLAYER, (player[cn].flags & CF_PLAYER) ? "checked" : "");
+	printf("Infrared <input type=checkbox name=flags value=%Lu %s><br>\n", CF_INFRARED, (player[cn].flags & CF_INFRARED) ? "checked" : "");
+	printf("Player <input type=checkbox name=flags value=%Lu %s><br>\n", CF_PLAYER, (player[cn].flags & CF_PLAYER) ? "checked" : "");
+	printf("Immortal <input type=checkbox name=flags value=%Lu %s><br>\n", CF_IMMORTAL, (player[cn].flags & CF_IMMORTAL) ? "checked" : "");
+	printf("God <input type=checkbox name=flags value=%Lu %s><br>\n", CF_GOD, (player[cn].flags & CF_GOD) ? "checked" : "");
+	printf("Greater God <input type=checkbox name=flags value=%Lu %s><br>\n", CF_GREATERGOD, (player[cn].flags & CF_GREATERGOD) ? "checked" : "");
+	printf("Greater Invisibility <input type=checkbox name=flags value=%Lu %s><br>\n", CF_GREATERINV, (player[cn].flags & CF_GREATERINV) ? "checked" : "");
+	printf("Safety Measures for Gods <input type=checkbox name=flags value=%Lu %s><br>\n", CF_SAFE, (player[cn].flags & CF_SAFE) ? "checked" : "");
+	printf("Imp <input type=checkbox name=flags value=%Lu %s><br>\n", CF_IMP, (player[cn].flags & CF_IMP) ? "checked" : "");
+	printf("Staff <input type=checkbox name=flags value=%Lu %s><br>\n", CF_STAFF, (player[cn].flags & CF_STAFF) ? "checked" : "");
+	printf("Creator <input type=checkbox name=flags value=%Lu %s><br>\n", CF_CREATOR, (player[cn].flags & CF_CREATOR) ? "checked" : "");
+	printf("Build Mode <input type=checkbox name=flags value=%Lu %s><br>\n", CF_BUILDMODE, (player[cn].flags & CF_BUILDMODE) ? "checked" : "");
+	printf("New User <input type=checkbox name=flags value=%Lu %s><br>\n", CF_NEWUSER, (player[cn].flags & CF_NEWUSER) ? "checked" : "");
+	printf("No Tell <input type=checkbox name=flags value=%Lu %s><br>\n", CF_NOTELL, (player[cn].flags & CF_NOTELL) ? "checked" : "");
+	printf("No Shout <input type=checkbox name=flags value=%Lu %s><br>\n", CF_NOSHOUT, (player[cn].flags & CF_NOSHOUT) ? "checked" : "");
+	printf("No HP Regen <input type=checkbox name=flags value=%Lu %s><br>\n", CF_NOHPREG, (player[cn].flags & CF_NOHPREG) ? "checked" : "");
+	printf("No END Regen <input type=checkbox name=flags value=%Lu %s><br>\n", CF_NOENDREG, (player[cn].flags & CF_NOENDREG) ? "checked" : "");
+	printf("No MANA Regen <input type=checkbox name=flags value=%Lu %s><br>\n", CF_NOMANAREG, (player[cn].flags & CF_NOMANAREG) ? "checked" : "");
+	printf("Invisible <input type=checkbox name=flags value=%Lu %s><br>\n", CF_INVISIBLE, (player[cn].flags & CF_INVISIBLE) ? "checked" : "");
+	printf("Dead Body <input type=checkbox name=flags value=%Lu %s><br>\n", CF_BODY, (player[cn].flags & CF_BODY) ? "checked" : "");
+	printf("Stay Awake <input type=checkbox name=flags value=%Lu %s><br>\n", CF_NOSLEEP, (player[cn].flags & CF_NOSLEEP) ? "checked" : "");
+	printf("No Magic <input type=checkbox name=flags value=%Lu %s><br>\n", CF_NOMAGIC, (player[cn].flags & CF_NOMAGIC) ? "checked" : "");
+	printf("Stoned <input type=checkbox name=flags value=%Lu %s><br>\n", CF_STONED, (player[cn].flags & CF_STONED) ? "checked" : "");
+	printf("Usurped <input type=checkbox name=flags value=%Lu %s><br>\n", CF_USURP, (player[cn].flags & CF_USURP) ? "checked" : "");
+	printf("Shutup <input type=checkbox name=flags value=%Lu %s><br>\n", CF_SHUTUP, (player[cn].flags & CF_SHUTUP) ? "checked" : "");
+	printf("No Description <input type=checkbox name=flags value=%Lu %s><br>\n", CF_NODESC, (player[cn].flags & CF_NODESC) ? "checked" : "");
+	printf("Profiler <input type=checkbox name=flags value=%Lu %s><br>\n", CF_PROF, (player[cn].flags & CF_PROF) ? "checked" : "");
+	printf("Simple Animation <input type=checkbox name=flags value=%Lu %s><br>\n", CF_SIMPLE, (player[cn].flags & CF_SIMPLE) ? "checked" : "");
+	printf("Kicked <input type=checkbox name=flags value=%Lu %s><br>\n", CF_KICKED, (player[cn].flags & CF_KICKED) ? "checked" : "");
+	printf("Do Not List <input type=checkbox name=flags value=%Lu %s><br>\n", CF_NOLIST, (player[cn].flags & CF_NOLIST) ? "checked" : "");
+	printf("Do Not List on Who <input type=checkbox name=flags value=%Lu %s><br>\n", CF_NOWHO, (player[cn].flags & CF_NOWHO) ? "checked" : "");
+	printf("Spell Ignore <input type=checkbox name=flags value=%Lu %s><br>\n", CF_SPELLIGNORE, (player[cn].flags & CF_SPELLIGNORE) ? "checked" : "");
+	printf("No Staff Tells <input type=checkbox name=flags value=%Lu %s><br>\n", CF_NOSTAFF, (player[cn].flags & CF_NOSTAFF) ? "checked" : "");
+	printf("Is POH <input type=checkbox name=flags value=%Lu %s><br>\n", CF_POH, (player[cn].flags & CF_POH) ? "checked" : "");
+	printf("Is POH Leader <input type=checkbox name=flags value=%Lu %s><br>\n", CF_POH_LEADER, (player[cn].flags & CF_POH_LEADER) ? "checked" : "");
+	printf("Is Looting <input type=checkbox name=flags value=%Lu %s><br>\n", CF_ISLOOTING, (player[cn].flags & CF_ISLOOTING) ? "checked" : "");
+	printf("Gold List <input type=checkbox name=flags value=%Lu %s><br>\n", CF_GOLDEN, (player[cn].flags & CF_GOLDEN) ? "checked" : "");
+	printf("Black List <input type=checkbox name=flags value=%Lu %s><br>\n", CF_BLACK, (player[cn].flags & CF_BLACK) ? "checked" : "");
+	printf("Has Password <input type=checkbox name=flags value=%Lu %s><br>\n", CF_PASSWD, (player[cn].flags & CF_PASSWD) ? "checked" : "");
+	printf("Client Side Update Needed <input type=checkbox name=flags value=%Lu %s><br>\n", CF_UPDATE, (player[cn].flags & CF_UPDATE) ? "checked" : "");
+	printf("Save Player To Disk <input type=checkbox name=flags value=%Lu %s><br>\n", CF_SAVEME, (player[cn].flags & CF_SAVEME) ? "checked" : "");
+
 	printf("</td></tr>\n");
 
 	printf("<tr><td valign=top>Alignment</td><td><input type=text name=alignment value=\"%d\" size=10 maxlength=10></td></tr>\n",

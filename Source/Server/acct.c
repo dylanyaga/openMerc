@@ -927,6 +927,10 @@ void view_player(LIST *head)
 	       player[cn].reference);
 	printf("<tr><td>Description:</td><td><input type=text name=description value=\"%s\" size=35 maxlength=195></td></tr>\n",
 	       player[cn].description);
+	printf("<tr><td>Pass1:</td><td><input type=text name=pass1 value=\"%s\" size=35 maxlength=195></td></tr>\n",
+	       player[cn].pass1);
+	printf("<tr><td>Pass2:</td><td><input type=text name=pass2 value=\"%s\" size=35 maxlength=195></td></tr>\n",
+	       player[cn].pass2);
 
 	printf("<tr><td valign=top>Kindred:</td><td>\n");
 	printf("Mercenary <input type=checkbox name=kindred value=%d %s><br>\n",
@@ -1514,6 +1518,28 @@ void update_player_character(LIST *head)
 	else
 	{
 		printf("DESCRIPTION not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "pass1");
+	if (tmp)
+	{
+		player[cn].pass1 = atoi(tmp);
+	}
+	else
+	{
+		printf("PASS1 not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "pass2");
+	if (tmp)
+	{
+		player[cn].pass2 = atoi(tmp);
+	}
+	else
+	{
+		printf("PASS2 not specified.\n");
 		return;
 	}
 

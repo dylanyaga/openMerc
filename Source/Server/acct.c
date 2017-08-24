@@ -229,6 +229,122 @@ static char *text_name[10] = {
 	"Unused", //9
 };
 
+static char *player_text_name[10] = {
+	"(Clobbered by Login) AFK Message", //0
+	"(Clobbered by Login)", //1
+	"(Clobbered by Login)",  //2
+	"Mark Message", //3
+	"Unused",//4
+	"Unused", //5
+	"Unused",      //6
+	"Unused", //7
+	"Unused", //8
+	"Unused", //9
+};
+
+static char *player_data_name[100] = {
+	"Away from Keyboard", //0
+	"Group With", //1
+	"Group With", //2
+	"Group With", //3
+	"Group With", //4
+	"Group With", //5
+	"Group With", //6
+	"Group With", //7
+	"Group With", //8
+	"Group With", //9
+	"Following",   //10
+	"No Fightback",   //11
+	"Follow Suspension Timeout",   //12
+	"Money in Bank (in silver)",   //13
+	"Number of Deaths",   //14
+	"Killed By X",   //15
+	"Date",   //16
+	"Area",   //17
+	"Current Pentagram Experience",   //18
+	"Lag Timer", //19
+	"Highest Gorge Solved", //20
+	"Seyan'Du Sword Shrines Used", //21
+	"Current Monster in Arena", //22
+	"Overall Kill Counter (Below Rank)", //23
+	"Overall Kill Counter (At Rank)", //24
+	"Overall Kill Counter (Above Rank)", //25
+	"BS Kill Counter (Below Rank)", //26
+	"BS Kill Counter (At Rank)", //27
+	"BS Kill Counter (Above Rank)",   //28
+	"Other Players Killed Outside Arena", //29
+	"Soft Ignore List", //30
+	"Protect Templ", //31
+	"Soft Ignore List", //32
+	"Soft Ignore List", //33
+	"Soft Ignore List", //34
+	"Soft Ignore List", //35
+	"Soft Ignore List", //36
+	"Soft Ignore List", //37
+	"Soft Ignore List", //38
+	"Soft Ignore List", //39
+	"Shop Keepers Etc. Killed", //40
+	"BS Points Already Spent", //41
+	"Group",    //42
+	"Black Candles Returned", //43
+	"Number of Times Saved by the Gods", //44
+	"Level X Got HP/END/MANA Bonus For", //45
+	"Flags of Explorer Points Visited", //46
+	"Flags of Explorer Points Visited", //47
+	"Flags of Explorer Points Visited", //48
+	"Flags of Explorer Points Visited", //49
+	"Hard Ignore List", //50
+	"Hard Ignore List", //51
+	"Hard Ignore List", //52
+	"Hard Ignore List", //53
+	"Hard Ignore List", //54
+	"Hard Ignore List", //55
+	"Hard Ignore List", //56
+	"Hard Ignore List", //57
+	"Hard Ignore List", //58
+	"Hard Ignore List", //59
+	"Flags of Killed NPC of Certain Class", //60
+	"Flags of Killed NPC of Certain Class", //61
+	"Flags of Killed NPC of Certain Class", //62
+	"Flags of Killed NPC of Certain Class", //63
+	"Current Ghost Companion", //64
+	"Player #ALLOWed to Search Corpse", //65
+	"Corpse's Owner", //66
+	"Riddle Giver (Lab 9)", //67
+	"Date of Last Player Attack (CHD_ATTACKTIME)", //68
+	"Last Player Attackeed (CHD_ATTACKVICT)", //69
+	"Number of Fire Points", //70
+	"Number of Says/Tells/Looks/Lights", //71
+	"Bad Word Score", //72
+	"Unused", //73
+	"Unused", //74
+	"Unused", //75
+	"Unused", //76
+	"Unused", //77
+	"Unused", //78
+	"Unused", //79
+	"Seen Loggin in from these Class C nets", //80
+	"Seen Loggin in from these Class C nets", //81
+	"Seen Loggin in from these Class C nets", //82
+	"Seen Loggin in from these Class C nets", //83
+	"Seen Loggin in from these Class C nets", //84
+	"Seen Loggin in from these Class C nets", //85
+	"Seen Loggin in from these Class C nets", //86
+	"Seen Loggin in from these Class C nets", //87
+	"Seen Loggin in from these Class C nets", //88
+	"Seen Loggin in from these Class C nets", //89
+	"Number in Database", //90
+	"Unused", //91
+	"Reserved", //92
+	"Unused", //93
+	"Unused", //94
+	"Unused", //95
+	"Queued Spells", //96
+	"Computation Time Used Last Action",   //97
+	"Computation Time Used",   //98
+	"Used by Populate"  //99
+};
+
 static char *data_name[100] = {
 	"Generic 1",    //0
 	"Generic 2",    //1
@@ -782,9 +898,9 @@ void view_player(LIST *head)
 	printf("<tr><td>Gold:</td><td><input type=text name=gold value=\"%d\" size=10 maxlength=10></td></tr>\n",
 	       player[cn].gold);
 
-	if (player[cn].citem<0 || player[cn].citem>=MAXTITEM)
+	if (player[cn].citem<0 || player[cn].citem>=MAXITEM)
 	{
-		//player[cn].citem = 0;
+		player[cn].citem = 0;
 	}
 
 	printf("<tr><td>Current Item</td><td><input type=text name=citem value=\"%d\" size=10 maxlength=10> (%s)</td></tr>\n",
@@ -792,9 +908,9 @@ void view_player(LIST *head)
 
 	for (n = 0; n<12; n++)
 	{
-		if (player[cn].worn[n]>=MAXTITEM)
+		if (player[cn].worn[n]>=MAXITEM)
 		{
-			//player[cn].worn[n] = 0;
+			player[cn].worn[n] = 0;
 		}
 		printf("<tr><td>%s</td><td><input type=text name=worn%d value=\"%d\" size=10 maxlength=10> (%s)</td></tr>\n",
 		       weartext[n], n, player[cn].worn[n], player[cn].worn[n] ? items[player[cn].worn[n]].name : "none");
@@ -802,9 +918,9 @@ void view_player(LIST *head)
 
 	for (n = 0; n<40; n++)
 	{
-		if (player[cn].item[n]<0 || player[cn].item[n]>=MAXTITEM)
+		if (player[cn].item[n]<0 || player[cn].item[n]>=MAXITEM)
 		{
-			//	player[cn].item[n] = 0;
+			player[cn].item[n] = 0;
 		}
 		printf("<tr><td>Item %d</td><td><input type=text name=item%d value=\"%d\" size=10 maxlength=10> (%s)</td></tr>\n",
 		       n, n, player[cn].item[n], player[cn].item[n] ? items[player[cn].item[n]].name : "none");
@@ -813,23 +929,23 @@ void view_player(LIST *head)
 	printf("<tr><td>Driver Data:</td></tr>\n");
 	for (n = 0; n<100; n++)
 	{
-		if (strcmp(data_name[n], "Unused")==0 || strcmp(data_name[n], "Reserved")==0)
+		if (strcmp(player_data_name[n], "Unused")==0 || strcmp(player_data_name[n], "Reserved")==0)
 		{
 			continue;
 		}
 		printf("<tr><td>[%3d] %s</td><td><input type=text name=drdata%d value=\"%d\" size=35 maxlength=75></td></tr>\n",
-		       n, data_name[n], n, player[cn].data[n]);
+		       n, player_data_name[n], n, player[cn].data[n]);
 	}
 
 	printf("<tr><td>Driver Texts:</td></tr>\n");
 	for (n = 0; n<10; n++)
 	{
-		if (strcmp(text_name[n], "Unused")==0 || strcmp(text_name[n], "Reserved")==0)
+		if (strcmp(player_text_name[n], "Unused")==0 || strcmp(player_text_name[n], "Reserved")==0)
 		{
 			continue;
 		}
 		printf("<tr><td>%s</td><td><input type=text name=text_%d value=\"%s\" size=35 maxlength=158></td></tr>\n",
-		       text_name[n], n, player[cn].text[n]);
+		       player_text_name[n], n, player[cn].text[n]);
 	}
 
 	printf("<tr><td><input type=submit value=Update></td><td> </td></tr>\n");

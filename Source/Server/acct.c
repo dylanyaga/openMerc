@@ -891,7 +891,7 @@ void view_character(LIST *head)
 
 	printf("<tr><td><input type=submit value=Update></td><td> </td></tr>\n");
 	printf("</table>\n");
-	printf("<input type=hidden name=step value=14>\n");
+	printf("<input type=hidden name=step value=26>\n");
 	printf("<input type=hidden name=cn value=%d>\n", cn);
 	printf("</form>\n");
 	printf("<a href=/cgi-imp/acct.cgi?step=10>Back</a><br>\n");
@@ -1457,6 +1457,541 @@ void delete_object(LIST *head)
 	}
 
 	it[in].used = USE_EMPTY;
+
+	printf("Done.\n");
+}
+
+void update_player_character(LIST *head)
+{
+	int cn, cnt, val, n;
+	unsigned long long lval;
+	playerar *tmp, **tmps, buf[80];
+
+	tmp = find_val(head, "cn");
+	if (tmp)
+	{
+		cn = atoi(tmp);
+	}
+	else
+	{
+		printf("CN not specified.\n");
+		return;
+	}
+
+	bzero(&player[cn], sizeof(struct playeraracter));
+	player[cn].used = USE_ACTIVE;
+
+	tmp = find_val(head, "name");
+	if (tmp)
+	{
+		strncpy(player[cn].name, tmp, 35);
+		player[cn].name[35] = 0;
+	}
+	else
+	{
+		printf("NAME not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "reference");
+	if (tmp)
+	{
+		strncpy(player[cn].reference, tmp, 35);
+		player[cn].reference[35] = 0;
+	}
+	else
+	{
+		printf("REFERENCE not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "description");
+	if (tmp)
+	{
+		strncpy(player[cn].description, tmp, 195);
+		player[cn].description[195] = 0;
+	}
+	else
+	{
+		printf("DESCRIPTION not specified.\n");
+		return;
+	}
+
+	cnt = find_val_multi(head, "kindred", &tmps);
+	if (cnt)
+	{
+		for (n = val = 0; n<cnt; n++)
+		{
+			val |= atoi(tmps[n]);
+		}
+		player[cn].kindred = val;
+	}
+
+	tmp = find_val(head, "sprite");
+	if (tmp)
+	{
+		player[cn].sprite = atoi(tmp);
+	}
+	else
+	{
+		printf("SPRITE not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "sound");
+	if (tmp)
+	{
+		player[cn].sound = atoi(tmp);
+	}
+	else
+	{
+		printf("SOUND not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "class");
+	if (tmp)
+	{
+		player[cn].class = atoi(tmp);
+	}
+	else
+	{
+		printf("CLASS not specified.\n");
+		return;
+	}
+
+	cnt  = find_val_multi(head, "flags", &tmps);
+	lval = 0;
+	if (cnt)
+	{
+		for (n = 0; n<cnt; n++)
+		{
+			lval |= atoll(tmps[n]);
+		}
+	}
+	player[cn].flags = lval;
+
+	tmp = find_val(head, "alignment");
+	if (tmp)
+	{
+		player[cn].alignment = atoi(tmp);
+	}
+	else
+	{
+		printf("ALIGNMENT not specified.\n");
+		return;
+	}
+
+	for (n = 0; n<100; n++)
+	{
+		sprintf(buf, "drdata%d", n);
+		tmp = find_val(head, buf);
+		if (tmp)
+		{
+			player[cn].data[n] = atoi(tmp);
+		}
+		else
+		{
+			player[cn].data[n] = 0;
+		}
+	}
+
+	for (n = 0; n<10; n++)
+	{
+		sprintf(buf, "text_%d", n);
+		tmp = find_val(head, buf);
+		if (tmp)
+		{
+			strncpy(player[cn].text[n], tmp, 158);
+		}
+		else
+		{
+			player[cn].text[n][0] = 0;
+		}
+		player[cn].text[n][159] = 0;
+	}
+
+	for (n = 0; n<5; n++)
+	{
+		sprintf(buf, "attrib%d_0", n);
+		tmp = find_val(head, buf);
+		if (tmp)
+		{
+			player[cn].attrib[n][0] = atoi(tmp);
+		}
+		else
+		{
+			printf("ATTRIB%d_0 not specified.", n);
+			return;
+		}
+
+		sprintf(buf, "attrib%d_1", n);
+		tmp = find_val(head, buf);
+		if (tmp)
+		{
+			player[cn].attrib[n][1] = atoi(tmp);
+		}
+		else
+		{
+			printf("ATTRIB%d_1 not specified.", n);
+			return;
+		}
+
+		sprintf(buf, "attrib%d_2", n);
+		tmp = find_val(head, buf);
+		if (tmp)
+		{
+			player[cn].attrib[n][2] = atoi(tmp);
+		}
+		else
+		{
+			printf("ATTRIB%d_2 not specified.", n);
+			return;
+		}
+
+		sprintf(buf, "attrib%d_3", n);
+		tmp = find_val(head, buf);
+		if (tmp)
+		{
+			player[cn].attrib[n][3] = atoi(tmp);
+		}
+		else
+		{
+			printf("ATTRIB%d_3 not specified.", n);
+			return;
+		}
+	}
+
+	tmp = find_val(head, "hp_0");
+	if (tmp)
+	{
+		player[cn].hp[0] = atoi(tmp);
+	}
+	else
+	{
+		printf("HP_0 not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "hp_1");
+	if (tmp)
+	{
+		player[cn].hp[1] = atoi(tmp);
+	}
+	else
+	{
+		printf("HP_1 not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "hp_2");
+	if (tmp)
+	{
+		player[cn].hp[2] = atoi(tmp);
+	}
+	else
+	{
+		printf("HP_2 not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "hp_3");
+	if (tmp)
+	{
+		player[cn].hp[3] = atoi(tmp);
+	}
+	else
+	{
+		printf("HP_3 not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "end_0");
+	if (tmp)
+	{
+		player[cn].end[0] = atoi(tmp);
+	}
+	else
+	{
+		printf("END_0 not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "end_1");
+	if (tmp)
+	{
+		player[cn].end[1] = atoi(tmp);
+	}
+	else
+	{
+		printf("END_1 not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "end_2");
+	if (tmp)
+	{
+		player[cn].end[2] = atoi(tmp);
+	}
+	else
+	{
+		printf("END_2 not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "end_3");
+	if (tmp)
+	{
+		player[cn].end[3] = atoi(tmp);
+	}
+	else
+	{
+		printf("END_3 not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "mana_0");
+	if (tmp)
+	{
+		player[cn].mana[0] = atoi(tmp);
+	}
+	else
+	{
+		printf("MANA_0 not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "mana_1");
+	if (tmp)
+	{
+		player[cn].mana[1] = atoi(tmp);
+	}
+	else
+	{
+		printf("MANA_1 not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "mana_2");
+	if (tmp)
+	{
+		player[cn].mana[2] = atoi(tmp);
+	}
+	else
+	{
+		printf("MANA_2 not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "mana_3");
+	if (tmp)
+	{
+		player[cn].mana[3] = atoi(tmp);
+	}
+	else
+	{
+		printf("MANA_3 not specified.\n");
+		return;
+	}
+
+
+	for (n = 0; n<50; n++)
+	{
+		sprintf(buf, "skill%d_0", n);
+		tmp = find_val(head, buf);
+		if (tmp)
+		{
+			player[cn].skill[n][0] = atoi(tmp);
+		}
+		else
+		{
+			player[cn].skill[n][0] = 0;
+		}
+
+		sprintf(buf, "skill%d_1", n);
+		tmp = find_val(head, buf);
+		if (tmp)
+		{
+			player[cn].skill[n][1] = atoi(tmp);
+		}
+		else
+		{
+			player[cn].skill[n][1] = 0;
+		}
+
+		sprintf(buf, "skill%d_2", n);
+		tmp = find_val(head, buf);
+		if (tmp)
+		{
+			player[cn].skill[n][2] = atoi(tmp);
+		}
+		else
+		{
+			player[cn].skill[n][2] = 0;
+		}
+
+		sprintf(buf, "skill%d_3", n);
+		tmp = find_val(head, buf);
+		if (tmp)
+		{
+			player[cn].skill[n][3] = atoi(tmp);
+		}
+		else
+		{
+			player[cn].skill[n][3] = 0;
+		}
+	}
+
+	tmp = find_val(head, "speed_mod");
+	if (tmp)
+	{
+		player[cn].speed_mod = atoi(tmp);
+	}
+	else
+	{
+		printf("SPEED_MOD not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "weapon_bonus");
+	if (tmp)
+	{
+		player[cn].weapon_bonus = atoi(tmp);
+	}
+	else
+	{
+		printf("WEAPON_BONUS not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "light_bonus");
+	if (tmp)
+	{
+		player[cn].light_bonus = atoi(tmp);
+	}
+	else
+	{
+		printf("LIGHT_BONUS not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "armor_bonus");
+	if (tmp)
+	{
+		player[cn].armor_bonus = atoi(tmp);
+	}
+	else
+	{
+		printf("ARMOR_BONUS not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "points");
+	if (tmp)
+	{
+		player[cn].points = atoi(tmp);
+	}
+	else
+	{
+		printf("POINTS not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "points_tot");
+	if (tmp)
+	{
+		player[cn].points_tot = atoi(tmp);
+	}
+	else
+	{
+		printf("POINTS_TOT not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "x");
+	if (tmp)
+	{
+		player[cn].x = atoi(tmp);
+	}
+	else
+	{
+		printf("X not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "y");
+	if (tmp)
+	{
+		player[cn].y = atoi(tmp);
+	}
+	else
+	{
+		printf("Y not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "dir");
+	if (tmp)
+	{
+		player[cn].dir = atoi(tmp);
+	}
+	else
+	{
+		printf("DIR not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "gold");
+	if (tmp)
+	{
+		player[cn].gold = atoi(tmp);
+	}
+	else
+	{
+		printf("GOLD not specified.\n");
+		return;
+	}
+
+	for (n = 0; n<20; n++)
+	{
+		sprintf(buf, "worn%d", n);
+		tmp = find_val(head, buf);
+		if (tmp)
+		{
+			player[cn].worn[n] = atoi(tmp);
+		}
+	}
+
+	for (n = 0; n<40; n++)
+	{
+		sprintf(buf, "item%d", n);
+		tmp = find_val(head, buf);
+		if (tmp)
+		{
+			player[cn].item[n] = atoi(tmp);
+		}
+	}
+
+	tmp = find_val(head, "citem");
+	if (tmp)
+	{
+		player[cn].citem = atoi(tmp);
+	}
+	else
+	{
+		printf("CITEM not specified.\n");
+		return;
+	}
+
+	if (player[cn].flags & CF_RESPAWN)
+	{
+		globs->reset_playerar = cn;
+	}
+
+	if (!player[cn].data[29] && (player[cn].flags & CF_RESPAWN))
+	{
+		player[cn].data[29] = player[cn].x + player[cn].y * MAPX;
+	}
 
 	printf("Done.\n");
 }
@@ -2936,7 +3471,9 @@ int main(int argc, char *args[])
 	case    25:
 		copy_object(head);
 		break;
-
+	case 26:
+		update_character(head);
+		break;
 	case    31:
 		list_object_drivers(head);
 		break;

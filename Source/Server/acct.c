@@ -207,111 +207,6 @@ static int web_load(void)
 	return(0);
 }
 
-/*static int load(void)
-   {
-        int handle;
-        char cwd[128];
-
-        handle = open(DATDIR "/tchar.dat", O_RDWR);
-        if (handle==-1)
-        {
-                if (getcwd(cwd, sizeof(cwd)) != NULL)
-                {
-                        fprintf(stderr, "cwd: %s\n", cwd);
-                }
-                perror(DATDIR "/tchar.dat");
-                return(-1);
-        }
-        if (!extend(handle, TCHARSIZE, sizeof(struct character), NULL))
-        {
-                return( -1);
-        }
-
-        ch = mmap(NULL, TCHARSIZE, PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
-        if (ch==(void*)-1)
-        {
-                fprintf(stderr, "cannot mmap tchar.dat.\n");
-                return(-1);
-        }
-        close(handle);
-
-   // DY Add player open
-        handle = open(DATDIR "/char.dat", O_RDWR);
-        if (handle==-1)
-        {
-                perror(DATDIR "/char.dat");
-
-                return(-1);
-        }
-        if (!extend(handle, CHARSIZE, sizeof(struct character), NULL))
-        {
-                return( -1);
-        }
-
-        player = mmap(NULL, CHARSIZE, PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
-        if (player==(void*)-1)
-        {
-                fprintf(stderr, "cannot mmap char.dat.\n");
-                return( -1);
-        }
-        close(handle);
-   // DY Add player open
-
-   // DY add item open
-        handle = open(DATDIR "/item.dat", O_RDWR);
-        if (handle==-1)
-        {
-                //printf("Building items");
-                //handle = open(DATDIR "/item.dat", O_RDWR | O_CREAT, 0600);
-                perror(DATDIR "/item.dat");
-                return( -1);
-        }
-        if (!extend(handle, ITEMSIZE, sizeof(struct item), NULL))
-        {
-                return( -1);
-        }
-
-
-        items = mmap(NULL, ITEMSIZE, PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
-        if (items==(void*)-1)
-        {
-                return( -1);
-        }
-        close(handle);
-   // DY add item open
-
-        handle = open(DATDIR "/titem.dat", O_RDWR);
-        if (handle==-1)
-        {
-                fprintf(stderr, "titem.dat does not exist.\n");
-                return(-1);
-        }
-
-        it = mmap(NULL, TITEMSIZE, PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
-        if (it==(void*)-1)
-        {
-                fprintf(stderr, "cannot mmap titem.dat.\n");
-                return(-1);
-        }
-        close(handle);
-
-        handle = open(DATDIR "/global.dat", O_RDWR);
-        if (handle==-1)
-        {
-                return( -1);
-        }
-
-        globs = mmap(NULL, sizeof(struct global), PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
-        if (globs==(void*)-1)
-        {
-                return( -1);
-        }
-        close(handle);
-
-        return(0);
-   }*/
-
-
 static void web_unload(void)
 {
 	fprintf(stderr, "Unloading data files");
@@ -337,30 +232,7 @@ static void web_unload(void)
 		fprintf(stderr, "ERROR: munmap(globs) %s", strerror(errno));
 	}
 }
-/*static void unload(void)
-   {
-        if (munmap(ch, TCHARSIZE))
-        {
-                perror("munmap(ch)");
-        }
-        if (munmap(player, CHARSIZE))
-        {
-                perror("munmap(player)");
-        }
-        if (munmap(items, ITEMSIZE))
-        {
-                perror("munmap(items)");
-        }
-        if (munmap(it, TITEMSIZE))
-        {
-                perror("munmap(it)");
-        }
-        if (munmap(globs, sizeof(struct global)))
-        {
-                perror("munmap(globs)");
-        }
-   }
- */
+
 static char *weartext[20] = {
 	"Head",
 	"Neck",
@@ -1063,6 +935,31 @@ void view_player(LIST *head)
 	       player[cn].y);
 	printf("<tr><td>Direction:</td><td><input type=text name=dir value=\"%d\" size=10 maxlength=10></td></tr>\n",
 	       player[cn].dir);
+	printf("<tr><td>Temple X:</td><td><input type=text name=temple_x value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       player[cn].temple_x);
+	printf("<tr><td>Temple Y:</td><td><input type=text name=temple_y value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       player[cn].temple_y);
+	printf("<tr><td>Tavern X:</td><td><input type=text name=tavern_x value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       player[cn].tavern_x);
+	printf("<tr><td>Tavern Y:</td><td><input type=text name=tavern_y value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       player[cn].tavern_y);
+	printf("<tr><td>Temp:</td><td><input type=text name=temp value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       player[cn].temp);
+
+	printf("<tr><td>To X:</td><td><input type=text name=tox value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       player[cn].tox);
+	printf("<tr><td>To Y:</td><td><input type=text name=toy value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       player[cn].toy);
+	printf("<tr><td>From X:</td><td><input type=text name=frx value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       player[cn].frx);
+	printf("<tr><td>From Y:</td><td><input type=text name=fry value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       player[cn].fry);
+	printf("<tr><td>Status:</td><td><input type=text name=status value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       player[cn].status);
+	printf("<tr><td>Status2:</td><td><input type=text name=status2 value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       player[cn].status2);
+
+
 	printf("<tr><td>Gold:</td><td><input type=text name=gold value=\"%d\" size=10 maxlength=10></td></tr>\n",
 	       player[cn].gold);
 
@@ -1982,6 +1879,125 @@ void update_player_character(LIST *head)
 		printf("DIR not specified.\n");
 		return;
 	}
+
+
+	tmp = find_val(head, "temple_x");
+	if (tmp)
+	{
+		player[cn].temple_x = atoi(tmp);
+	}
+	else
+	{
+		printf("temple_x not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "temple_y");
+	if (tmp)
+	{
+		player[cn].temple_y = atoi(tmp);
+	}
+	else
+	{
+		printf("temple_y not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "tavern_x");
+	if (tmp)
+	{
+		player[cn].tavern_x = atoi(tmp);
+	}
+	else
+	{
+		printf("tavern_x not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "tavern_y");
+	if (tmp)
+	{
+		player[cn].tavern_y = atoi(tmp);
+	}
+	else
+	{
+		printf("tavern_y not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "temp");
+	if (tmp)
+	{
+		player[cn].temp = atoi(tmp);
+	}
+	else
+	{
+		printf("temp not specified.\n");
+		return;
+	}
+
+
+	tmp = find_val(head, "tox");
+	if (tmp)
+	{
+		player[cn].tox = atoi(tmp);
+	}
+	else
+	{
+		printf("tox not specified.\n");
+		return;
+	}
+	tmp = find_val(head, "toy");
+	if (tmp)
+	{
+		player[cn].toy = atoi(tmp);
+	}
+	else
+	{
+		printf("toy not specified.\n");
+		return;
+	}
+	tmp = find_val(head, "frx");
+	if (tmp)
+	{
+		player[cn].frx = atoi(tmp);
+	}
+	else
+	{
+		printf("frx not specified.\n");
+		return;
+	}
+	tmp = find_val(head, "fry");
+	if (tmp)
+	{
+		player[cn].fry = atoi(tmp);
+	}
+	else
+	{
+		printf("fry not specified.\n");
+		return;
+	}
+	tmp = find_val(head, "status");
+	if (tmp)
+	{
+		player[cn].status = atoi(tmp);
+	}
+	else
+	{
+		printf("status not specified.\n");
+		return;
+	}
+	tmp = find_val(head, "status2");
+	if (tmp)
+	{
+		player[cn].status2 = atoi(tmp);
+	}
+	else
+	{
+		printf("status2 not specified.\n");
+		return;
+	}
+
 
 	tmp = find_val(head, "gold");
 	if (tmp)

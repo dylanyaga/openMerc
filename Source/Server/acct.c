@@ -1465,7 +1465,7 @@ void update_player_character(LIST *head)
 {
 	int cn, cnt, val, n;
 	unsigned long long lval;
-	playerar *tmp, **tmps, buf[80];
+	char *tmp, **tmps, buf[80];
 
 	tmp = find_val(head, "cn");
 	if (tmp)
@@ -1985,7 +1985,7 @@ void update_player_character(LIST *head)
 
 	if (player[cn].flags & CF_RESPAWN)
 	{
-		globs->reset_playerar = cn;
+		globs->reset_char = cn;
 	}
 
 	if (!player[cn].data[29] && (player[cn].flags & CF_RESPAWN))

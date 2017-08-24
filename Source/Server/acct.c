@@ -983,6 +983,8 @@ void view_player(LIST *head)
 	       CF_MERCHANT, (player[cn].flags & CF_MERCHANT) ? "checked" : "");
 	printf("Simple Animation <input type=checkbox name=flags value=%Lu %s><br>\n",
 	       CF_SIMPLE, (player[cn].flags & CF_SIMPLE) ? "checked" : "");
+	printf("Player <input type=checkbox name=flags value=%Lu %s><br>\n",
+	       CF_PLAYER, (player[cn].flags & CF_PLAYER) ? "checked" : "");
 	printf("</td></tr>\n");
 
 	printf("<tr><td valign=top>Alignment</td><td><input type=text name=alignment value=\"%d\" size=10 maxlength=10></td></tr>\n",
@@ -1490,8 +1492,8 @@ void update_player_character(LIST *head)
 	tmp = find_val(head, "name");
 	if (tmp)
 	{
-		strncpy(player[cn].name, tmp, 35);
-		player[cn].name[35] = 0;
+		strncpy(player[cn].name, tmp, 40);
+		player[cn].name[40] = 0;
 	}
 	else
 	{
@@ -1502,8 +1504,8 @@ void update_player_character(LIST *head)
 	tmp = find_val(head, "reference");
 	if (tmp)
 	{
-		strncpy(player[cn].reference, tmp, 35);
-		player[cn].reference[35] = 0;
+		strncpy(player[cn].reference, tmp, 40);
+		player[cn].reference[40] = 0;
 	}
 	else
 	{

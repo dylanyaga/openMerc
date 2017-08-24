@@ -891,7 +891,7 @@ void view_character(LIST *head)
 
 	printf("<tr><td><input type=submit value=Update></td><td> </td></tr>\n");
 	printf("</table>\n");
-	printf("<input type=hidden name=step value=26>\n");
+	printf("<input type=hidden name=step value=14>\n");
 	printf("<input type=hidden name=cn value=%d>\n", cn);
 	printf("</form>\n");
 	printf("<a href=/cgi-imp/acct.cgi?step=10>Back</a><br>\n");
@@ -1110,7 +1110,7 @@ void view_player(LIST *head)
 
 	printf("<tr><td><input type=submit value=Update></td><td> </td></tr>\n");
 	printf("</table>\n");
-	printf("<input type=hidden name=step value=14>\n");
+	printf("<input type=hidden name=step value=26>\n");
 	printf("<input type=hidden name=cn value=%d>\n", cn);
 	printf("</form>\n");
 	printf("<a href=/cgi-imp/acct.cgi?step=10>Back</a><br>\n");

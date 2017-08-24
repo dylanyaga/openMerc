@@ -852,7 +852,7 @@ void view_player(LIST *head)
 	printf("<input type=checkbox name=flags value=%Lu %s>Greater God<br>\n", CF_GREATERGOD, (player[cn].flags & CF_GREATERGOD) ? "checked" : "");
 	printf("<input type=checkbox name=flags value=%Lu %s>Infrared<br>\n", CF_INFRARED, (player[cn].flags & CF_INFRARED) ? "checked" : "");
 	printf("<input type=checkbox name=flags value=%Lu %s>Immortal<br>\n", CF_IMMORTAL, (player[cn].flags & CF_IMMORTAL) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %sInvisible><br>\n", CF_INVISIBLE, (player[cn].flags & CF_INVISIBLE) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Invisible><br>\n", CF_INVISIBLE, (player[cn].flags & CF_INVISIBLE) ? "checked" : "");
 	printf("<input type=checkbox name=flags value=%Lu %s>Greater Invisibility<br>\n", CF_GREATERINV, (player[cn].flags & CF_GREATERINV) ? "checked" : "");
 	printf("<input type=checkbox name=flags value=%Lu %s>Safety Measures for Gods<br>\n", CF_SAFE, (player[cn].flags & CF_SAFE) ? "checked" : "");
 	printf("<input type=checkbox name=flags value=%Lu %s>New User<br>\n", CF_NEWUSER, (player[cn].flags & CF_NEWUSER) ? "checked" : "");

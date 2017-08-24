@@ -198,8 +198,8 @@ extern unsigned int mapmarker;
 #define CF_MERCHANT    (1ull<<10)       // will sell his inventory if looked at
 #define CF_STAFF       (1ull<<11)       // member of the staff
 #define CF_NOHPREG     (1ull<<12)       // no hp regeneration
-#define CF_NOENDREG    (1ull<<13)
-#define CF_NOMANAREG   (1ull<<14)
+#define CF_NOENDREG    (1ull<<13)       // no end regeneration
+#define CF_NOMANAREG   (1ull<<14)       // no mana regeneration
 #define CF_INVISIBLE   (1ull<<15)       // character is completely invisible
 #define CF_INFRARED    (1ull<<16)       // sees in the dark
 #define CF_BODY        (1ull<<17)       // dead body

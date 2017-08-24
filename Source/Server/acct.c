@@ -24,11 +24,17 @@
 
 /* CS, 991113: TCHARSIZE and TITEMSIZE now in data.h */
 
+struct character *ch_temp;
 struct character *ch;
-struct character *player;
-struct item *items;
 struct item *it;
+struct item *it_temp;
 struct global *globs;
+
+
+// struct character *ch_temp;
+// struct item *it_temp;
+// struct character *ch_temp;
+// struct item *it_temp;
 
 #if 0
 unsigned long long atoll(char *string)
@@ -57,181 +63,6 @@ char *at_name[5] = {
 	"Agility",
 	"Strength"
 };
-
-int extend(int handle, long sizereq, size_t sizeone, void*templ)
-{
-	long length;
-	void *buffer;
-
-	length = lseek(handle, 0L, SEEK_END);
-	if (length < sizereq)
-	{
-		fprintf(stderr, "Current size = %ldK, extending to %ldK", length / 1024, sizereq / 1024);
-		buffer = templ;
-		if (buffer == NULL)
-		{
-			buffer = calloc(1, sizeone);             // automatically clears memory
-		}
-		if (buffer == NULL)
-		{
-			return( 0);           // calloc() failure
-		}
-		for (; length < sizereq; length += sizeone)
-		{
-			int success = write(handle, buffer, sizeone);
-		}
-		if (templ == NULL)
-		{
-			free(buffer);
-		}
-	}
-	return(1); // success
-}
-
-
-static int web_load(void)
-{
-	int handle = 0;
-
-	/** CHAR **/
-	fprintf(stderr, "Loading CHAR: Item size=%d, file size=%dK",
-	        sizeof(struct character), CHARSIZE >> 10);
-
-	handle = open(DATDIR "/char.dat", O_RDWR);
-	if (handle==-1)
-	{
-		fprintf(stderr, "Building characters");
-		handle = open(DATDIR "/char.dat", O_RDWR | O_CREAT, 0600);
-	}
-	if (!extend(handle, CHARSIZE, sizeof(struct character), NULL))
-	{
-		return( -1);
-	}
-
-	player = mmap(NULL, CHARSIZE, PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
-	if (player==(void*)-1)
-	{
-		return( -1);
-	}
-	close(handle);
-
-	/** TCHAR **/
-	fprintf(stderr, "Loading TCHAR: Item size=%d, file size=%dK",
-	        sizeof(struct character), TCHARSIZE >> 10);
-
-	handle = open(DATDIR "/tchar.dat", O_RDWR);
-	if (handle==-1)
-	{
-		fprintf(stderr, "Building tcharacters");
-		handle = open(DATDIR "/tchar.dat", O_RDWR | O_CREAT, 0600);
-	}
-	if (!extend(handle, TCHARSIZE, sizeof(struct character), NULL))
-	{
-		return( -1);
-	}
-
-	ch = mmap(NULL, TCHARSIZE, PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
-	if (ch==(void*)-1)
-	{
-		return( -1);
-	}
-	close(handle);
-
-	/** ITEM **/
-	fprintf(stderr, "Loading ITEM: Item size=%d, file size=%dK",
-	        sizeof(struct item), ITEMSIZE >> 10);
-
-	handle = open(DATDIR "/item.dat", O_RDWR);
-	if (handle==-1)
-	{
-		fprintf(stderr, "Building items");
-		handle = open(DATDIR "/item.dat", O_RDWR | O_CREAT, 0600);
-	}
-	if (!extend(handle, ITEMSIZE, sizeof(struct item), NULL))
-	{
-		return( -1);
-	}
-
-
-	items = mmap(NULL, ITEMSIZE, PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
-	if (items==(void*)-1)
-	{
-		return( -1);
-	}
-	close(handle);
-
-	/** TITEM **/
-	fprintf(stderr, "Loading TITEM: Item size=%d, file size=%dK",
-	        sizeof(struct item), TITEMSIZE >> 10);
-
-	handle = open(DATDIR "/titem.dat", O_RDWR);
-	if (handle==-1)
-	{
-		fprintf(stderr, "Building titems");
-		handle = open(DATDIR "/titem.dat", O_RDWR | O_CREAT, 0600);
-	}
-	if (!extend(handle, TITEMSIZE, sizeof(struct item), NULL))
-	{
-		return( -1);
-	}
-
-	it = mmap(NULL, TITEMSIZE, PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
-	if (it==(void*)-1)
-	{
-		return( -1);
-	}
-	close(handle);
-
-	/** GLOBS **/
-	fprintf(stderr, "Loading GLOBS: Item size=%d, file size=%db",
-	        sizeof(struct global), sizeof(struct global));
-
-	handle = open(DATDIR "/global.dat", O_RDWR);
-	if (handle==-1)
-	{
-		fprintf(stderr, "Building globals");
-		handle = open(DATDIR "/global.dat", O_RDWR | O_CREAT, 0600);
-	}
-	if (!extend(handle, GLOBSIZE, sizeof(struct global), NULL))
-	{
-		return( -1);
-	}
-
-	globs = mmap(NULL, sizeof(struct global), PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
-	if (globs==(void*)-1)
-	{
-		return( -1);
-	}
-	close(handle);
-
-	return(0);
-}
-
-static void web_unload(void)
-{
-	fprintf(stderr, "Unloading data files");
-
-	if (munmap(player, CHARSIZE))
-	{
-		fprintf(stderr, "ERROR: munmap(ch) %s", strerror(errno));
-	}
-	if (munmap(items, ITEMSIZE))
-	{
-		fprintf(stderr, "ERROR: munmap(it) %s", strerror(errno));
-	}
-	if (munmap(ch, TCHARSIZE))
-	{
-		fprintf(stderr, "ERROR: munmap(ch_temp) %s", strerror(errno));
-	}
-	if (munmap(it, TITEMSIZE))
-	{
-		fprintf(stderr, "ERROR: munmap(it_temp) %s", strerror(errno));
-	}
-	if (munmap(globs, sizeof(struct global)))
-	{
-		fprintf(stderr, "ERROR: munmap(globs) %s", strerror(errno));
-	}
-}
 
 static char *weartext[20] = {
 	"Head",
@@ -480,23 +311,285 @@ static char *data_name[100] = {
 	"Reserved"      //99
 };
 
+static char *obj_drdata[] = {
+	"Drdata 0",
+	"Drdata 1",
+	"Drdata 2",
+	"Drdata 3",
+	"Drdata 4",
+	"Drdata 5",
+	"Drdata 6",
+	"Drdata 7",
+	"Drdata 8",
+	"Drdata 9"
+};
+
+#define bad_name_count 56
+static char *bad_names[bad_name_count] = {
+	"Guard",
+	"Janitor",
+	"Peacekeeper",
+	"Merchant",
+	"Barkeeper",
+	"Cityguard",
+	"Librarian",
+	"Amazon",
+	"Swordsman",
+	"Thief",
+	"Adventurer",
+	"Tower Guard",
+	"Tower Ratling",
+	"Tower Greenling",
+	"Tower Skeleton",
+	"Tower Seyan'Du",
+	"Tower Warrior",
+	"Tower Sorceress",
+	"Golem",
+	"Ghost",
+	"Gatekeeper",
+	"Skeleton",
+	"Outlaw",
+	"Manager",
+	"Lizard Youngster",
+	"Lizard Youth",
+	"Lizard Worker",
+	"Lizard Fighter",
+	"Lizard Warrior",
+	"Lizard Mage",
+	"Bartender",
+	"Spellcaster",
+	"Spellcaster Guard",
+	"Keeper",
+	"Knight",
+	"Undead",
+	"Spider",
+	"Robber",
+	"Undead Lord",
+	"Lord",
+	"Flame",
+	"Lizard Knight",
+	"Lizard Archmage",
+	"Undead King",
+	"Spellcaster Lord",
+	"Tower Arch-Templar",
+	"Tower Arch-Harakim",
+	"Lizard Defender",
+	"Elite Lizard Guard",
+	"Mage",
+	"Archmage",
+	"Swindler",
+	"Sea Golem",
+	"Barbaric Fighter",
+	"Lizard Attacker",
+	"Lizard Necromancer"
+};
+
+int extend(int handle, long sizereq, size_t sizeone, void*templ)
+{
+	long length;
+	void *buffer;
+
+	length = lseek(handle, 0L, SEEK_END);
+	if (length < sizereq)
+	{
+		fprintf(stderr, "Current size = %ldK, extending to %ldK", length / 1024, sizereq / 1024);
+		buffer = templ;
+		if (buffer == NULL)
+		{
+			buffer = calloc(1, sizeone);             // automatically clears memory
+		}
+		if (buffer == NULL)
+		{
+			return( 0);           // calloc() failure
+		}
+		for (; length < sizereq; length += sizeone)
+		{
+			int success = write(handle, buffer, sizeone);
+		}
+		if (templ == NULL)
+		{
+			free(buffer);
+		}
+	}
+	return(1); // success
+}
+
+
+static int web_load(void)
+{
+	int handle = 0;
+
+	/** CHAR **/
+	fprintf(stderr, "Loading CHAR: Item size=%d, file size=%dK",
+	        sizeof(struct character), CHARSIZE >> 10);
+
+	handle = open(DATDIR "/char.dat", O_RDWR);
+	if (handle==-1)
+	{
+		fprintf(stderr, "Unable to load CHAR");
+		return( -1);
+	}
+	if (!extend(handle, CHARSIZE, sizeof(struct character), NULL))
+	{
+		fprintf(stderr, "Unable to extend CHAR");
+		return( -1);
+	}
+
+	ch = mmap(NULL, CHARSIZE, PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
+	if (ch==(void*)-1)
+	{
+		fprintf(stderr, "Unable to mmap CHAR");
+		return( -1);
+	}
+	close(handle);
+
+	/** TCHAR **/
+	fprintf(stderr, "Loading TCHAR: Item size=%d, file size=%dK",
+	        sizeof(struct character), TCHARSIZE >> 10);
+
+	handle = open(DATDIR "/tchar.dat", O_RDWR);
+	if (handle==-1)
+	{
+		fprintf(stderr, "Unable to load TCHAR");
+		return( -1);
+	}
+	if (!extend(handle, TCHARSIZE, sizeof(struct character), NULL))
+	{
+		fprintf(stderr, "Unable to extend TCHAR");
+		return( -1);
+	}
+
+	ch_temp = mmap(NULL, TCHARSIZE, PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
+	if (ch_temp==(void*)-1)
+	{
+		fprintf(stderr, "Unable to mmap TCHAR");
+		return( -1);
+	}
+	close(handle);
+
+	/** ITEM **/
+	fprintf(stderr, "Loading ITEM: Item size=%d, file size=%dK",
+	        sizeof(struct item), ITEMSIZE >> 10);
+
+	handle = open(DATDIR "/item.dat", O_RDWR);
+	if (handle==-1)
+	{
+		fprintf(stderr, "Unable to load ITEM");
+		return( -1);
+	}
+	if (!extend(handle, ITEMSIZE, sizeof(struct item), NULL))
+	{
+		fprintf(stderr, "Unable to extend ITEM");
+		return( -1);
+	}
+
+
+	it = mmap(NULL, ITEMSIZE, PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
+	if (it==(void*)-1)
+	{
+		fprintf(stderr, "Unable to mmap ITEM");
+		return( -1);
+	}
+	close(handle);
+
+	/** TITEM **/
+	fprintf(stderr, "Loading TITEM: Item size=%d, file size=%dK",
+	        sizeof(struct item), TITEMSIZE >> 10);
+
+	handle = open(DATDIR "/titem.dat", O_RDWR);
+	if (handle==-1)
+	{
+		fprintf(stderr, "Unable to load TITEM");
+		return( -1);
+	}
+	if (!extend(handle, TITEMSIZE, sizeof(struct item), NULL))
+	{
+		fprintf(stderr, "Unable to extend TITEM");
+		return( -1);
+	}
+
+	it_temp = mmap(NULL, TITEMSIZE, PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
+	if (it_temp==(void*)-1)
+	{
+		fprintf(stderr, "Unable to mmap TITEM");
+		return( -1);
+	}
+	close(handle);
+
+	/** GLOBS **/
+	fprintf(stderr, "Loading GLOBS: Item size=%d, file size=%db",
+	        sizeof(struct global), sizeof(struct global));
+
+	handle = open(DATDIR "/global.dat", O_RDWR);
+	if (handle==-1)
+	{
+		fprintf(stderr, "Unable to load GLOBS");
+		return( -1);
+	}
+	if (!extend(handle, GLOBSIZE, sizeof(struct global), NULL))
+	{
+		fprintf(stderr, "Unable to load GLOBS");
+		return( -1);
+	}
+
+	globs = mmap(NULL, sizeof(struct global), PROT_READ | PROT_WRITE, MAP_SHARED, handle, 0);
+	if (globs==(void*)-1)
+	{
+		fprintf(stderr, "Unable to mmap GLOBS");
+		return( -1);
+	}
+	close(handle);
+
+	return(0);
+}
+
+static void web_unload(void)
+{
+	fprintf(stderr, "Unloading data files");
+
+	if (munmap(ch, CHARSIZE))
+	{
+		fprintf(stderr, "ERROR: munmap(ch) %s", strerror(errno));
+	}
+	if (munmap(it, ITEMSIZE))
+	{
+		fprintf(stderr, "ERROR: munmap(it_temp) %s", strerror(errno));
+	}
+	if (munmap(ch_temp, TCHARSIZE))
+	{
+		fprintf(stderr, "ERROR: munmap(ch_temp) %s", strerror(errno));
+	}
+	if (munmap(it_temp, TITEMSIZE))
+	{
+		fprintf(stderr, "ERROR: munmap(it_temp) %s", strerror(errno));
+	}
+	if (munmap(globs, sizeof(struct global)))
+	{
+		fprintf(stderr, "ERROR: munmap(globs) %s", strerror(errno));
+	}
+}
+
+
+
 
 void list_all_player_characters()
 {
 	int n;
-	printf("<ul>\n");
+	printf("<center><a href=/cgi-imp/acct.cgi>Home</a></center><br><br>\n");
+	printf("<table>\n");
 	for (n = 1; n<MAXCHARS; n++)
 	{
-		if (!(player[n].flags & (CF_PLAYER)))
+		if (!(ch[n].flags & (CF_PLAYER)))
 		{
 			continue;
 		}
-		printf("<li><a href=/cgi-imp/acct.cgi?step=20&cn=%d>%s</a></li>", n, player[n].name);
+		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=20&cn=%d>%s</a></td></tr>", n, n, ch[n].name);
 	}
-	printf("</ul>\n");
+	printf("</table>\n");
+	printf("<center><a href=/cgi-imp/acct.cgi>Home</a></center><br><br>\n");
 }
 
-void copy_character(LIST *head)
+void copy_character_template(LIST *head)
 {
 	int cn, n;
 	char *tmp;
@@ -520,7 +613,7 @@ void copy_character(LIST *head)
 
 	for (n = 1; n<MAXTCHARS; n++)
 	{
-		if (ch[n].used==USE_EMPTY)
+		if (ch_temp[n].used==USE_EMPTY)
 		{
 			break;
 		}
@@ -530,27 +623,246 @@ void copy_character(LIST *head)
 		printf("MAXTCHARS reached!\n");
 		return;
 	}
-	ch[n] = ch[cn];
+	ch_temp[n] = ch_temp[cn];
 
 	printf("Done. Here is your new, copied monster\n");
 	printf("<table>\n"); // show copied monster for direct access.
 
 
-//                if (ch[n].used==USE_EMPTY) continue;
+//                if (ch_temp[n].used==USE_EMPTY) continue;
 	printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
 	       "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",
 	       n, n,
-	       (ch[n].flags & CF_RESPAWN) ? "<b>" : "",
-	       ch[n].name,
-	       (ch[n].flags & CF_RESPAWN) ? "</b>" : "",
-	       ch[n].x, ch[n].y, ch[n].points_tot >> 10, ch[n].alignment, n, n);
+	       (ch_temp[n].flags & CF_RESPAWN) ? "<b>" : "",
+	       ch_temp[n].name,
+	       (ch_temp[n].flags & CF_RESPAWN) ? "</b>" : "",
+	       ch_temp[n].x, ch_temp[n].y, ch_temp[n].points_tot >> 10, ch_temp[n].alignment, n, n);
 
 	printf("</table>\n");
 
 
 }
 
-void view_character(LIST *head)
+void view_character_template(LIST *head)
+{
+	int cn, n;
+	char *tmp;
+
+	tmp = find_val(head, "cn");
+	if (tmp)
+	{
+		cn = atoi(tmp);
+	}
+	else
+	{
+		printf("No number specified.\n");
+		return;
+	}
+
+	if (cn<0 || cn>=MAXTCHARS)
+	{
+		printf("Number out of bounds.\n");
+		return;
+	}
+	printf("<center><a href=/cgi-imp/acct.cgi?step=11>Back</a>|<a href=/cgi-imp/acct.cgi>Home</a></center><br><br>\n");
+	printf("<form method=post action=/cgi-imp/acct.cgi>\n");
+	printf("<table>\n");
+	printf("<tr><td>Name:</td><td><input type=text name=name value=\"%s\" size=35 maxlength=35></td></tr>\n",
+	       ch_temp[cn].name);
+	printf("<tr><td>Reference:</td><td><input type=text name=reference value=\"%s\" size=35 maxlength=35></td></tr>\n",
+	       ch_temp[cn].reference);
+	printf("<tr><td>Description:</td><td><input type=text name=description value=\"%s\" size=35 maxlength=195></td></tr>\n",
+	       ch_temp[cn].description);
+
+	printf("<tr><td valign=top>Kindred:</td><td>\n");
+	printf("<input type=checkbox name=kindred value=%d %s>Mercenary<br>\n",
+	       KIN_MERCENARY, (ch_temp[cn].kindred & KIN_MERCENARY) ? "checked" : "");
+	printf("<input type=checkbox name=kindred value=%d %s>Sorcerer-Mercenary<br>\n\n",
+	       KIN_SORCERER, (ch_temp[cn].kindred & KIN_SORCERER) ? "checked" : "");
+	printf("<input type=checkbox name=kindred value=%d %s>Warrior-Mercenary<br>\n",
+	       KIN_WARRIOR, (ch_temp[cn].kindred & KIN_WARRIOR) ? "checked" : "");
+	printf("<input type=checkbox name=kindred value=%d %s>Templar<br>\n",
+	       KIN_TEMPLAR, (ch_temp[cn].kindred & KIN_TEMPLAR) ? "checked" : "");
+	printf("<input type=checkbox name=kindred value=%d %s>Arch-Templar<br>\n",
+	       KIN_ARCHTEMPLAR, (ch_temp[cn].kindred & KIN_ARCHTEMPLAR) ? "checked" : "");
+	printf("<input type=checkbox name=kindred value=%d %s>Harakim<br>\n",
+	       KIN_HARAKIM, (ch_temp[cn].kindred & KIN_HARAKIM) ? "checked" : "");
+	printf("<input type=checkbox name=kindred value=%d %s>Arch-Harakim<br>\n",
+	       KIN_ARCHHARAKIM, (ch_temp[cn].kindred & KIN_ARCHHARAKIM) ? "checked" : "");
+	printf("<input type=checkbox name=kindred value=%d %s>Seyan'Du<br>\n",
+	       KIN_SEYAN_DU, (ch_temp[cn].kindred & KIN_SEYAN_DU) ? "checked" : "");
+	printf("<input type=checkbox name=kindred value=%d %s>Purple<br>\n",
+	       KIN_PURPLE, (ch_temp[cn].kindred & KIN_PURPLE) ? "checked" : "");
+	printf("<input type=checkbox name=kindred value=%d %s>Monster<br>\n",
+	       KIN_MONSTER, (ch_temp[cn].kindred & KIN_MONSTER) ? "checked" : "");
+	printf("<input type=checkbox name=kindred value=%d %s>Male<br>\n",
+	       KIN_MALE, (ch_temp[cn].kindred & KIN_MALE) ? "checked" : "");
+	printf("<input type=checkbox name=kindred value=%d %s>Female<br>\n",
+	       KIN_FEMALE, (ch_temp[cn].kindred & KIN_FEMALE) ? "checked" : "");
+	printf("</td></tr>\n");
+
+	printf("<tr><td valign=top>Sprite base:</td><td><input type=text name=sprite value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch_temp[cn].sprite);
+
+	printf("<tr><td valign=top>Sound base:</td><td><input type=text name=sound value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch_temp[cn].sound);
+
+	printf("<tr><td valign=top>Class:</td><td><input type=text name=class value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch_temp[cn].class);
+
+	printf("<tr><td valign=top>Flags:</td><td>\n");
+	printf("<input type=checkbox name=flags value=%Lu %s>Infrared<br>\n",
+	       CF_INFRARED, (ch_temp[cn].flags & CF_INFRARED) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Undead<br>\n",
+	       CF_UNDEAD, (ch_temp[cn].flags & CF_UNDEAD) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Respawn<br>\n",
+	       CF_RESPAWN, (ch_temp[cn].flags & CF_RESPAWN) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>No-Sleep<br>\n",
+	       CF_NOSLEEP, (ch_temp[cn].flags & CF_NOSLEEP) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Merchant<br>\n",
+	       CF_MERCHANT, (ch_temp[cn].flags & CF_MERCHANT) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Simple Animation<br>\n",
+	       CF_SIMPLE, (ch_temp[cn].flags & CF_SIMPLE) ? "checked" : "");
+	printf("</td></tr>\n");
+
+	printf("<tr><td valign=top>Alignment</td><td><input type=text name=alignment value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch_temp[cn].alignment);
+
+	printf("<tr><td colspan=2><table>\n");
+
+	printf("<tr><td>Name</td><td>Start Value</td><td>Race Mod</td><td>Race Max</td><td>Difficulty</td></tr>\n");
+
+	for (n = 0; n<5; n++)
+	{
+		printf("<tr><td>%s</td>\n", at_name[n]);
+		printf("<td><input type=text name=attrib%d_0 value=\"%d\" size=10 maxlength=10></td>\n", n, ch_temp[cn].attrib[n][0]);
+		printf("<td><input type=text name=attrib%d_1 value=\"%d\" size=10 maxlength=10></td>\n", n, ch_temp[cn].attrib[n][1]);
+		printf("<td><input type=text name=attrib%d_2 value=\"%d\" size=10 maxlength=10></td>\n", n, ch_temp[cn].attrib[n][2]);
+		printf("<td><input type=text name=attrib%d_3 value=\"%d\" size=10 maxlength=10></td>\n", n, ch_temp[cn].attrib[n][3]);
+		printf("</tr>\n");
+	}
+
+	printf("<tr><td>Hitpoints</td>\n");
+	printf("<td><input type=text name=hp_0 value=\"%d\" size=10 maxlength=10></td>\n", ch_temp[cn].hp[0]);
+	printf("<td><input type=text name=hp_1 value=\"%d\" size=10 maxlength=10></td>\n", ch_temp[cn].hp[1]);
+	printf("<td><input type=text name=hp_2 value=\"%d\" size=10 maxlength=10></td>\n", ch_temp[cn].hp[2]);
+	printf("<td><input type=text name=hp_3 value=\"%d\" size=10 maxlength=10></td>\n", ch_temp[cn].hp[3]);
+	printf("</tr>\n");
+
+	printf("<tr><td>Endurance</td>\n");
+	printf("<td><input type=text name=end_0 value=\"%d\" size=10 maxlength=10></td>\n", ch_temp[cn].end[0]);
+	printf("<td><input type=text name=end_1 value=\"%d\" size=10 maxlength=10></td>\n", ch_temp[cn].end[1]);
+	printf("<td><input type=text name=end_2 value=\"%d\" size=10 maxlength=10></td>\n", ch_temp[cn].end[2]);
+	printf("<td><input type=text name=end_3 value=\"%d\" size=10 maxlength=10></td>\n", ch_temp[cn].end[3]);
+	printf("</tr>\n");
+
+	printf("<tr><td>Mana</td>\n");
+	printf("<td><input type=text name=mana_0 value=\"%d\" size=10 maxlength=10></td>\n", ch_temp[cn].mana[0]);
+	printf("<td><input type=text name=mana_1 value=\"%d\" size=10 maxlength=10></td>\n", ch_temp[cn].mana[1]);
+	printf("<td><input type=text name=mana_2 value=\"%d\" size=10 maxlength=10></td>\n", ch_temp[cn].mana[2]);
+	printf("<td><input type=text name=mana_3 value=\"%d\" size=10 maxlength=10></td>\n", ch_temp[cn].mana[3]);
+	printf("</tr>\n");
+
+	for (n = 0; n<50; n++)
+	{
+		if (skilltab[n].name[0]==0)
+		{
+			continue;
+		}
+		printf("<tr><td>%s</td>\n", skilltab[n].name);
+		printf("<td><input type=text name=skill%d_0 value=\"%d\" size=10 maxlength=10></td>\n", n, ch_temp[cn].skill[n][0]);
+		printf("<td><input type=text name=skill%d_1 value=\"%d\" size=10 maxlength=10></td>\n", n, ch_temp[cn].skill[n][1]);
+		printf("<td><input type=text name=skill%d_2 value=\"%d\" size=10 maxlength=10></td>\n", n, ch_temp[cn].skill[n][2]);
+		printf("<td><input type=text name=skill%d_3 value=\"%d\" size=10 maxlength=10></td>\n", n, ch_temp[cn].skill[n][3]);
+		printf("</tr>\n");
+	}
+
+	printf("</table></td></tr>\n");
+
+	printf("<tr><td valign=top>Speed Mod</td><td><input type=text name=speed_mod value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch_temp[cn].speed_mod);
+	printf("<tr><td valign=top>Weapon Bonus</td><td><input type=text name=weapon_bonus value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch_temp[cn].weapon_bonus);
+	printf("<tr><td valign=top>Armor Bonus</td><td><input type=text name=armor_bonus value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch_temp[cn].armor_bonus);
+	printf("<tr><td valign=top>Gethit Bonus</td><td><input type=text name=gethit_bonus value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch_temp[cn].gethit_bonus);
+	printf("<tr><td valign=top>Light Bonus</td><td><input type=text name=light_bonus value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch_temp[cn].light_bonus);
+
+	printf("<tr><td>EXP left:</td><td><input type=text name=points value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch_temp[cn].points);
+	printf("<tr><td>EXP total:</td><td><input type=text name=points_tot value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch_temp[cn].points_tot);
+
+	printf("<tr><td>Position X:</td><td><input type=text name=x value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch_temp[cn].x);
+	printf("<tr><td>Position Y:</td><td><input type=text name=y value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch_temp[cn].y);
+	printf("<tr><td>Direction:</td><td><input type=text name=dir value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch_temp[cn].dir);
+	printf("<tr><td>Gold:</td><td><input type=text name=gold value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch_temp[cn].gold);
+
+	if (ch_temp[cn].citem<0 || ch_temp[cn].citem>=MAXTITEM)
+	{
+		ch_temp[cn].citem = 0;
+	}
+
+	printf("<tr><td>Current Item</td><td><input type=text name=citem value=\"%d\" size=10 maxlength=10> (%s)</td></tr>\n",
+	       ch_temp[cn].citem, ch_temp[cn].citem ? it_temp[ch_temp[cn].citem].name : "none");
+
+	for (n = 0; n<12; n++)
+	{
+		if (ch_temp[cn].worn[n]>=MAXTITEM)
+		{
+			ch_temp[cn].worn[n] = 0;
+		}
+		printf("<tr><td>%s</td><td><input type=text name=worn%d value=\"%d\" size=10 maxlength=10> (%s)</td></tr>\n",
+		       weartext[n], n, ch_temp[cn].worn[n], ch_temp[cn].worn[n] ? it_temp[ch_temp[cn].worn[n]].name : "none");
+	}
+
+	for (n = 0; n<40; n++)
+	{
+		if (ch_temp[cn].item[n]<0 || ch_temp[cn].item[n]>=MAXTITEM)
+		{
+			ch_temp[cn].item[n] = 0;
+		}
+		printf("<tr><td>Item %d</td><td><input type=text name=item%d value=\"%d\" size=10 maxlength=10> (%s)</td></tr>\n",
+		       n, n, ch_temp[cn].item[n], ch_temp[cn].item[n] ? it_temp[ch_temp[cn].item[n]].name : "none");
+	}
+
+	printf("<tr><td>Driver Data:</td></tr>\n");
+	for (n = 0; n<100; n++)
+	{
+		if (strcmp(data_name[n], "Unused")==0 || strcmp(data_name[n], "Reserved")==0)
+		{
+			continue;
+		}
+		printf("<tr><td>[%3d] %s</td><td><input type=text name=drdata%d value=\"%d\" size=35 maxlength=75></td></tr>\n",
+		       n, data_name[n], n, ch_temp[cn].data[n]);
+	}
+
+	printf("<tr><td>Driver Texts:</td></tr>\n");
+	for (n = 0; n<10; n++)
+	{
+		if (strcmp(text_name[n], "Unused")==0 || strcmp(text_name[n], "Reserved")==0)
+		{
+			continue;
+		}
+		printf("<tr><td>%s</td><td><input type=text name=text_%d value=\"%s\" size=35 maxlength=158></td></tr>\n",
+		       text_name[n], n, ch_temp[cn].text[n]);
+	}
+
+	printf("<tr><td><input type=submit value=Update></td><td> </td></tr>\n");
+	printf("</table>\n");
+	printf("<input type=hidden name=step value=14>\n");
+	printf("<input type=hidden name=cn value=%d>\n", cn);
+	printf("</form>\n");
+	printf("<center><a href=/cgi-imp/acct.cgi?step=11>Back</a>|<a href=/cgi-imp/acct.cgi>Home</a></center><br><br>\n");
+}
+
+void view_character_player(LIST *head)
 {
 	int cn, n;
 	char *tmp;
@@ -572,6 +884,7 @@ void view_character(LIST *head)
 		return;
 	}
 
+	printf("<center><a href=/cgi-imp/acct.cgi?step=19>Back</a>|<a href=/cgi-imp/acct.cgi>Home</a></center><br><br>\n");
 	printf("<form method=post action=/cgi-imp/acct.cgi>\n");
 	printf("<table>\n");
 	printf("<tr><td>Name:</td><td><input type=text name=name value=\"%s\" size=35 maxlength=35></td></tr>\n",
@@ -580,31 +893,37 @@ void view_character(LIST *head)
 	       ch[cn].reference);
 	printf("<tr><td>Description:</td><td><input type=text name=description value=\"%s\" size=35 maxlength=195></td></tr>\n",
 	       ch[cn].description);
+	printf("<tr><td>Player:</td><td><input type=text name=player value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch[cn].player);
+	printf("<tr><td>Pass1:</td><td><input type=text name=pass1 value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch[cn].pass1);
+	printf("<tr><td>Pass2:</td><td><input type=text name=pass2 value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch[cn].pass2);
 
 	printf("<tr><td valign=top>Kindred:</td><td>\n");
-	printf("Mercenary <input type=checkbox name=kindred value=%d %s><br>\n",
+	printf("<input type=checkbox name=kindred value=%d %s>Mercenary<br>\n",
 	       KIN_MERCENARY, (ch[cn].kindred & KIN_MERCENARY) ? "checked" : "");
-	printf("Sorcerer-Mercenary <input type=checkbox name=kindred value=%d %s><br>\n\n",
+	printf("<input type=checkbox name=kindred value=%d %s>Sorcerer-Mercenary<br>\n\n",
 	       KIN_SORCERER, (ch[cn].kindred & KIN_SORCERER) ? "checked" : "");
-	printf("Warrior-Mercenary <input type=checkbox name=kindred value=%d %s><br>\n",
+	printf("<input type=checkbox name=kindred value=%d %s>Warrior-Mercenary<br>\n",
 	       KIN_WARRIOR, (ch[cn].kindred & KIN_WARRIOR) ? "checked" : "");
-	printf("Templar <input type=checkbox name=kindred value=%d %s><br>\n",
+	printf("<input type=checkbox name=kindred value=%d %s>Templar<br>\n",
 	       KIN_TEMPLAR, (ch[cn].kindred & KIN_TEMPLAR) ? "checked" : "");
-	printf("Arch-Templar <input type=checkbox name=kindred value=%d %s><br>\n",
+	printf("<input type=checkbox name=kindred value=%d %s>Arch-Templar<br>\n",
 	       KIN_ARCHTEMPLAR, (ch[cn].kindred & KIN_ARCHTEMPLAR) ? "checked" : "");
-	printf("Harakim <input type=checkbox name=kindred value=%d %s><br>\n",
+	printf("<input type=checkbox name=kindred value=%d %s>Harakim<br>\n",
 	       KIN_HARAKIM, (ch[cn].kindred & KIN_HARAKIM) ? "checked" : "");
-	printf("Arch-Harakim <input type=checkbox name=kindred value=%d %s><br>\n",
+	printf("<input type=checkbox name=kindred value=%d %s>Arch-Harakim<br>\n",
 	       KIN_ARCHHARAKIM, (ch[cn].kindred & KIN_ARCHHARAKIM) ? "checked" : "");
-	printf("Seyan'Du <input type=checkbox name=kindred value=%d %s><br>\n",
+	printf("<input type=checkbox name=kindred value=%d %s>Seyan'Du<br>\n",
 	       KIN_SEYAN_DU, (ch[cn].kindred & KIN_SEYAN_DU) ? "checked" : "");
-	printf("Purple <input type=checkbox name=kindred value=%d %s><br>\n",
+	printf("<input type=checkbox name=kindred value=%d %s>Purple<br>\n",
 	       KIN_PURPLE, (ch[cn].kindred & KIN_PURPLE) ? "checked" : "");
-	printf("Monster <input type=checkbox name=kindred value=%d %s><br>\n",
+	printf("<input type=checkbox name=kindred value=%d %s>Monster<br>\n",
 	       KIN_MONSTER, (ch[cn].kindred & KIN_MONSTER) ? "checked" : "");
-	printf("Male <input type=checkbox name=kindred value=%d %s><br>\n",
+	printf("<input type=checkbox name=kindred value=%d %s>Male<br>\n",
 	       KIN_MALE, (ch[cn].kindred & KIN_MALE) ? "checked" : "");
-	printf("Female <input type=checkbox name=kindred value=%d %s><br>\n",
+	printf("<input type=checkbox name=kindred value=%d %s>Female<br>\n",
 	       KIN_FEMALE, (ch[cn].kindred & KIN_FEMALE) ? "checked" : "");
 	printf("</td></tr>\n");
 
@@ -618,18 +937,46 @@ void view_character(LIST *head)
 	       ch[cn].class);
 
 	printf("<tr><td valign=top>Flags:</td><td>\n");
-	printf("Infrared <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       CF_INFRARED, (ch[cn].flags & CF_INFRARED) ? "checked" : "");
-	printf("Undead <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       CF_UNDEAD, (ch[cn].flags & CF_UNDEAD) ? "checked" : "");
-	printf("Respawn <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       CF_RESPAWN, (ch[cn].flags & CF_RESPAWN) ? "checked" : "");
-	printf("No-Sleep <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       CF_NOSLEEP, (ch[cn].flags & CF_NOSLEEP) ? "checked" : "");
-	printf("Merchant <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       CF_MERCHANT, (ch[cn].flags & CF_MERCHANT) ? "checked" : "");
-	printf("Simple Animation <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       CF_SIMPLE, (ch[cn].flags & CF_SIMPLE) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Player<br>\n", CF_PLAYER, (ch[cn].flags & CF_PLAYER) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Staff<br>\n", CF_STAFF, (ch[cn].flags & CF_STAFF) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Imp<br>\n", CF_IMP, (ch[cn].flags & CF_IMP) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Creator<br>\n", CF_CREATOR, (ch[cn].flags & CF_CREATOR) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Build Mode<br>\n", CF_BUILDMODE, (ch[cn].flags & CF_BUILDMODE) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>God<br>\n", CF_GOD, (ch[cn].flags & CF_GOD) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Greater God<br>\n", CF_GREATERGOD, (ch[cn].flags & CF_GREATERGOD) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Infrared<br>\n", CF_INFRARED, (ch[cn].flags & CF_INFRARED) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Immortal<br>\n", CF_IMMORTAL, (ch[cn].flags & CF_IMMORTAL) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Invisible<br>\n", CF_INVISIBLE, (ch[cn].flags & CF_INVISIBLE) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Greater Invisibility<br>\n", CF_GREATERINV, (ch[cn].flags & CF_GREATERINV) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Safety Measures for Gods<br>\n", CF_SAFE, (ch[cn].flags & CF_SAFE) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>New User<br>\n", CF_NEWUSER, (ch[cn].flags & CF_NEWUSER) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>No Tell<br>\n", CF_NOTELL, (ch[cn].flags & CF_NOTELL) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>No Shout<br>\n", CF_NOSHOUT, (ch[cn].flags & CF_NOSHOUT) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>No HP Regen<br>\n", CF_NOHPREG, (ch[cn].flags & CF_NOHPREG) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>No END Regen<br>\n", CF_NOENDREG, (ch[cn].flags & CF_NOENDREG) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>No MANA Regen<br>\n", CF_NOMANAREG, (ch[cn].flags & CF_NOMANAREG) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Dead Body<br>\n", CF_BODY, (ch[cn].flags & CF_BODY) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Stay Awake<br>\n", CF_NOSLEEP, (ch[cn].flags & CF_NOSLEEP) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>No Magic<br>\n", CF_NOMAGIC, (ch[cn].flags & CF_NOMAGIC) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Stoned<br>\n", CF_STONED, (ch[cn].flags & CF_STONED) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Usurped<br>\n", CF_USURP, (ch[cn].flags & CF_USURP) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Shutup<br>\n", CF_SHUTUP, (ch[cn].flags & CF_SHUTUP) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>No Description<br>\n", CF_NODESC, (ch[cn].flags & CF_NODESC) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Profiler<br>\n", CF_PROF, (ch[cn].flags & CF_PROF) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Simple Animation<br>\n", CF_SIMPLE, (ch[cn].flags & CF_SIMPLE) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Kicked<br>\n", CF_KICKED, (ch[cn].flags & CF_KICKED) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Do Not List<br>\n", CF_NOLIST, (ch[cn].flags & CF_NOLIST) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Do Not List on Who<br>\n", CF_NOWHO, (ch[cn].flags & CF_NOWHO) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Spell Ignore<br>\n", CF_SPELLIGNORE, (ch[cn].flags & CF_SPELLIGNORE) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>No Staff Tells<br>\n", CF_NOSTAFF, (ch[cn].flags & CF_NOSTAFF) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Is POH<br>\n", CF_POH, (ch[cn].flags & CF_POH) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Is POH Leader<br>\n", CF_POH_LEADER, (ch[cn].flags & CF_POH_LEADER) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Is Looting<br>\n", CF_ISLOOTING, (ch[cn].flags & CF_ISLOOTING) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Gold List<br>\n", CF_GOLDEN, (ch[cn].flags & CF_GOLDEN) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Black List<br>\n", CF_BLACK, (ch[cn].flags & CF_BLACK) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Has Password<br>\n", CF_PASSWD, (ch[cn].flags & CF_PASSWD) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Client Side Update Needed<br>\n", CF_UPDATE, (ch[cn].flags & CF_UPDATE) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Save Player To Disk<br>\n", CF_SAVEME, (ch[cn].flags & CF_SAVEME) ? "checked" : "");
 	printf("</td></tr>\n");
 
 	printf("<tr><td valign=top>Alignment</td><td><input type=text name=alignment value=\"%d\" size=10 maxlength=10></td></tr>\n",
@@ -708,10 +1055,35 @@ void view_character(LIST *head)
 	       ch[cn].y);
 	printf("<tr><td>Direction:</td><td><input type=text name=dir value=\"%d\" size=10 maxlength=10></td></tr>\n",
 	       ch[cn].dir);
+	printf("<tr><td>Temple X:</td><td><input type=text name=temple_x value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch[cn].temple_x);
+	printf("<tr><td>Temple Y:</td><td><input type=text name=temple_y value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch[cn].temple_y);
+	printf("<tr><td>Tavern X:</td><td><input type=text name=tavern_x value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch[cn].tavern_x);
+	printf("<tr><td>Tavern Y:</td><td><input type=text name=tavern_y value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch[cn].tavern_y);
+	printf("<tr><td>Temp:</td><td><input type=text name=temp value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch[cn].temp);
+
+	printf("<tr><td>To X:</td><td><input type=text name=tox value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch[cn].tox);
+	printf("<tr><td>To Y:</td><td><input type=text name=toy value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch[cn].toy);
+	printf("<tr><td>From X:</td><td><input type=text name=frx value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch[cn].frx);
+	printf("<tr><td>From Y:</td><td><input type=text name=fry value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch[cn].fry);
+	printf("<tr><td>Status:</td><td><input type=text name=status value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch[cn].status);
+	printf("<tr><td>Status2:</td><td><input type=text name=status2 value=\"%d\" size=10 maxlength=10></td></tr>\n",
+	       ch[cn].status2);
+
+
 	printf("<tr><td>Gold:</td><td><input type=text name=gold value=\"%d\" size=10 maxlength=10></td></tr>\n",
 	       ch[cn].gold);
 
-	if (ch[cn].citem<0 || ch[cn].citem>=MAXTITEM)
+	if (ch[cn].citem<0 || ch[cn].citem>=MAXITEM)
 	{
 		ch[cn].citem = 0;
 	}
@@ -721,7 +1093,7 @@ void view_character(LIST *head)
 
 	for (n = 0; n<12; n++)
 	{
-		if (ch[cn].worn[n]>=MAXTITEM)
+		if (ch[cn].worn[n]>=MAXITEM)
 		{
 			ch[cn].worn[n] = 0;
 		}
@@ -731,7 +1103,7 @@ void view_character(LIST *head)
 
 	for (n = 0; n<40; n++)
 	{
-		if (ch[cn].item[n]<0 || ch[cn].item[n]>=MAXTITEM)
+		if (ch[cn].item[n]<0 || ch[cn].item[n]>=MAXITEM)
 		{
 			ch[cn].item[n] = 0;
 		}
@@ -742,290 +1114,12 @@ void view_character(LIST *head)
 	printf("<tr><td>Driver Data:</td></tr>\n");
 	for (n = 0; n<100; n++)
 	{
-		if (strcmp(data_name[n], "Unused")==0 || strcmp(data_name[n], "Reserved")==0)
-		{
-			continue;
-		}
-		printf("<tr><td>[%3d] %s</td><td><input type=text name=drdata%d value=\"%d\" size=35 maxlength=75></td></tr>\n",
-		       n, data_name[n], n, ch[cn].data[n]);
-	}
-
-	printf("<tr><td>Driver Texts:</td></tr>\n");
-	for (n = 0; n<10; n++)
-	{
-		if (strcmp(text_name[n], "Unused")==0 || strcmp(text_name[n], "Reserved")==0)
-		{
-			continue;
-		}
-		printf("<tr><td>%s</td><td><input type=text name=text_%d value=\"%s\" size=35 maxlength=158></td></tr>\n",
-		       text_name[n], n, ch[cn].text[n]);
-	}
-
-	printf("<tr><td><input type=submit value=Update></td><td> </td></tr>\n");
-	printf("</table>\n");
-	printf("<input type=hidden name=step value=14>\n");
-	printf("<input type=hidden name=cn value=%d>\n", cn);
-	printf("</form>\n");
-	printf("<a href=/cgi-imp/acct.cgi?step=10>Back</a><br>\n");
-}
-
-void view_player(LIST *head)
-{
-	int cn, n;
-	char *tmp;
-
-	tmp = find_val(head, "cn");
-	if (tmp)
-	{
-		cn = atoi(tmp);
-	}
-	else
-	{
-		printf("No number specified.\n");
-		return;
-	}
-
-	if (cn<0 || cn>=MAXTCHARS)
-	{
-		printf("Number out of bounds.\n");
-		return;
-	}
-
-	printf("<form method=post action=/cgi-imp/acct.cgi>\n");
-	printf("<table>\n");
-	printf("<tr><td>Name:</td><td><input type=text name=name value=\"%s\" size=35 maxlength=35></td></tr>\n",
-	       player[cn].name);
-	printf("<tr><td>Reference:</td><td><input type=text name=reference value=\"%s\" size=35 maxlength=35></td></tr>\n",
-	       player[cn].reference);
-	printf("<tr><td>Description:</td><td><input type=text name=description value=\"%s\" size=35 maxlength=195></td></tr>\n",
-	       player[cn].description);
-	printf("<tr><td>Player:</td><td><input type=text name=player value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].player);
-	printf("<tr><td>Pass1:</td><td><input type=text name=pass1 value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].pass1);
-	printf("<tr><td>Pass2:</td><td><input type=text name=pass2 value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].pass2);
-
-	printf("<tr><td valign=top>Kindred:</td><td>\n");
-	printf("Mercenary <input type=checkbox name=kindred value=%d %s><br>\n",
-	       KIN_MERCENARY, (player[cn].kindred & KIN_MERCENARY) ? "checked" : "");
-	printf("Sorcerer-Mercenary <input type=checkbox name=kindred value=%d %s><br>\n\n",
-	       KIN_SORCERER, (player[cn].kindred & KIN_SORCERER) ? "checked" : "");
-	printf("Warrior-Mercenary <input type=checkbox name=kindred value=%d %s><br>\n",
-	       KIN_WARRIOR, (player[cn].kindred & KIN_WARRIOR) ? "checked" : "");
-	printf("Templar <input type=checkbox name=kindred value=%d %s><br>\n",
-	       KIN_TEMPLAR, (player[cn].kindred & KIN_TEMPLAR) ? "checked" : "");
-	printf("Arch-Templar <input type=checkbox name=kindred value=%d %s><br>\n",
-	       KIN_ARCHTEMPLAR, (player[cn].kindred & KIN_ARCHTEMPLAR) ? "checked" : "");
-	printf("Harakim <input type=checkbox name=kindred value=%d %s><br>\n",
-	       KIN_HARAKIM, (player[cn].kindred & KIN_HARAKIM) ? "checked" : "");
-	printf("Arch-Harakim <input type=checkbox name=kindred value=%d %s><br>\n",
-	       KIN_ARCHHARAKIM, (player[cn].kindred & KIN_ARCHHARAKIM) ? "checked" : "");
-	printf("Seyan'Du <input type=checkbox name=kindred value=%d %s><br>\n",
-	       KIN_SEYAN_DU, (player[cn].kindred & KIN_SEYAN_DU) ? "checked" : "");
-	printf("Purple <input type=checkbox name=kindred value=%d %s><br>\n",
-	       KIN_PURPLE, (player[cn].kindred & KIN_PURPLE) ? "checked" : "");
-	printf("Monster <input type=checkbox name=kindred value=%d %s><br>\n",
-	       KIN_MONSTER, (player[cn].kindred & KIN_MONSTER) ? "checked" : "");
-	printf("Male <input type=checkbox name=kindred value=%d %s><br>\n",
-	       KIN_MALE, (player[cn].kindred & KIN_MALE) ? "checked" : "");
-	printf("Female <input type=checkbox name=kindred value=%d %s><br>\n",
-	       KIN_FEMALE, (player[cn].kindred & KIN_FEMALE) ? "checked" : "");
-	printf("</td></tr>\n");
-
-	printf("<tr><td valign=top>Sprite base:</td><td><input type=text name=sprite value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].sprite);
-
-	printf("<tr><td valign=top>Sound base:</td><td><input type=text name=sound value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].sound);
-
-	printf("<tr><td valign=top>Class:</td><td><input type=text name=class value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].class);
-
-	printf("<tr><td valign=top>Flags:</td><td>\n");
-	printf("<input type=checkbox name=flags value=%Lu %s>Player<br>\n", CF_PLAYER, (player[cn].flags & CF_PLAYER) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Staff<br>\n", CF_STAFF, (player[cn].flags & CF_STAFF) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Imp<br>\n", CF_IMP, (player[cn].flags & CF_IMP) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Creator<br>\n", CF_CREATOR, (player[cn].flags & CF_CREATOR) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Build Mode<br>\n", CF_BUILDMODE, (player[cn].flags & CF_BUILDMODE) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>God<br>\n", CF_GOD, (player[cn].flags & CF_GOD) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Greater God<br>\n", CF_GREATERGOD, (player[cn].flags & CF_GREATERGOD) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Infrared<br>\n", CF_INFRARED, (player[cn].flags & CF_INFRARED) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Immortal<br>\n", CF_IMMORTAL, (player[cn].flags & CF_IMMORTAL) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Invisible<br>\n", CF_INVISIBLE, (player[cn].flags & CF_INVISIBLE) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Greater Invisibility<br>\n", CF_GREATERINV, (player[cn].flags & CF_GREATERINV) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Safety Measures for Gods<br>\n", CF_SAFE, (player[cn].flags & CF_SAFE) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>New User<br>\n", CF_NEWUSER, (player[cn].flags & CF_NEWUSER) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>No Tell<br>\n", CF_NOTELL, (player[cn].flags & CF_NOTELL) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>No Shout<br>\n", CF_NOSHOUT, (player[cn].flags & CF_NOSHOUT) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>No HP Regen<br>\n", CF_NOHPREG, (player[cn].flags & CF_NOHPREG) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>No END Regen<br>\n", CF_NOENDREG, (player[cn].flags & CF_NOENDREG) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>No MANA Regen<br>\n", CF_NOMANAREG, (player[cn].flags & CF_NOMANAREG) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Dead Body<br>\n", CF_BODY, (player[cn].flags & CF_BODY) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Stay Awake<br>\n", CF_NOSLEEP, (player[cn].flags & CF_NOSLEEP) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>No Magic<br>\n", CF_NOMAGIC, (player[cn].flags & CF_NOMAGIC) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Stoned<br>\n", CF_STONED, (player[cn].flags & CF_STONED) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Usurped<br>\n", CF_USURP, (player[cn].flags & CF_USURP) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Shutup<br>\n", CF_SHUTUP, (player[cn].flags & CF_SHUTUP) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>No Description<br>\n", CF_NODESC, (player[cn].flags & CF_NODESC) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Profiler<br>\n", CF_PROF, (player[cn].flags & CF_PROF) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Simple Animation<br>\n", CF_SIMPLE, (player[cn].flags & CF_SIMPLE) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Kicked<br>\n", CF_KICKED, (player[cn].flags & CF_KICKED) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Do Not List<br>\n", CF_NOLIST, (player[cn].flags & CF_NOLIST) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Do Not List on Who<br>\n", CF_NOWHO, (player[cn].flags & CF_NOWHO) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Spell Ignore<br>\n", CF_SPELLIGNORE, (player[cn].flags & CF_SPELLIGNORE) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>No Staff Tells<br>\n", CF_NOSTAFF, (player[cn].flags & CF_NOSTAFF) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Is POH<br>\n", CF_POH, (player[cn].flags & CF_POH) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Is POH Leader<br>\n", CF_POH_LEADER, (player[cn].flags & CF_POH_LEADER) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Is Looting<br>\n", CF_ISLOOTING, (player[cn].flags & CF_ISLOOTING) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Gold List<br>\n", CF_GOLDEN, (player[cn].flags & CF_GOLDEN) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Black List<br>\n", CF_BLACK, (player[cn].flags & CF_BLACK) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Has Password<br>\n", CF_PASSWD, (player[cn].flags & CF_PASSWD) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Client Side Update Needed<br>\n", CF_UPDATE, (player[cn].flags & CF_UPDATE) ? "checked" : "");
-	printf("<input type=checkbox name=flags value=%Lu %s>Save Player To Disk<br>\n", CF_SAVEME, (player[cn].flags & CF_SAVEME) ? "checked" : "");
-	printf("</td></tr>\n");
-
-	printf("<tr><td valign=top>Alignment</td><td><input type=text name=alignment value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].alignment);
-
-	printf("<tr><td colspan=2><table>\n");
-
-	printf("<tr><td>Name</td><td>Start Value</td><td>Race Mod</td><td>Race Max</td><td>Difficulty</td></tr>\n");
-
-	for (n = 0; n<5; n++)
-	{
-		printf("<tr><td>%s</td>\n", at_name[n]);
-		printf("<td><input type=text name=attrib%d_0 value=\"%d\" size=10 maxlength=10></td>\n", n, player[cn].attrib[n][0]);
-		printf("<td><input type=text name=attrib%d_1 value=\"%d\" size=10 maxlength=10></td>\n", n, player[cn].attrib[n][1]);
-		printf("<td><input type=text name=attrib%d_2 value=\"%d\" size=10 maxlength=10></td>\n", n, player[cn].attrib[n][2]);
-		printf("<td><input type=text name=attrib%d_3 value=\"%d\" size=10 maxlength=10></td>\n", n, player[cn].attrib[n][3]);
-		printf("</tr>\n");
-	}
-
-	printf("<tr><td>Hitpoints</td>\n");
-	printf("<td><input type=text name=hp_0 value=\"%d\" size=10 maxlength=10></td>\n", player[cn].hp[0]);
-	printf("<td><input type=text name=hp_1 value=\"%d\" size=10 maxlength=10></td>\n", player[cn].hp[1]);
-	printf("<td><input type=text name=hp_2 value=\"%d\" size=10 maxlength=10></td>\n", player[cn].hp[2]);
-	printf("<td><input type=text name=hp_3 value=\"%d\" size=10 maxlength=10></td>\n", player[cn].hp[3]);
-	printf("</tr>\n");
-
-	printf("<tr><td>Endurance</td>\n");
-	printf("<td><input type=text name=end_0 value=\"%d\" size=10 maxlength=10></td>\n", player[cn].end[0]);
-	printf("<td><input type=text name=end_1 value=\"%d\" size=10 maxlength=10></td>\n", player[cn].end[1]);
-	printf("<td><input type=text name=end_2 value=\"%d\" size=10 maxlength=10></td>\n", player[cn].end[2]);
-	printf("<td><input type=text name=end_3 value=\"%d\" size=10 maxlength=10></td>\n", player[cn].end[3]);
-	printf("</tr>\n");
-
-	printf("<tr><td>Mana</td>\n");
-	printf("<td><input type=text name=mana_0 value=\"%d\" size=10 maxlength=10></td>\n", player[cn].mana[0]);
-	printf("<td><input type=text name=mana_1 value=\"%d\" size=10 maxlength=10></td>\n", player[cn].mana[1]);
-	printf("<td><input type=text name=mana_2 value=\"%d\" size=10 maxlength=10></td>\n", player[cn].mana[2]);
-	printf("<td><input type=text name=mana_3 value=\"%d\" size=10 maxlength=10></td>\n", player[cn].mana[3]);
-	printf("</tr>\n");
-
-	for (n = 0; n<50; n++)
-	{
-		if (skilltab[n].name[0]==0)
-		{
-			continue;
-		}
-		printf("<tr><td>%s</td>\n", skilltab[n].name);
-		printf("<td><input type=text name=skill%d_0 value=\"%d\" size=10 maxlength=10></td>\n", n, player[cn].skill[n][0]);
-		printf("<td><input type=text name=skill%d_1 value=\"%d\" size=10 maxlength=10></td>\n", n, player[cn].skill[n][1]);
-		printf("<td><input type=text name=skill%d_2 value=\"%d\" size=10 maxlength=10></td>\n", n, player[cn].skill[n][2]);
-		printf("<td><input type=text name=skill%d_3 value=\"%d\" size=10 maxlength=10></td>\n", n, player[cn].skill[n][3]);
-		printf("</tr>\n");
-	}
-
-	printf("</table></td></tr>\n");
-
-	printf("<tr><td valign=top>Speed Mod</td><td><input type=text name=speed_mod value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].speed_mod);
-	printf("<tr><td valign=top>Weapon Bonus</td><td><input type=text name=weapon_bonus value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].weapon_bonus);
-	printf("<tr><td valign=top>Armor Bonus</td><td><input type=text name=armor_bonus value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].armor_bonus);
-	printf("<tr><td valign=top>Gethit Bonus</td><td><input type=text name=gethit_bonus value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].gethit_bonus);
-	printf("<tr><td valign=top>Light Bonus</td><td><input type=text name=light_bonus value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].light_bonus);
-
-	printf("<tr><td>EXP left:</td><td><input type=text name=points value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].points);
-	printf("<tr><td>EXP total:</td><td><input type=text name=points_tot value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].points_tot);
-
-	printf("<tr><td>Position X:</td><td><input type=text name=x value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].x);
-	printf("<tr><td>Position Y:</td><td><input type=text name=y value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].y);
-	printf("<tr><td>Direction:</td><td><input type=text name=dir value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].dir);
-	printf("<tr><td>Temple X:</td><td><input type=text name=temple_x value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].temple_x);
-	printf("<tr><td>Temple Y:</td><td><input type=text name=temple_y value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].temple_y);
-	printf("<tr><td>Tavern X:</td><td><input type=text name=tavern_x value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].tavern_x);
-	printf("<tr><td>Tavern Y:</td><td><input type=text name=tavern_y value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].tavern_y);
-	printf("<tr><td>Temp:</td><td><input type=text name=temp value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].temp);
-
-	printf("<tr><td>To X:</td><td><input type=text name=tox value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].tox);
-	printf("<tr><td>To Y:</td><td><input type=text name=toy value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].toy);
-	printf("<tr><td>From X:</td><td><input type=text name=frx value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].frx);
-	printf("<tr><td>From Y:</td><td><input type=text name=fry value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].fry);
-	printf("<tr><td>Status:</td><td><input type=text name=status value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].status);
-	printf("<tr><td>Status2:</td><td><input type=text name=status2 value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].status2);
-
-
-	printf("<tr><td>Gold:</td><td><input type=text name=gold value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       player[cn].gold);
-
-	if (player[cn].citem<0 || player[cn].citem>=MAXITEM)
-	{
-		player[cn].citem = 0;
-	}
-
-	printf("<tr><td>Current Item</td><td><input type=text name=citem value=\"%d\" size=10 maxlength=10> (%s)</td></tr>\n",
-	       player[cn].citem, player[cn].citem ? items[player[cn].citem].name : "none");
-
-	for (n = 0; n<12; n++)
-	{
-		if (player[cn].worn[n]>=MAXITEM)
-		{
-			player[cn].worn[n] = 0;
-		}
-		printf("<tr><td>%s</td><td><input type=text name=worn%d value=\"%d\" size=10 maxlength=10> (%s)</td></tr>\n",
-		       weartext[n], n, player[cn].worn[n], player[cn].worn[n] ? items[player[cn].worn[n]].name : "none");
-	}
-
-	for (n = 0; n<40; n++)
-	{
-		if (player[cn].item[n]<0 || player[cn].item[n]>=MAXITEM)
-		{
-			player[cn].item[n] = 0;
-		}
-		printf("<tr><td>Item %d</td><td><input type=text name=item%d value=\"%d\" size=10 maxlength=10> (%s)</td></tr>\n",
-		       n, n, player[cn].item[n], player[cn].item[n] ? items[player[cn].item[n]].name : "none");
-	}
-
-	printf("<tr><td>Driver Data:</td></tr>\n");
-	for (n = 0; n<100; n++)
-	{
 		if (strcmp(player_data_name[n], "Unused")==0 || strcmp(player_data_name[n], "Reserved")==0)
 		{
 			continue;
 		}
 		printf("<tr><td>[%3d] %s</td><td><input type=text name=drdata%d value=\"%d\" size=35 maxlength=75></td></tr>\n",
-		       n, player_data_name[n], n, player[cn].data[n]);
+		       n, player_data_name[n], n, ch[cn].data[n]);
 	}
 
 	printf("<tr><td>Driver Texts:</td></tr>\n");
@@ -1036,7 +1130,7 @@ void view_player(LIST *head)
 			continue;
 		}
 		printf("<tr><td>%s</td><td><input type=text name=text_%d value=\"%s\" size=35 maxlength=158></td></tr>\n",
-		       player_text_name[n], n, player[cn].text[n]);
+		       player_text_name[n], n, ch[cn].text[n]);
 	}
 
 	printf("<tr><td><input type=submit value=Update></td><td> </td></tr>\n");
@@ -1044,21 +1138,10 @@ void view_player(LIST *head)
 	printf("<input type=hidden name=step value=26>\n");
 	printf("<input type=hidden name=cn value=%d>\n", cn);
 	printf("</form>\n");
-	printf("<a href=/cgi-imp/acct.cgi?step=10>Back</a><br>\n");
+	printf("<center><a href=/cgi-imp/acct.cgi?step=19>Back</a>|<a href=/cgi-imp/acct.cgi>Home</a></center><br><br>\n");
 }
 
-static char *obj_drdata[] = {
-	"Drdata 0",
-	"Drdata 1",
-	"Drdata 2",
-	"Drdata 3",
-	"Drdata 4",
-	"Drdata 5",
-	"Drdata 6",
-	"Drdata 7",
-	"Drdata 8",
-	"Drdata 9"
-};
+
 
 void copy_object(LIST *head)
 {
@@ -1084,7 +1167,7 @@ void copy_object(LIST *head)
 
 	for (n = 1; n<MAXTITEM; n++)
 	{
-		if (it[n].used==USE_EMPTY)
+		if (it_temp[n].used==USE_EMPTY)
 		{
 			break;
 		}
@@ -1094,7 +1177,7 @@ void copy_object(LIST *head)
 		printf("MAXTITEM reached!\n");
 		return;
 	}
-	it[n] = it[in];
+	it_temp[n] = it_temp[in];
 
 	printf("Done.\n");
 }
@@ -1120,119 +1203,119 @@ void view_object(LIST *head)
 		printf("Number out of bounds.\n");
 		return;
 	}
-
+	printf("<center><a href=/cgi-imp/acct.cgi?step=21>Back</a>|<a href=/cgi-imp/acct.cgi>Home</a></center><br><br>\n");
 	printf("<form method=post action=/cgi-imp/acct.cgi>\n");
 	printf("<table>\n");
 	printf("<tr><td valign=top>Name:</td><td><input type=text name=name value=\"%s\" size=35 maxlength=35></td></tr>\n",
-	       it[in].name);
+	       it_temp[in].name);
 	printf("<tr><td>Reference:</td><td><input type=text name=reference value=\"%s\" size=35 maxlength=35></td></tr>\n",
-	       it[in].reference);
+	       it_temp[in].reference);
 	printf("<tr><td>Description:</td><td><input type=text name=description value=\"%s\" size=35 maxlength=195></td></tr>\n",
-	       it[in].description);
+	       it_temp[in].description);
 
 	printf("<tr><td valign=top>Flags:</td><td>\n");
-	printf("Moveblock <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_MOVEBLOCK, (it[in].flags & IF_MOVEBLOCK) ? "checked" : "");
-	printf("Sightblock <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_SIGHTBLOCK, (it[in].flags & IF_SIGHTBLOCK) ? "checked" : "");
-	printf("Take-Able <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_TAKE, (it[in].flags & IF_TAKE) ? "checked" : "");
-	printf("Look-Able <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_LOOK, (it[in].flags & IF_LOOK) ? "checked" : "");
-	printf("Look-Special <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_LOOKSPECIAL, (it[in].flags & IF_LOOKSPECIAL) ? "checked" : "");
-	printf("Use <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_USE, (it[in].flags & IF_USE) ? "checked" : "");
-	printf("Use-Special <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_USESPECIAL, (it[in].flags & IF_USESPECIAL) ? "checked" : "");
-	printf("Use-Destroy <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_USEDESTROY, (it[in].flags & IF_USEDESTROY) ? "checked" : "");
-	printf("Use-Activate <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_USEACTIVATE, (it[in].flags & IF_USEACTIVATE) ? "checked" : "");
-	printf("Use-Deactivate <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_USEDEACTIVATE, (it[in].flags & IF_USEDEACTIVATE) ? "checked" : "");
-	printf("Re-Activate <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_REACTIVATE, (it[in].flags & IF_REACTIVATE) ? "checked" : "");
-	printf("No-Repair <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_NOREPAIR, (it[in].flags & IF_NOREPAIR) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Moveblock<br>\n",
+	       IF_MOVEBLOCK, (it_temp[in].flags & IF_MOVEBLOCK) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Sightblock<br>\n",
+	       IF_SIGHTBLOCK, (it_temp[in].flags & IF_SIGHTBLOCK) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Take-Able<br>\n",
+	       IF_TAKE, (it_temp[in].flags & IF_TAKE) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Look-Able<br>\n",
+	       IF_LOOK, (it_temp[in].flags & IF_LOOK) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Look-Special<br>\n",
+	       IF_LOOKSPECIAL, (it_temp[in].flags & IF_LOOKSPECIAL) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Use<br>\n",
+	       IF_USE, (it_temp[in].flags & IF_USE) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Use-Special<br>\n",
+	       IF_USESPECIAL, (it_temp[in].flags & IF_USESPECIAL) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Use-Destroy<br>\n",
+	       IF_USEDESTROY, (it_temp[in].flags & IF_USEDESTROY) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Use-Activate<br>\n",
+	       IF_USEACTIVATE, (it_temp[in].flags & IF_USEACTIVATE) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Use-Deactivate<br>\n",
+	       IF_USEDEACTIVATE, (it_temp[in].flags & IF_USEDEACTIVATE) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Re-Activate<br>\n",
+	       IF_REACTIVATE, (it_temp[in].flags & IF_REACTIVATE) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>No-Repair<br>\n",
+	       IF_NOREPAIR, (it_temp[in].flags & IF_NOREPAIR) ? "checked" : "");
 
-	printf("Hidden (data[9])<input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_HIDDEN, (it[in].flags & IF_HIDDEN) ? "checked" : "");
-	printf("Step-Action <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_STEPACTION, (it[in].flags & IF_STEPACTION) ? "checked" : "");
-	printf("Expire-Proc <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_EXPIREPROC, (it[in].flags & IF_EXPIREPROC) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Hidden (data[9])<br>\n",
+	       IF_HIDDEN, (it_temp[in].flags & IF_HIDDEN) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Step-Action<br>\n",
+	       IF_STEPACTION, (it_temp[in].flags & IF_STEPACTION) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Expire-Proc<br>\n",
+	       IF_EXPIREPROC, (it_temp[in].flags & IF_EXPIREPROC) ? "checked" : "");
 
-	printf("Fast Light Age <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_LIGHTAGE, (it[in].flags & IF_LIGHTAGE) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Fast Light Age<br>\n",
+	       IF_LIGHTAGE, (it_temp[in].flags & IF_LIGHTAGE) ? "checked" : "");
 
-	printf("Unique <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_UNIQUE, (it[in].flags & IF_UNIQUE) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Unique<br>\n",
+	       IF_UNIQUE, (it_temp[in].flags & IF_UNIQUE) ? "checked" : "");
 
-	printf("Spell <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_SPELL, (it[in].flags & IF_SPELL) ? "checked" : "");
-	printf("Shop-Destroy (quest items)<input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_SHOPDESTROY, (it[in].flags & IF_SHOPDESTROY) ? "checked" : "");
-	printf("Laby-Destroy (quest items)<input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_LABYDESTROY, (it[in].flags & IF_LABYDESTROY) ? "checked" : "");
-	printf("No-Depot (quest items)<input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_NODEPOT, (it[in].flags & IF_NODEPOT) ? "checked" : "");
-	printf("No Market (no price change)<input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_NOMARKET, (it[in].flags & IF_NOMARKET) ? "checked" : "");
-	printf("Donate (cheap items)<input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_DONATE, (it[in].flags & IF_DONATE) ? "checked" : "");
-	printf("Single-Age <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_SINGLEAGE, (it[in].flags & IF_SINGLEAGE) ? "checked" : "");
-	printf("Always expire when inactive <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_ALWAYSEXP1, (it[in].flags & IF_ALWAYSEXP1) ? "checked" : "");
-	printf("Always expire when active <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_ALWAYSEXP2, (it[in].flags & IF_ALWAYSEXP2) ? "checked" : "");
-	printf("Armor <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_ARMOR, (it[in].flags & IF_ARMOR) ? "checked" : "");
-	printf("Magic <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_MAGIC, (it[in].flags & IF_MAGIC) ? "checked" : "");
-	printf("Misc <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_MISC, (it[in].flags & IF_MISC) ? "checked" : "");
-	printf("Weapon: Sword <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_WP_SWORD, (it[in].flags & IF_WP_SWORD) ? "checked" : "");
-	printf("Weapon: Dagger <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_WP_DAGGER, (it[in].flags & IF_WP_DAGGER) ? "checked" : "");
-	printf("Weapon: Axe <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_WP_AXE, (it[in].flags & IF_WP_AXE) ? "checked" : "");
-	printf("Weapon: Club <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_WP_STAFF, (it[in].flags & IF_WP_STAFF) ? "checked" : "");
-	printf("Weapon: Two-Handed <input type=checkbox name=flags value=%Lu %s><br>\n",
-	       IF_WP_TWOHAND, (it[in].flags & IF_WP_TWOHAND) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Spell<br>\n",
+	       IF_SPELL, (it_temp[in].flags & IF_SPELL) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Shop-Destroy (quest items)<br>\n",
+	       IF_SHOPDESTROY, (it_temp[in].flags & IF_SHOPDESTROY) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Laby-Destroy (quest items)<br>\n",
+	       IF_LABYDESTROY, (it_temp[in].flags & IF_LABYDESTROY) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>No-Depot (quest items)<br>\n",
+	       IF_NODEPOT, (it_temp[in].flags & IF_NODEPOT) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>No Market (no price change)<br>\n",
+	       IF_NOMARKET, (it_temp[in].flags & IF_NOMARKET) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Donate (cheap items)<br>\n",
+	       IF_DONATE, (it_temp[in].flags & IF_DONATE) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Single-Age<br>\n",
+	       IF_SINGLEAGE, (it_temp[in].flags & IF_SINGLEAGE) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Always expire when inactive<br>\n",
+	       IF_ALWAYSEXP1, (it_temp[in].flags & IF_ALWAYSEXP1) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Always expire when active<br>\n",
+	       IF_ALWAYSEXP2, (it_temp[in].flags & IF_ALWAYSEXP2) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Armor<br>\n",
+	       IF_ARMOR, (it_temp[in].flags & IF_ARMOR) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Magic<br>\n",
+	       IF_MAGIC, (it_temp[in].flags & IF_MAGIC) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Misc<br>\n",
+	       IF_MISC, (it_temp[in].flags & IF_MISC) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Weapon: Sword<br>\n",
+	       IF_WP_SWORD, (it_temp[in].flags & IF_WP_SWORD) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Weapon: Dagger<br>\n",
+	       IF_WP_DAGGER, (it_temp[in].flags & IF_WP_DAGGER) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Weapon: Axe<br>\n",
+	       IF_WP_AXE, (it_temp[in].flags & IF_WP_AXE) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Weapon: Club<br>\n",
+	       IF_WP_STAFF, (it_temp[in].flags & IF_WP_STAFF) ? "checked" : "");
+	printf("<input type=checkbox name=flags value=%Lu %s>Weapon: Two-Handed<br>\n",
+	       IF_WP_TWOHAND, (it_temp[in].flags & IF_WP_TWOHAND) ? "checked" : "");
 	printf("</td></tr>\n");
 
 	printf("<tr><td>Value:</td><td><input type=text name=value value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       it[in].value);
+	       it_temp[in].value);
 
 	printf("<tr><td valign=top>Placement:</td><td>\n");
-	printf("Head <input type=checkbox name=placement value=%d %s><br>\n",
-	       PL_HEAD, (it[in].placement & PL_HEAD) ? "checked" : "");
-	printf("Neck <input type=checkbox name=placement value=%d %s><br>\n",
-	       PL_NECK, (it[in].placement & PL_NECK) ? "checked" : "");
-	printf("Body <input type=checkbox name=placement value=%d %s><br>\n",
-	       PL_BODY, (it[in].placement & PL_BODY) ? "checked" : "");
-	printf("Arms <input type=checkbox name=placement value=%d %s><br>\n",
-	       PL_ARMS, (it[in].placement & PL_ARMS) ? "checked" : "");
-	printf("Belt <input type=checkbox name=placement value=%d %s><br>\n",
-	       PL_BELT, (it[in].placement & PL_BELT) ? "checked" : "");
-	printf("Legs <input type=checkbox name=placement value=%d %s><br>\n",
-	       PL_LEGS, (it[in].placement & PL_LEGS) ? "checked" : "");
-	printf("Feet <input type=checkbox name=placement value=%d %s><br>\n",
-	       PL_FEET, (it[in].placement & PL_FEET) ? "checked" : "");
-	printf("Left Hand <input type=checkbox name=placement value=%d %s><br>\n",
-	       PL_SHIELD, (it[in].placement & PL_SHIELD) ? "checked" : "");
-	printf("Right Hand <input type=checkbox name=placement value=%d %s><br>\n",
-	       PL_WEAPON, (it[in].placement & PL_WEAPON) ? "checked" : "");
-	printf("Cloak <input type=checkbox name=placement value=%d %s><br>\n",
-	       PL_CLOAK, (it[in].placement & PL_CLOAK) ? "checked" : "");
-	printf("Two-Handed <input type=checkbox name=placement value=%d %s><br>\n",
-	       PL_TWOHAND, (it[in].placement & PL_TWOHAND) ? "checked" : "");
-	printf("Ring <input type=checkbox name=placement value=%d %s><br>\n",
-	       PL_RING, (it[in].placement & PL_RING) ? "checked" : "");
+	printf("<input type=checkbox name=placement value=%d %s>Head<br>\n",
+	       PL_HEAD, (it_temp[in].placement & PL_HEAD) ? "checked" : "");
+	printf("<input type=checkbox name=placement value=%d %s>Neck<br>\n",
+	       PL_NECK, (it_temp[in].placement & PL_NECK) ? "checked" : "");
+	printf("<input type=checkbox name=placement value=%d %s>Body<br>\n",
+	       PL_BODY, (it_temp[in].placement & PL_BODY) ? "checked" : "");
+	printf("<input type=checkbox name=placement value=%d %s>Arms<br>\n",
+	       PL_ARMS, (it_temp[in].placement & PL_ARMS) ? "checked" : "");
+	printf("<input type=checkbox name=placement value=%d %s>Belt<br>\n",
+	       PL_BELT, (it_temp[in].placement & PL_BELT) ? "checked" : "");
+	printf("<input type=checkbox name=placement value=%d %s>Legs<br>\n",
+	       PL_LEGS, (it_temp[in].placement & PL_LEGS) ? "checked" : "");
+	printf("<input type=checkbox name=placement value=%d %s>Feet<br>\n",
+	       PL_FEET, (it_temp[in].placement & PL_FEET) ? "checked" : "");
+	printf("<input type=checkbox name=placement value=%d %s>Left Hand<br>\n",
+	       PL_SHIELD, (it_temp[in].placement & PL_SHIELD) ? "checked" : "");
+	printf("<input type=checkbox name=placement value=%d %s>Right Hand<br>\n",
+	       PL_WEAPON, (it_temp[in].placement & PL_WEAPON) ? "checked" : "");
+	printf("<input type=checkbox name=placement value=%d %s>Cloak<br>\n",
+	       PL_CLOAK, (it_temp[in].placement & PL_CLOAK) ? "checked" : "");
+	printf("<input type=checkbox name=placement value=%d %s>Two-Handed<br>\n",
+	       PL_TWOHAND, (it_temp[in].placement & PL_TWOHAND) ? "checked" : "");
+	printf("<input type=checkbox name=placement value=%d %s>Ring<br>\n",
+	       PL_RING, (it_temp[in].placement & PL_RING) ? "checked" : "");
 
 	printf("</td></tr>\n");
 
@@ -1244,28 +1327,28 @@ void view_object(LIST *head)
 	for (n = 0; n<5; n++)
 	{
 		printf("<tr><td>%s</td>\n", at_name[n]);
-		printf("<td><input type=text name=attrib%d_0 value=\"%d\" size=10 maxlength=10></td>\n", n, it[in].attrib[n][0]);
-		printf("<td><input type=text name=attrib%d_1 value=\"%d\" size=10 maxlength=10></td>\n", n, it[in].attrib[n][1]);
-		printf("<td><input type=text name=attrib%d_2 value=\"%d\" size=10 maxlength=10></td>\n", n, it[in].attrib[n][2]);
+		printf("<td><input type=text name=attrib%d_0 value=\"%d\" size=10 maxlength=10></td>\n", n, it_temp[in].attrib[n][0]);
+		printf("<td><input type=text name=attrib%d_1 value=\"%d\" size=10 maxlength=10></td>\n", n, it_temp[in].attrib[n][1]);
+		printf("<td><input type=text name=attrib%d_2 value=\"%d\" size=10 maxlength=10></td>\n", n, it_temp[in].attrib[n][2]);
 		printf("</tr>\n");
 	}
 
 	printf("<tr><td>Hitpoints</td>\n");
-	printf("<td><input type=text name=hp_0 value=\"%d\" size=10 maxlength=10></td>\n", it[in].hp[0]);
-	printf("<td><input type=text name=hp_1 value=\"%d\" size=10 maxlength=10></td>\n", it[in].hp[1]);
-	printf("<td><input type=text name=hp_2 value=\"%d\" size=10 maxlength=10></td>\n", it[in].hp[2]);
+	printf("<td><input type=text name=hp_0 value=\"%d\" size=10 maxlength=10></td>\n", it_temp[in].hp[0]);
+	printf("<td><input type=text name=hp_1 value=\"%d\" size=10 maxlength=10></td>\n", it_temp[in].hp[1]);
+	printf("<td><input type=text name=hp_2 value=\"%d\" size=10 maxlength=10></td>\n", it_temp[in].hp[2]);
 	printf("</tr>\n");
 
 	printf("<tr><td>Endurance</td>\n");
-	printf("<td><input type=text name=end_0 value=\"%d\" size=10 maxlength=10></td>\n", it[in].end[0]);
-	printf("<td><input type=text name=end_1 value=\"%d\" size=10 maxlength=10></td>\n", it[in].end[1]);
-	printf("<td><input type=text name=end_2 value=\"%d\" size=10 maxlength=10></td>\n", it[in].end[2]);
+	printf("<td><input type=text name=end_0 value=\"%d\" size=10 maxlength=10></td>\n", it_temp[in].end[0]);
+	printf("<td><input type=text name=end_1 value=\"%d\" size=10 maxlength=10></td>\n", it_temp[in].end[1]);
+	printf("<td><input type=text name=end_2 value=\"%d\" size=10 maxlength=10></td>\n", it_temp[in].end[2]);
 	printf("</tr>\n");
 
 	printf("<tr><td>Mana</td>\n");
-	printf("<td><input type=text name=mana_0 value=\"%d\" size=10 maxlength=10></td>\n", it[in].mana[0]);
-	printf("<td><input type=text name=mana_1 value=\"%d\" size=10 maxlength=10></td>\n", it[in].mana[1]);
-	printf("<td><input type=text name=mana_2 value=\"%d\" size=10 maxlength=10></td>\n", it[in].mana[2]);
+	printf("<td><input type=text name=mana_0 value=\"%d\" size=10 maxlength=10></td>\n", it_temp[in].mana[0]);
+	printf("<td><input type=text name=mana_1 value=\"%d\" size=10 maxlength=10></td>\n", it_temp[in].mana[1]);
+	printf("<td><input type=text name=mana_2 value=\"%d\" size=10 maxlength=10></td>\n", it_temp[in].mana[2]);
 	printf("</tr>\n");
 
 	for (n = 0; n<50; n++)
@@ -1275,57 +1358,57 @@ void view_object(LIST *head)
 			continue;
 		}
 		printf("<tr><td>%s</td>\n", skilltab[n].name);
-		printf("<td><input type=text name=skill%d_0 value=\"%d\" size=10 maxlength=10></td>\n", n, it[in].skill[n][0]);
-		printf("<td><input type=text name=skill%d_1 value=\"%d\" size=10 maxlength=10></td>\n", n, it[in].skill[n][1]);
-		printf("<td><input type=text name=skill%d_2 value=\"%d\" size=10 maxlength=10></td>\n", n, it[in].skill[n][2]);
+		printf("<td><input type=text name=skill%d_0 value=\"%d\" size=10 maxlength=10></td>\n", n, it_temp[in].skill[n][0]);
+		printf("<td><input type=text name=skill%d_1 value=\"%d\" size=10 maxlength=10></td>\n", n, it_temp[in].skill[n][1]);
+		printf("<td><input type=text name=skill%d_2 value=\"%d\" size=10 maxlength=10></td>\n", n, it_temp[in].skill[n][2]);
 		printf("</tr>\n");
 	}
 
 	printf("<tr><td>Armor:</td><td><input type=text name=armor_1 value=\"%d\" size=10 maxlength=10></td><td><input type=text name=armor_2 value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       it[in].armor[0], it[in].armor[1]);
+	       it_temp[in].armor[0], it_temp[in].armor[1]);
 	printf("<tr><td>Weapon:</td><td><input type=text name=weapon_1 value=\"%d\" size=10 maxlength=10></td><td><input type=text name=weapon_2 value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       it[in].weapon[0], it[in].weapon[1]);
+	       it_temp[in].weapon[0], it_temp[in].weapon[1]);
 
 	printf("<tr><td>Gethit Damage:</td><td><input type=text name=gethit_dam_1 value=\"%d\" size=10 maxlength=10></td><td><input type=text name=gethit_dam_2 value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       it[in].gethit_dam[0], it[in].gethit_dam[1]);
+	       it_temp[in].gethit_dam[0], it_temp[in].gethit_dam[1]);
 
 	printf("<tr><td>Max Age:</td><td><input type=text name=max_age_1 value=\"%d\" size=10 maxlength=10></td><td><input type=text name=max_age_2 value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       it[in].max_age[0], it[in].max_age[1]);
+	       it_temp[in].max_age[0], it_temp[in].max_age[1]);
 
 	printf("<tr><td>Light</td><td><input type=text name=light_1 value=\"%d\" size=10 maxlength=10></td>\n",
-	       it[in].light[0]);
+	       it_temp[in].light[0]);
 	printf("<td><input type=text name=light_2 value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       it[in].light[1]);
+	       it_temp[in].light[1]);
 
 	printf("<tr><td valign=top>Sprite:</td><td><input type=text name=sprite_1 value=\"%d\" size=10 maxlength=10></td>\n",
-	       it[in].sprite[0]);
+	       it_temp[in].sprite[0]);
 	printf("<td><input type=text name=sprite_2 value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       it[in].sprite[1]);
+	       it_temp[in].sprite[1]);
 
 	printf("<tr><td>Animation-Status:</td><td><input type=text name=status_1 value=\"%d\" size=10 maxlength=10></td>\n",
-	       it[in].status[0]);
+	       it_temp[in].status[0]);
 	printf("<td><input type=text name=status_2 value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       it[in].status[1]);
+	       it_temp[in].status[1]);
 
 	printf("</table></td></tr>\n");
 
 	printf("<tr><td>Max Damage:</td><td><input type=text name=max_damage value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       it[in].max_damage);
+	       it_temp[in].max_damage);
 
 	printf("<tr><td>Duration:</td><td><input type=text name=duration value=\"%d\" size=10 maxlength=10> (in 1/18 of a sec)</td></tr>\n",
-	       it[in].duration);
+	       it_temp[in].duration);
 	printf("<tr><td>Cost:</td><td><input type=text name=cost value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       it[in].cost);
+	       it_temp[in].cost);
 	printf("<tr><td>Power:</td><td><input type=text name=power value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       it[in].power);
+	       it_temp[in].power);
 	printf("<tr><td>Sprite Overr.:</td><td><input type=text name=spr_ovr value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       it[in].sprite_override);
+	       it_temp[in].sprite_override);
 
 	printf("<tr><td>Min. Rank:</td><td><input type=text name=min_rank value=\"%d\" size=10 maxlength=10></td></tr>\n",
-	       it[in].min_rank);
+	       it_temp[in].min_rank);
 
 	printf("<tr><td valign=top>Driver:</td><td>\n");
-	printf("<input type=text name=driver value=%d>", it[in].driver);
+	printf("<input type=text name=driver value=%d>", it_temp[in].driver);
 	printf("</td></tr>\n");
 
 	printf("<tr><td valign=top>Driver Data:</td><td>\n");
@@ -1334,7 +1417,7 @@ void view_object(LIST *head)
 	for (n = 0; n<10; n++)
 	{
 		printf("<tr><td>%s:</td><td><input type=text name=drdata%d value=\"%d\" size=10 maxlength=10></td></tr>\n",
-		       obj_drdata[n], n, it[in].data[n]);
+		       obj_drdata[n], n, it_temp[in].data[n]);
 	}
 
 	printf("<tr><td><input type=submit value=Update></td><td> </td></tr>\n");
@@ -1342,10 +1425,11 @@ void view_object(LIST *head)
 	printf("<input type=hidden name=step value=24>\n");
 	printf("<input type=hidden name=in value=%d>", in);
 	printf("</form>\n");
-	printf("<a href=/cgi-imp/acct.cgi?step=20>Back</a><br>\n");
+	printf("<center><a href=/cgi-imp/acct.cgi?step=21>Back</a>|<a href=/cgi-imp/acct.cgi>Home</a></center><br><br>\n");
+
 }
 
-void delete_character(LIST *head)
+void delete_character_template(LIST *head)
 {
 	int cn;
 	char *tmp;
@@ -1361,9 +1445,9 @@ void delete_character(LIST *head)
 		return;
 	}
 
-	ch[cn].used = USE_EMPTY;
+	ch_temp[cn].used = USE_EMPTY;
 
-	if (ch[cn].flags & CF_RESPAWN)
+	if (ch_temp[cn].flags & CF_RESPAWN)
 	{
 		globs->reset_char = cn;
 	}
@@ -1387,690 +1471,12 @@ void delete_object(LIST *head)
 		return;
 	}
 
-	it[in].used = USE_EMPTY;
+	it_temp[in].used = USE_EMPTY;
 
 	printf("Done.\n");
 }
 
-void update_player_character(LIST *head)
-{
-	int cn, cnt, val, n;
-	unsigned long long lval;
-	char *tmp, **tmps, buf[80];
-
-	tmp = find_val(head, "cn");
-	if (tmp)
-	{
-		cn = atoi(tmp);
-	}
-	else
-	{
-		printf("CN not specified.\n");
-		return;
-	}
-
-	bzero(&player[cn], sizeof(struct character));
-	player[cn].used = USE_ACTIVE;
-
-	tmp = find_val(head, "name");
-	if (tmp)
-	{
-		strncpy(player[cn].name, tmp, 35);
-		player[cn].name[35] = 0;
-	}
-	else
-	{
-		printf("NAME not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "reference");
-	if (tmp)
-	{
-		strncpy(player[cn].reference, tmp, 35);
-		player[cn].reference[35] = 0;
-	}
-	else
-	{
-		printf("REFERENCE not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "description");
-	if (tmp)
-	{
-		strncpy(player[cn].description, tmp, 195);
-		player[cn].description[195] = 0;
-	}
-	else
-	{
-		printf("DESCRIPTION not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "player");
-	if (tmp)
-	{
-		player[cn].player = atoi(tmp);
-	}
-	else
-	{
-		printf("PLAYER not specified.\n");
-		return;
-	}
-
-
-	tmp = find_val(head, "pass1");
-	if (tmp)
-	{
-		player[cn].pass1 = atoi(tmp);
-	}
-	else
-	{
-		printf("PASS1 not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "pass2");
-	if (tmp)
-	{
-		player[cn].pass2 = atoi(tmp);
-	}
-	else
-	{
-		printf("PASS2 not specified.\n");
-		return;
-	}
-
-	cnt = find_val_multi(head, "kindred", &tmps);
-	if (cnt)
-	{
-		for (n = val = 0; n<cnt; n++)
-		{
-			val |= atoi(tmps[n]);
-		}
-		player[cn].kindred = val;
-	}
-
-	tmp = find_val(head, "sprite");
-	if (tmp)
-	{
-		player[cn].sprite = atoi(tmp);
-	}
-	else
-	{
-		printf("SPRITE not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "sound");
-	if (tmp)
-	{
-		player[cn].sound = atoi(tmp);
-	}
-	else
-	{
-		printf("SOUND not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "class");
-	if (tmp)
-	{
-		player[cn].class = atoi(tmp);
-	}
-	else
-	{
-		printf("CLASS not specified.\n");
-		return;
-	}
-
-	cnt  = find_val_multi(head, "flags", &tmps);
-	lval = 0;
-	if (cnt)
-	{
-		for (n = 0; n<cnt; n++)
-		{
-			lval |= atoll(tmps[n]);
-		}
-	}
-	player[cn].flags = lval;
-
-	tmp = find_val(head, "alignment");
-	if (tmp)
-	{
-		player[cn].alignment = atoi(tmp);
-	}
-	else
-	{
-		printf("ALIGNMENT not specified.\n");
-		return;
-	}
-
-	for (n = 0; n<100; n++)
-	{
-		sprintf(buf, "drdata%d", n);
-		tmp = find_val(head, buf);
-		if (tmp)
-		{
-			player[cn].data[n] = atoi(tmp);
-		}
-		else
-		{
-			player[cn].data[n] = 0;
-		}
-	}
-
-	for (n = 0; n<10; n++)
-	{
-		sprintf(buf, "text_%d", n);
-		tmp = find_val(head, buf);
-		if (tmp)
-		{
-			strncpy(player[cn].text[n], tmp, 158);
-		}
-		else
-		{
-			player[cn].text[n][0] = 0;
-		}
-		player[cn].text[n][159] = 0;
-	}
-
-	for (n = 0; n<5; n++)
-	{
-		sprintf(buf, "attrib%d_0", n);
-		tmp = find_val(head, buf);
-		if (tmp)
-		{
-			player[cn].attrib[n][0] = atoi(tmp);
-		}
-		else
-		{
-			printf("ATTRIB%d_0 not specified.", n);
-			return;
-		}
-
-		sprintf(buf, "attrib%d_1", n);
-		tmp = find_val(head, buf);
-		if (tmp)
-		{
-			player[cn].attrib[n][1] = atoi(tmp);
-		}
-		else
-		{
-			printf("ATTRIB%d_1 not specified.", n);
-			return;
-		}
-
-		sprintf(buf, "attrib%d_2", n);
-		tmp = find_val(head, buf);
-		if (tmp)
-		{
-			player[cn].attrib[n][2] = atoi(tmp);
-		}
-		else
-		{
-			printf("ATTRIB%d_2 not specified.", n);
-			return;
-		}
-
-		sprintf(buf, "attrib%d_3", n);
-		tmp = find_val(head, buf);
-		if (tmp)
-		{
-			player[cn].attrib[n][3] = atoi(tmp);
-		}
-		else
-		{
-			printf("ATTRIB%d_3 not specified.", n);
-			return;
-		}
-	}
-
-	tmp = find_val(head, "hp_0");
-	if (tmp)
-	{
-		player[cn].hp[0] = atoi(tmp);
-	}
-	else
-	{
-		printf("HP_0 not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "hp_1");
-	if (tmp)
-	{
-		player[cn].hp[1] = atoi(tmp);
-	}
-	else
-	{
-		printf("HP_1 not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "hp_2");
-	if (tmp)
-	{
-		player[cn].hp[2] = atoi(tmp);
-	}
-	else
-	{
-		printf("HP_2 not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "hp_3");
-	if (tmp)
-	{
-		player[cn].hp[3] = atoi(tmp);
-	}
-	else
-	{
-		printf("HP_3 not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "end_0");
-	if (tmp)
-	{
-		player[cn].end[0] = atoi(tmp);
-	}
-	else
-	{
-		printf("END_0 not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "end_1");
-	if (tmp)
-	{
-		player[cn].end[1] = atoi(tmp);
-	}
-	else
-	{
-		printf("END_1 not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "end_2");
-	if (tmp)
-	{
-		player[cn].end[2] = atoi(tmp);
-	}
-	else
-	{
-		printf("END_2 not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "end_3");
-	if (tmp)
-	{
-		player[cn].end[3] = atoi(tmp);
-	}
-	else
-	{
-		printf("END_3 not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "mana_0");
-	if (tmp)
-	{
-		player[cn].mana[0] = atoi(tmp);
-	}
-	else
-	{
-		printf("MANA_0 not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "mana_1");
-	if (tmp)
-	{
-		player[cn].mana[1] = atoi(tmp);
-	}
-	else
-	{
-		printf("MANA_1 not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "mana_2");
-	if (tmp)
-	{
-		player[cn].mana[2] = atoi(tmp);
-	}
-	else
-	{
-		printf("MANA_2 not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "mana_3");
-	if (tmp)
-	{
-		player[cn].mana[3] = atoi(tmp);
-	}
-	else
-	{
-		printf("MANA_3 not specified.\n");
-		return;
-	}
-
-
-	for (n = 0; n<50; n++)
-	{
-		sprintf(buf, "skill%d_0", n);
-		tmp = find_val(head, buf);
-		if (tmp)
-		{
-			player[cn].skill[n][0] = atoi(tmp);
-		}
-		else
-		{
-			player[cn].skill[n][0] = 0;
-		}
-
-		sprintf(buf, "skill%d_1", n);
-		tmp = find_val(head, buf);
-		if (tmp)
-		{
-			player[cn].skill[n][1] = atoi(tmp);
-		}
-		else
-		{
-			player[cn].skill[n][1] = 0;
-		}
-
-		sprintf(buf, "skill%d_2", n);
-		tmp = find_val(head, buf);
-		if (tmp)
-		{
-			player[cn].skill[n][2] = atoi(tmp);
-		}
-		else
-		{
-			player[cn].skill[n][2] = 0;
-		}
-
-		sprintf(buf, "skill%d_3", n);
-		tmp = find_val(head, buf);
-		if (tmp)
-		{
-			player[cn].skill[n][3] = atoi(tmp);
-		}
-		else
-		{
-			player[cn].skill[n][3] = 0;
-		}
-	}
-
-	tmp = find_val(head, "speed_mod");
-	if (tmp)
-	{
-		player[cn].speed_mod = atoi(tmp);
-	}
-	else
-	{
-		printf("SPEED_MOD not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "weapon_bonus");
-	if (tmp)
-	{
-		player[cn].weapon_bonus = atoi(tmp);
-	}
-	else
-	{
-		printf("WEAPON_BONUS not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "light_bonus");
-	if (tmp)
-	{
-		player[cn].light_bonus = atoi(tmp);
-	}
-	else
-	{
-		printf("LIGHT_BONUS not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "armor_bonus");
-	if (tmp)
-	{
-		player[cn].armor_bonus = atoi(tmp);
-	}
-	else
-	{
-		printf("ARMOR_BONUS not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "points");
-	if (tmp)
-	{
-		player[cn].points = atoi(tmp);
-	}
-	else
-	{
-		printf("POINTS not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "points_tot");
-	if (tmp)
-	{
-		player[cn].points_tot = atoi(tmp);
-	}
-	else
-	{
-		printf("POINTS_TOT not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "x");
-	if (tmp)
-	{
-		player[cn].x = atoi(tmp);
-	}
-	else
-	{
-		printf("X not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "y");
-	if (tmp)
-	{
-		player[cn].y = atoi(tmp);
-	}
-	else
-	{
-		printf("Y not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "dir");
-	if (tmp)
-	{
-		player[cn].dir = atoi(tmp);
-	}
-	else
-	{
-		printf("DIR not specified.\n");
-		return;
-	}
-
-
-	tmp = find_val(head, "temple_x");
-	if (tmp)
-	{
-		player[cn].temple_x = atoi(tmp);
-	}
-	else
-	{
-		printf("temple_x not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "temple_y");
-	if (tmp)
-	{
-		player[cn].temple_y = atoi(tmp);
-	}
-	else
-	{
-		printf("temple_y not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "tavern_x");
-	if (tmp)
-	{
-		player[cn].tavern_x = atoi(tmp);
-	}
-	else
-	{
-		printf("tavern_x not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "tavern_y");
-	if (tmp)
-	{
-		player[cn].tavern_y = atoi(tmp);
-	}
-	else
-	{
-		printf("tavern_y not specified.\n");
-		return;
-	}
-
-	tmp = find_val(head, "temp");
-	if (tmp)
-	{
-		player[cn].temp = atoi(tmp);
-	}
-	else
-	{
-		printf("temp not specified.\n");
-		return;
-	}
-
-
-	tmp = find_val(head, "tox");
-	if (tmp)
-	{
-		player[cn].tox = atoi(tmp);
-	}
-	else
-	{
-		printf("tox not specified.\n");
-		return;
-	}
-	tmp = find_val(head, "toy");
-	if (tmp)
-	{
-		player[cn].toy = atoi(tmp);
-	}
-	else
-	{
-		printf("toy not specified.\n");
-		return;
-	}
-	tmp = find_val(head, "frx");
-	if (tmp)
-	{
-		player[cn].frx = atoi(tmp);
-	}
-	else
-	{
-		printf("frx not specified.\n");
-		return;
-	}
-	tmp = find_val(head, "fry");
-	if (tmp)
-	{
-		player[cn].fry = atoi(tmp);
-	}
-	else
-	{
-		printf("fry not specified.\n");
-		return;
-	}
-	tmp = find_val(head, "status");
-	if (tmp)
-	{
-		player[cn].status = atoi(tmp);
-	}
-	else
-	{
-		printf("status not specified.\n");
-		return;
-	}
-	tmp = find_val(head, "status2");
-	if (tmp)
-	{
-		player[cn].status2 = atoi(tmp);
-	}
-	else
-	{
-		printf("status2 not specified.\n");
-		return;
-	}
-
-
-	tmp = find_val(head, "gold");
-	if (tmp)
-	{
-		player[cn].gold = atoi(tmp);
-	}
-	else
-	{
-		printf("GOLD not specified.\n");
-		return;
-	}
-
-	for (n = 0; n<20; n++)
-	{
-		sprintf(buf, "worn%d", n);
-		tmp = find_val(head, buf);
-		if (tmp)
-		{
-			player[cn].worn[n] = atoi(tmp);
-		}
-	}
-
-	for (n = 0; n<40; n++)
-	{
-		sprintf(buf, "item%d", n);
-		tmp = find_val(head, buf);
-		if (tmp)
-		{
-			player[cn].item[n] = atoi(tmp);
-		}
-	}
-
-	tmp = find_val(head, "citem");
-	if (tmp)
-	{
-		player[cn].citem = atoi(tmp);
-	}
-	else
-	{
-		printf("CITEM not specified.\n");
-		return;
-	}
-
-	printf("Done.\n");
-}
-
-void update_character(LIST *head)
+void update_character_player(LIST *head)
 {
 	int cn, cnt, val, n;
 	unsigned long long lval;
@@ -2123,6 +1529,40 @@ void update_character(LIST *head)
 	else
 	{
 		printf("DESCRIPTION not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "player");
+	if (tmp)
+	{
+		ch[cn].player = atoi(tmp);
+	}
+	else
+	{
+		printf("PLAYER not specified.\n");
+		return;
+	}
+
+
+	tmp = find_val(head, "pass1");
+	if (tmp)
+	{
+		ch[cn].pass1 = atoi(tmp);
+	}
+	else
+	{
+		printf("PASS1 not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "pass2");
+	if (tmp)
+	{
+		ch[cn].pass2 = atoi(tmp);
+	}
+	else
+	{
+		printf("PASS2 not specified.\n");
 		return;
 	}
 
@@ -2550,6 +1990,125 @@ void update_character(LIST *head)
 		return;
 	}
 
+
+	tmp = find_val(head, "temple_x");
+	if (tmp)
+	{
+		ch[cn].temple_x = atoi(tmp);
+	}
+	else
+	{
+		printf("temple_x not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "temple_y");
+	if (tmp)
+	{
+		ch[cn].temple_y = atoi(tmp);
+	}
+	else
+	{
+		printf("temple_y not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "tavern_x");
+	if (tmp)
+	{
+		ch[cn].tavern_x = atoi(tmp);
+	}
+	else
+	{
+		printf("tavern_x not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "tavern_y");
+	if (tmp)
+	{
+		ch[cn].tavern_y = atoi(tmp);
+	}
+	else
+	{
+		printf("tavern_y not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "temp");
+	if (tmp)
+	{
+		ch[cn].temp = atoi(tmp);
+	}
+	else
+	{
+		printf("temp not specified.\n");
+		return;
+	}
+
+
+	tmp = find_val(head, "tox");
+	if (tmp)
+	{
+		ch[cn].tox = atoi(tmp);
+	}
+	else
+	{
+		printf("tox not specified.\n");
+		return;
+	}
+	tmp = find_val(head, "toy");
+	if (tmp)
+	{
+		ch[cn].toy = atoi(tmp);
+	}
+	else
+	{
+		printf("toy not specified.\n");
+		return;
+	}
+	tmp = find_val(head, "frx");
+	if (tmp)
+	{
+		ch[cn].frx = atoi(tmp);
+	}
+	else
+	{
+		printf("frx not specified.\n");
+		return;
+	}
+	tmp = find_val(head, "fry");
+	if (tmp)
+	{
+		ch[cn].fry = atoi(tmp);
+	}
+	else
+	{
+		printf("fry not specified.\n");
+		return;
+	}
+	tmp = find_val(head, "status");
+	if (tmp)
+	{
+		ch[cn].status = atoi(tmp);
+	}
+	else
+	{
+		printf("status not specified.\n");
+		return;
+	}
+	tmp = find_val(head, "status2");
+	if (tmp)
+	{
+		ch[cn].status2 = atoi(tmp);
+	}
+	else
+	{
+		printf("status2 not specified.\n");
+		return;
+	}
+
+
 	tmp = find_val(head, "gold");
 	if (tmp)
 	{
@@ -2592,14 +2151,539 @@ void update_character(LIST *head)
 		return;
 	}
 
-	if (ch[cn].flags & CF_RESPAWN)
+	printf("Done.\n");
+}
+
+void update_character_template(LIST *head)
+{
+	int cn, cnt, val, n;
+	unsigned long long lval;
+	char *tmp, **tmps, buf[80];
+
+	tmp = find_val(head, "cn");
+	if (tmp)
+	{
+		cn = atoi(tmp);
+	}
+	else
+	{
+		printf("CN not specified.\n");
+		return;
+	}
+
+	bzero(&ch_temp[cn], sizeof(struct character));
+	ch_temp[cn].used = USE_ACTIVE;
+
+	tmp = find_val(head, "name");
+	if (tmp)
+	{
+		strncpy(ch_temp[cn].name, tmp, 35);
+		ch_temp[cn].name[35] = 0;
+	}
+	else
+	{
+		printf("NAME not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "reference");
+	if (tmp)
+	{
+		strncpy(ch_temp[cn].reference, tmp, 35);
+		ch_temp[cn].reference[35] = 0;
+	}
+	else
+	{
+		printf("REFERENCE not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "description");
+	if (tmp)
+	{
+		strncpy(ch_temp[cn].description, tmp, 195);
+		ch_temp[cn].description[195] = 0;
+	}
+	else
+	{
+		printf("DESCRIPTION not specified.\n");
+		return;
+	}
+
+	cnt = find_val_multi(head, "kindred", &tmps);
+	if (cnt)
+	{
+		for (n = val = 0; n<cnt; n++)
+		{
+			val |= atoi(tmps[n]);
+		}
+		ch_temp[cn].kindred = val;
+	}
+
+	tmp = find_val(head, "sprite");
+	if (tmp)
+	{
+		ch_temp[cn].sprite = atoi(tmp);
+	}
+	else
+	{
+		printf("SPRITE not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "sound");
+	if (tmp)
+	{
+		ch_temp[cn].sound = atoi(tmp);
+	}
+	else
+	{
+		printf("SOUND not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "class");
+	if (tmp)
+	{
+		ch_temp[cn].class = atoi(tmp);
+	}
+	else
+	{
+		printf("CLASS not specified.\n");
+		return;
+	}
+
+	cnt  = find_val_multi(head, "flags", &tmps);
+	lval = 0;
+	if (cnt)
+	{
+		for (n = 0; n<cnt; n++)
+		{
+			lval |= atoll(tmps[n]);
+		}
+	}
+	ch_temp[cn].flags = lval;
+
+	tmp = find_val(head, "alignment");
+	if (tmp)
+	{
+		ch_temp[cn].alignment = atoi(tmp);
+	}
+	else
+	{
+		printf("ALIGNMENT not specified.\n");
+		return;
+	}
+
+	for (n = 0; n<100; n++)
+	{
+		sprintf(buf, "drdata%d", n);
+		tmp = find_val(head, buf);
+		if (tmp)
+		{
+			ch_temp[cn].data[n] = atoi(tmp);
+		}
+		else
+		{
+			ch_temp[cn].data[n] = 0;
+		}
+	}
+
+	for (n = 0; n<10; n++)
+	{
+		sprintf(buf, "text_%d", n);
+		tmp = find_val(head, buf);
+		if (tmp)
+		{
+			strncpy(ch_temp[cn].text[n], tmp, 158);
+		}
+		else
+		{
+			ch_temp[cn].text[n][0] = 0;
+		}
+		ch_temp[cn].text[n][159] = 0;
+	}
+
+	for (n = 0; n<5; n++)
+	{
+		sprintf(buf, "attrib%d_0", n);
+		tmp = find_val(head, buf);
+		if (tmp)
+		{
+			ch_temp[cn].attrib[n][0] = atoi(tmp);
+		}
+		else
+		{
+			printf("ATTRIB%d_0 not specified.", n);
+			return;
+		}
+
+		sprintf(buf, "attrib%d_1", n);
+		tmp = find_val(head, buf);
+		if (tmp)
+		{
+			ch_temp[cn].attrib[n][1] = atoi(tmp);
+		}
+		else
+		{
+			printf("ATTRIB%d_1 not specified.", n);
+			return;
+		}
+
+		sprintf(buf, "attrib%d_2", n);
+		tmp = find_val(head, buf);
+		if (tmp)
+		{
+			ch_temp[cn].attrib[n][2] = atoi(tmp);
+		}
+		else
+		{
+			printf("ATTRIB%d_2 not specified.", n);
+			return;
+		}
+
+		sprintf(buf, "attrib%d_3", n);
+		tmp = find_val(head, buf);
+		if (tmp)
+		{
+			ch_temp[cn].attrib[n][3] = atoi(tmp);
+		}
+		else
+		{
+			printf("ATTRIB%d_3 not specified.", n);
+			return;
+		}
+	}
+
+	tmp = find_val(head, "hp_0");
+	if (tmp)
+	{
+		ch_temp[cn].hp[0] = atoi(tmp);
+	}
+	else
+	{
+		printf("HP_0 not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "hp_1");
+	if (tmp)
+	{
+		ch_temp[cn].hp[1] = atoi(tmp);
+	}
+	else
+	{
+		printf("HP_1 not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "hp_2");
+	if (tmp)
+	{
+		ch_temp[cn].hp[2] = atoi(tmp);
+	}
+	else
+	{
+		printf("HP_2 not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "hp_3");
+	if (tmp)
+	{
+		ch_temp[cn].hp[3] = atoi(tmp);
+	}
+	else
+	{
+		printf("HP_3 not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "end_0");
+	if (tmp)
+	{
+		ch_temp[cn].end[0] = atoi(tmp);
+	}
+	else
+	{
+		printf("END_0 not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "end_1");
+	if (tmp)
+	{
+		ch_temp[cn].end[1] = atoi(tmp);
+	}
+	else
+	{
+		printf("END_1 not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "end_2");
+	if (tmp)
+	{
+		ch_temp[cn].end[2] = atoi(tmp);
+	}
+	else
+	{
+		printf("END_2 not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "end_3");
+	if (tmp)
+	{
+		ch_temp[cn].end[3] = atoi(tmp);
+	}
+	else
+	{
+		printf("END_3 not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "mana_0");
+	if (tmp)
+	{
+		ch_temp[cn].mana[0] = atoi(tmp);
+	}
+	else
+	{
+		printf("MANA_0 not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "mana_1");
+	if (tmp)
+	{
+		ch_temp[cn].mana[1] = atoi(tmp);
+	}
+	else
+	{
+		printf("MANA_1 not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "mana_2");
+	if (tmp)
+	{
+		ch_temp[cn].mana[2] = atoi(tmp);
+	}
+	else
+	{
+		printf("MANA_2 not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "mana_3");
+	if (tmp)
+	{
+		ch_temp[cn].mana[3] = atoi(tmp);
+	}
+	else
+	{
+		printf("MANA_3 not specified.\n");
+		return;
+	}
+
+
+	for (n = 0; n<50; n++)
+	{
+		sprintf(buf, "skill%d_0", n);
+		tmp = find_val(head, buf);
+		if (tmp)
+		{
+			ch_temp[cn].skill[n][0] = atoi(tmp);
+		}
+		else
+		{
+			ch_temp[cn].skill[n][0] = 0;
+		}
+
+		sprintf(buf, "skill%d_1", n);
+		tmp = find_val(head, buf);
+		if (tmp)
+		{
+			ch_temp[cn].skill[n][1] = atoi(tmp);
+		}
+		else
+		{
+			ch_temp[cn].skill[n][1] = 0;
+		}
+
+		sprintf(buf, "skill%d_2", n);
+		tmp = find_val(head, buf);
+		if (tmp)
+		{
+			ch_temp[cn].skill[n][2] = atoi(tmp);
+		}
+		else
+		{
+			ch_temp[cn].skill[n][2] = 0;
+		}
+
+		sprintf(buf, "skill%d_3", n);
+		tmp = find_val(head, buf);
+		if (tmp)
+		{
+			ch_temp[cn].skill[n][3] = atoi(tmp);
+		}
+		else
+		{
+			ch_temp[cn].skill[n][3] = 0;
+		}
+	}
+
+	tmp = find_val(head, "speed_mod");
+	if (tmp)
+	{
+		ch_temp[cn].speed_mod = atoi(tmp);
+	}
+	else
+	{
+		printf("SPEED_MOD not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "weapon_bonus");
+	if (tmp)
+	{
+		ch_temp[cn].weapon_bonus = atoi(tmp);
+	}
+	else
+	{
+		printf("WEAPON_BONUS not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "light_bonus");
+	if (tmp)
+	{
+		ch_temp[cn].light_bonus = atoi(tmp);
+	}
+	else
+	{
+		printf("LIGHT_BONUS not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "armor_bonus");
+	if (tmp)
+	{
+		ch_temp[cn].armor_bonus = atoi(tmp);
+	}
+	else
+	{
+		printf("ARMOR_BONUS not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "points");
+	if (tmp)
+	{
+		ch_temp[cn].points = atoi(tmp);
+	}
+	else
+	{
+		printf("POINTS not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "points_tot");
+	if (tmp)
+	{
+		ch_temp[cn].points_tot = atoi(tmp);
+	}
+	else
+	{
+		printf("POINTS_TOT not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "x");
+	if (tmp)
+	{
+		ch_temp[cn].x = atoi(tmp);
+	}
+	else
+	{
+		printf("X not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "y");
+	if (tmp)
+	{
+		ch_temp[cn].y = atoi(tmp);
+	}
+	else
+	{
+		printf("Y not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "dir");
+	if (tmp)
+	{
+		ch_temp[cn].dir = atoi(tmp);
+	}
+	else
+	{
+		printf("DIR not specified.\n");
+		return;
+	}
+
+	tmp = find_val(head, "gold");
+	if (tmp)
+	{
+		ch_temp[cn].gold = atoi(tmp);
+	}
+	else
+	{
+		printf("GOLD not specified.\n");
+		return;
+	}
+
+	for (n = 0; n<20; n++)
+	{
+		sprintf(buf, "worn%d", n);
+		tmp = find_val(head, buf);
+		if (tmp)
+		{
+			ch_temp[cn].worn[n] = atoi(tmp);
+		}
+	}
+
+	for (n = 0; n<40; n++)
+	{
+		sprintf(buf, "item%d", n);
+		tmp = find_val(head, buf);
+		if (tmp)
+		{
+			ch_temp[cn].item[n] = atoi(tmp);
+		}
+	}
+
+	tmp = find_val(head, "citem");
+	if (tmp)
+	{
+		ch_temp[cn].citem = atoi(tmp);
+	}
+	else
+	{
+		printf("CITEM not specified.\n");
+		return;
+	}
+
+	if (ch_temp[cn].flags & CF_RESPAWN)
 	{
 		globs->reset_char = cn;
 	}
 
-	if (!ch[cn].data[29] && (ch[cn].flags & CF_RESPAWN))
+	if (!ch_temp[cn].data[29] && (ch_temp[cn].flags & CF_RESPAWN))
 	{
-		ch[cn].data[29] = ch[cn].x + ch[cn].y * MAPX;
+		ch_temp[cn].data[29] = ch_temp[cn].x + ch_temp[cn].y * MAPX;
 	}
 
 	printf("Done.\n");
@@ -2622,14 +2706,14 @@ void update_object(LIST *head)
 		return;
 	}
 
-	bzero(&it[in], sizeof(struct item));
-	it[in].used = USE_ACTIVE;
+	bzero(&it_temp[in], sizeof(struct item));
+	it_temp[in].used = USE_ACTIVE;
 
 	tmp = find_val(head, "name");
 	if (tmp)
 	{
-		strncpy(it[in].name, tmp, 35);
-		it[in].name[35] = 0;
+		strncpy(it_temp[in].name, tmp, 35);
+		it_temp[in].name[35] = 0;
 	}
 	else
 	{
@@ -2640,8 +2724,8 @@ void update_object(LIST *head)
 	tmp = find_val(head, "reference");
 	if (tmp)
 	{
-		strncpy(it[in].reference, tmp, 35);
-		it[in].reference[35] = 0;
+		strncpy(it_temp[in].reference, tmp, 35);
+		it_temp[in].reference[35] = 0;
 	}
 	else
 	{
@@ -2652,8 +2736,8 @@ void update_object(LIST *head)
 	tmp = find_val(head, "description");
 	if (tmp)
 	{
-		strncpy(it[in].description, tmp, 195);
-		it[in].description[195] = 0;
+		strncpy(it_temp[in].description, tmp, 195);
+		it_temp[in].description[195] = 0;
 	}
 	else
 	{
@@ -2670,12 +2754,12 @@ void update_object(LIST *head)
 			lval |= atoll(tmps[n]);
 		}
 	}
-	it[in].flags = lval;
+	it_temp[in].flags = lval;
 
 	tmp = find_val(head, "driver");
 	if (tmp)
 	{
-		it[in].driver = atoi(tmp);
+		it_temp[in].driver = atoi(tmp);
 	}
 	else
 	{
@@ -2689,14 +2773,14 @@ void update_object(LIST *head)
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			it[in].data[n] = atoi(tmp);
+			it_temp[in].data[n] = atoi(tmp);
 		}
 	}
 
 	tmp = find_val(head, "light_1");
 	if (tmp)
 	{
-		it[in].light[0] = atoi(tmp);
+		it_temp[in].light[0] = atoi(tmp);
 	}
 	else
 	{
@@ -2707,7 +2791,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "light_2");
 	if (tmp)
 	{
-		it[in].light[1] = atoi(tmp);
+		it_temp[in].light[1] = atoi(tmp);
 	}
 	else
 	{
@@ -2718,7 +2802,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "value");
 	if (tmp)
 	{
-		it[in].value = atoi(tmp);
+		it_temp[in].value = atoi(tmp);
 	}
 	else
 	{
@@ -2733,7 +2817,7 @@ void update_object(LIST *head)
 		{
 			val |= atoi(tmps[n]);
 		}
-		it[in].placement = val;
+		it_temp[in].placement = val;
 	}
 
 	for (n = 0; n<5; n++)
@@ -2742,7 +2826,7 @@ void update_object(LIST *head)
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			it[in].attrib[n][0] = atoi(tmp);
+			it_temp[in].attrib[n][0] = atoi(tmp);
 		}
 		else
 		{
@@ -2754,7 +2838,7 @@ void update_object(LIST *head)
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			it[in].attrib[n][1] = atoi(tmp);
+			it_temp[in].attrib[n][1] = atoi(tmp);
 		}
 		else
 		{
@@ -2766,7 +2850,7 @@ void update_object(LIST *head)
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			it[in].attrib[n][2] = atoi(tmp);
+			it_temp[in].attrib[n][2] = atoi(tmp);
 		}
 		else
 		{
@@ -2778,7 +2862,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "hp_0");
 	if (tmp)
 	{
-		it[in].hp[0] = atoi(tmp);
+		it_temp[in].hp[0] = atoi(tmp);
 	}
 	else
 	{
@@ -2789,7 +2873,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "hp_1");
 	if (tmp)
 	{
-		it[in].hp[1] = atoi(tmp);
+		it_temp[in].hp[1] = atoi(tmp);
 	}
 	else
 	{
@@ -2800,7 +2884,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "hp_2");
 	if (tmp)
 	{
-		it[in].hp[2] = atoi(tmp);
+		it_temp[in].hp[2] = atoi(tmp);
 	}
 	else
 	{
@@ -2811,7 +2895,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "end_0");
 	if (tmp)
 	{
-		it[in].end[0] = atoi(tmp);
+		it_temp[in].end[0] = atoi(tmp);
 	}
 	else
 	{
@@ -2822,7 +2906,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "end_1");
 	if (tmp)
 	{
-		it[in].end[1] = atoi(tmp);
+		it_temp[in].end[1] = atoi(tmp);
 	}
 	else
 	{
@@ -2833,7 +2917,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "end_2");
 	if (tmp)
 	{
-		it[in].end[2] = atoi(tmp);
+		it_temp[in].end[2] = atoi(tmp);
 	}
 	else
 	{
@@ -2844,7 +2928,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "mana_0");
 	if (tmp)
 	{
-		it[in].mana[0] = atoi(tmp);
+		it_temp[in].mana[0] = atoi(tmp);
 	}
 	else
 	{
@@ -2855,7 +2939,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "mana_1");
 	if (tmp)
 	{
-		it[in].mana[1] = atoi(tmp);
+		it_temp[in].mana[1] = atoi(tmp);
 	}
 	else
 	{
@@ -2866,7 +2950,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "mana_2");
 	if (tmp)
 	{
-		it[in].mana[2] = atoi(tmp);
+		it_temp[in].mana[2] = atoi(tmp);
 	}
 	else
 	{
@@ -2880,40 +2964,40 @@ void update_object(LIST *head)
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			it[in].skill[n][0] = atoi(tmp);
+			it_temp[in].skill[n][0] = atoi(tmp);
 		}
 		else
 		{
-			it[in].skill[n][0] = 0;
+			it_temp[in].skill[n][0] = 0;
 		}
 
 		sprintf(buf, "skill%d_1", n);
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			it[in].skill[n][1] = atoi(tmp);
+			it_temp[in].skill[n][1] = atoi(tmp);
 		}
 		else
 		{
-			it[in].skill[n][1] = 0;
+			it_temp[in].skill[n][1] = 0;
 		}
 
 		sprintf(buf, "skill%d_2", n);
 		tmp = find_val(head, buf);
 		if (tmp)
 		{
-			it[in].skill[n][2] = atoi(tmp);
+			it_temp[in].skill[n][2] = atoi(tmp);
 		}
 		else
 		{
-			it[in].skill[n][2] = 0;
+			it_temp[in].skill[n][2] = 0;
 		}
 	}
 
 	tmp = find_val(head, "armor_1");
 	if (tmp)
 	{
-		it[in].armor[0] = atoi(tmp);
+		it_temp[in].armor[0] = atoi(tmp);
 	}
 	else
 	{
@@ -2924,7 +3008,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "armor_2");
 	if (tmp)
 	{
-		it[in].armor[1] = atoi(tmp);
+		it_temp[in].armor[1] = atoi(tmp);
 	}
 	else
 	{
@@ -2935,7 +3019,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "weapon_1");
 	if (tmp)
 	{
-		it[in].weapon[0] = atoi(tmp);
+		it_temp[in].weapon[0] = atoi(tmp);
 	}
 	else
 	{
@@ -2946,7 +3030,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "weapon_2");
 	if (tmp)
 	{
-		it[in].weapon[1] = atoi(tmp);
+		it_temp[in].weapon[1] = atoi(tmp);
 	}
 	else
 	{
@@ -2957,7 +3041,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "gethit_dam_1");
 	if (tmp)
 	{
-		it[in].gethit_dam[0] = atoi(tmp);
+		it_temp[in].gethit_dam[0] = atoi(tmp);
 	}
 	else
 	{
@@ -2968,7 +3052,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "gethit_dam_2");
 	if (tmp)
 	{
-		it[in].gethit_dam[1] = atoi(tmp);
+		it_temp[in].gethit_dam[1] = atoi(tmp);
 	}
 	else
 	{
@@ -2979,7 +3063,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "max_age_1");
 	if (tmp)
 	{
-		it[in].max_age[0] = atoi(tmp);
+		it_temp[in].max_age[0] = atoi(tmp);
 	}
 	else
 	{
@@ -2990,7 +3074,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "max_age_2");
 	if (tmp)
 	{
-		it[in].max_age[1] = atoi(tmp);
+		it_temp[in].max_age[1] = atoi(tmp);
 	}
 	else
 	{
@@ -3001,7 +3085,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "max_damage");
 	if (tmp)
 	{
-		it[in].max_damage = atoi(tmp);
+		it_temp[in].max_damage = atoi(tmp);
 	}
 	else
 	{
@@ -3012,7 +3096,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "duration");
 	if (tmp)
 	{
-		it[in].duration = atoi(tmp);
+		it_temp[in].duration = atoi(tmp);
 	}
 	else
 	{
@@ -3023,7 +3107,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "cost");
 	if (tmp)
 	{
-		it[in].cost = atoi(tmp);
+		it_temp[in].cost = atoi(tmp);
 	}
 	else
 	{
@@ -3034,7 +3118,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "power");
 	if (tmp)
 	{
-		it[in].power = atoi(tmp);
+		it_temp[in].power = atoi(tmp);
 	}
 	else
 	{
@@ -3045,7 +3129,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "spr_ovr");
 	if (tmp)
 	{
-		it[in].sprite_override = atoi(tmp);
+		it_temp[in].sprite_override = atoi(tmp);
 	}
 	else
 	{
@@ -3056,7 +3140,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "min_rank");
 	if (tmp)
 	{
-		it[in].min_rank = atoi(tmp);
+		it_temp[in].min_rank = atoi(tmp);
 	}
 	else
 	{
@@ -3067,7 +3151,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "sprite_1");
 	if (tmp)
 	{
-		it[in].sprite[0] = atoi(tmp);
+		it_temp[in].sprite[0] = atoi(tmp);
 	}
 	else
 	{
@@ -3078,7 +3162,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "sprite_2");
 	if (tmp)
 	{
-		it[in].sprite[1] = atoi(tmp);
+		it_temp[in].sprite[1] = atoi(tmp);
 	}
 	else
 	{
@@ -3089,7 +3173,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "status_1");
 	if (tmp)
 	{
-		it[in].status[0] = atoi(tmp);
+		it_temp[in].status[0] = atoi(tmp);
 	}
 	else
 	{
@@ -3100,7 +3184,7 @@ void update_object(LIST *head)
 	tmp = find_val(head, "status_2");
 	if (tmp)
 	{
-		it[in].status[1] = atoi(tmp);
+		it_temp[in].status[1] = atoi(tmp);
 	}
 	else
 	{
@@ -3114,183 +3198,129 @@ void update_object(LIST *head)
 }
 
 
-void list_characters(LIST *head)    // excludes grolms, gargs, icegargs. decides by sprite-nr
+void list_characters_template(LIST *head)    // excludes grolms, gargs, icegargs. decides by sprite-nr
 {
 	int n;
-
+	printf("<center><a href=/cgi-imp/acct.cgi>Home</a></center><br><br>\n");
 	printf("<table>\n");
 
 	for (n = 0; n<MAXTCHARS; n++)
 	{
-		if (ch[n].used==USE_EMPTY)
+		if (ch_temp[n].used==USE_EMPTY)
 		{
 			continue;
 		}
-		if (ch[n].sprite==12240 || ch[n].sprite==18384 || ch[n].sprite==21456)
+		if (ch_temp[n].sprite==12240 || ch_temp[n].sprite==18384 || ch_temp[n].sprite==21456)
 		{
 			continue;
 		}
 		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
 		       "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",
 		       n, n,
-		       (ch[n].flags & CF_RESPAWN) ? "<b>" : "",
-		       ch[n].name,
-		       (ch[n].flags & CF_RESPAWN) ? "</b>" : "",
-		       ch[n].x, ch[n].y, ch[n].points_tot >> 10, ch[n].alignment, n, n);
+		       (ch_temp[n].flags & CF_RESPAWN) ? "<b>" : "",
+		       ch_temp[n].name,
+		       (ch_temp[n].flags & CF_RESPAWN) ? "</b>" : "",
+		       ch_temp[n].x, ch_temp[n].y, ch_temp[n].points_tot >> 10, ch_temp[n].alignment, n, n);
 	}
 
 	printf("</table>\n");
+	printf("<center><a href=/cgi-imp/acct.cgi>Home</a></center><br><br>\n");
 }
 
-void list_characters2(LIST *head)       // listing grolms,gargs,icegargs only, desides by sprite-nr
+void list_characters2_template(LIST *head)       // listing grolms,gargs,icegargs only, desides by sprite-nr
 {
 	int n;
-
+	printf("<center><a href=/cgi-imp/acct.cgi>Home</a></center><br><br>\n");
 	printf("<table>\n");
 
 	for (n = 0; n<MAXTCHARS; n++)
 	{
-		if (ch[n].used==USE_EMPTY)
+		if (ch_temp[n].used==USE_EMPTY)
 		{
 			continue;
 		}
-		if (!(ch[n].sprite==12240 || ch[n].sprite==18384 || ch[n].sprite==21456))
+		if (!(ch_temp[n].sprite==12240 || ch_temp[n].sprite==18384 || ch_temp[n].sprite==21456))
 		{
 			continue;
 		}
 		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
 		       "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",
 		       n, n,
-		       (ch[n].flags & CF_RESPAWN) ? "<b>" : "",
-		       ch[n].name,
-		       (ch[n].flags & CF_RESPAWN) ? "</b>" : "",
-		       ch[n].x, ch[n].y, ch[n].points_tot >> 10, ch[n].alignment, n, n);
+		       (ch_temp[n].flags & CF_RESPAWN) ? "<b>" : "",
+		       ch_temp[n].name,
+		       (ch_temp[n].flags & CF_RESPAWN) ? "</b>" : "",
+		       ch_temp[n].x, ch_temp[n].y, ch_temp[n].points_tot >> 10, ch_temp[n].alignment, n, n);
 	}
 
 	printf("</table>\n");
+	printf("<center><a href=/cgi-imp/acct.cgi>Home</a></center><br><br>\n");
 }
 
-void list_characters_good(LIST *head)    // excludes grolms, gargs, icegargs. decides by sprite-nr
+void list_characters_template_good(LIST *head)    // excludes grolms, gargs, icegargs. decides by sprite-nr
 {
 	int n;
-
+	printf("<center><a href=/cgi-imp/acct.cgi>Home</a></center><br><br>\n");
 	printf("<table>\n");
 
 	for (n = 0; n<MAXTCHARS; n++)
 	{
-		if (ch[n].used==USE_EMPTY)
+		if (ch_temp[n].used==USE_EMPTY)
 		{
 			continue;
 		}
-		if (ch[n].sprite==12240 || ch[n].sprite==18384 || ch[n].sprite==21456)
+		if (ch_temp[n].sprite==12240 || ch_temp[n].sprite==18384 || ch_temp[n].sprite==21456)
 		{
 			continue;
 		}
-		if(ch[n].alignment < 0)
+		if(ch_temp[n].alignment < 0)
 		{
 			continue;
 		}
 		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
 		       "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",
 		       n, n,
-		       (ch[n].flags & CF_RESPAWN) ? "<b>" : "",
-		       ch[n].name,
-		       (ch[n].flags & CF_RESPAWN) ? "</b>" : "",
-		       ch[n].x, ch[n].y, ch[n].points_tot >> 10, ch[n].alignment, n, n);
+		       (ch_temp[n].flags & CF_RESPAWN) ? "<b>" : "",
+		       ch_temp[n].name,
+		       (ch_temp[n].flags & CF_RESPAWN) ? "</b>" : "",
+		       ch_temp[n].x, ch_temp[n].y, ch_temp[n].points_tot >> 10, ch_temp[n].alignment, n, n);
 	}
 
 	printf("</table>\n");
+	printf("<center><a href=/cgi-imp/acct.cgi>Home</a></center><br><br>\n");
 }
 
-void list_characters_non_monster(LIST *head)    // excludes grolms, gargs, icegargs. decides by sprite-nr
+void list_characters_template_non_monster(LIST *head)    // excludes grolms, gargs, icegargs. decides by sprite-nr
 {
 	int n;
-
+	printf("<center><a href=/cgi-imp/acct.cgi>Home</a></center><br><br>\n");
 	printf("<table>\n");
 
 	for (n = 0; n<MAXTCHARS; n++)
 	{
-		if (ch[n].used==USE_EMPTY)
+		if (ch_temp[n].used==USE_EMPTY)
 		{
 			continue;
 		}
-		if(ch[n].kindred & KIN_MONSTER)
+		if(ch_temp[n].kindred & KIN_MONSTER)
 		{
 			continue;
 		}
 		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
 		       "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",
 		       n, n,
-		       (ch[n].flags & CF_RESPAWN) ? "<b>" : "",
-		       ch[n].name,
-		       (ch[n].flags & CF_RESPAWN) ? "</b>" : "",
-		       ch[n].x, ch[n].y, ch[n].points_tot >> 10, ch[n].alignment, n, n);
+		       (ch_temp[n].flags & CF_RESPAWN) ? "<b>" : "",
+		       ch_temp[n].name,
+		       (ch_temp[n].flags & CF_RESPAWN) ? "</b>" : "",
+		       ch_temp[n].x, ch_temp[n].y, ch_temp[n].points_tot >> 10, ch_temp[n].alignment, n, n);
 	}
 
 	printf("</table>\n");
+	printf("<center><a href=/cgi-imp/acct.cgi>Home</a></center><br><br>\n");
 }
 
-#define bad_name_count 56
-static char *bad_names[bad_name_count] = {
-	"Guard",
-	"Janitor",
-	"Peacekeeper",
-	"Merchant",
-	"Barkeeper",
-	"Cityguard",
-	"Librarian",
-	"Amazon",
-	"Swordsman",
-	"Thief",
-	"Adventurer",
-	"Tower Guard",
-	"Tower Ratling",
-	"Tower Greenling",
-	"Tower Skeleton",
-	"Tower Seyan'Du",
-	"Tower Warrior",
-	"Tower Sorceress",
-	"Golem",
-	"Ghost",
-	"Gatekeeper",
-	"Skeleton",
-	"Outlaw",
-	"Manager",
-	"Lizard Youngster",
-	"Lizard Youth",
-	"Lizard Worker",
-	"Lizard Fighter",
-	"Lizard Warrior",
-	"Lizard Mage",
-	"Bartender",
-	"Spellcaster",
-	"Spellcaster Guard",
-	"Keeper",
-	"Knight",
-	"Undead",
-	"Spider",
-	"Robber",
-	"Undead Lord",
-	"Lord",
-	"Flame",
-	"Lizard Knight",
-	"Lizard Archmage",
-	"Undead King",
-	"Spellcaster Lord",
-	"Tower Arch-Templar",
-	"Tower Arch-Harakim",
-	"Lizard Defender",
-	"Elite Lizard Guard",
-	"Mage",
-	"Archmage",
-	"Swindler",
-	"Sea Golem",
-	"Barbaric Fighter",
-	"Lizard Attacker",
-	"Lizard Necromancer"
-};
 
-void list_named_characters(LIST *head)    // excludes grolms, gargs, icegargs. decides by sprite-nr
+
+void list_named_characters_template(LIST *head)    // excludes grolms, gargs, icegargs. decides by sprite-nr
 {
 	int n;
 	int i;
@@ -3299,21 +3329,21 @@ void list_named_characters(LIST *head)    // excludes grolms, gargs, icegargs. d
 	for (n = 0; n<MAXTCHARS; n++)
 	{
 		int found = 0;
-		if (ch[n].used==USE_EMPTY)
+		if (ch_temp[n].used==USE_EMPTY)
 		{
 			continue;
 		}
-		if (ch[n].sprite==12240 ||
-		    ch[n].sprite==18384 ||
-		    ch[n].sprite==21456 ||
-		    ch[n].sprite==14288 ||
-		    ch[n].sprite==31696)
+		if (ch_temp[n].sprite==12240 ||
+		    ch_temp[n].sprite==18384 ||
+		    ch_temp[n].sprite==21456 ||
+		    ch_temp[n].sprite==14288 ||
+		    ch_temp[n].sprite==31696)
 		{
 			continue;
 		}
 		for(i = 0; i < bad_name_count; i++)
 		{
-			if(strcmp(ch[n].name, bad_names[i]) == 0)
+			if(strcmp(ch_temp[n].name, bad_names[i]) == 0)
 			{
 				found = 1;
 			}
@@ -3325,16 +3355,16 @@ void list_named_characters(LIST *head)    // excludes grolms, gargs, icegargs. d
 		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
 		       "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",
 		       n, n,
-		       (ch[n].flags & CF_RESPAWN) ? "<b>" : "",
-		       ch[n].name,
-		       (ch[n].flags & CF_RESPAWN) ? "</b>" : "",
-		       ch[n].x, ch[n].y, ch[n].points_tot >> 10, ch[n].alignment, n, n);
+		       (ch_temp[n].flags & CF_RESPAWN) ? "<b>" : "",
+		       ch_temp[n].name,
+		       (ch_temp[n].flags & CF_RESPAWN) ? "</b>" : "",
+		       ch_temp[n].x, ch_temp[n].y, ch_temp[n].points_tot >> 10, ch_temp[n].alignment, n, n);
 	}
 
 	printf("</table>\n");
 }
 
-void list_new_characters(LIST *head)        // listing characters with high IDs
+void list_new_characters_template(LIST *head)        // listing characters with high IDs
 {
 	int n;
 
@@ -3342,17 +3372,17 @@ void list_new_characters(LIST *head)        // listing characters with high IDs
 
 	for (n = 1012; n<MAXTCHARS; n++)
 	{
-		if (ch[n].used==USE_EMPTY)
+		if (ch_temp[n].used==USE_EMPTY)
 		{
 			continue;
 		}
 		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=13&cn=%d>"
 		       "%s%30.30s%s</a></td><td>Pos: %d,%d</td><td>EXP: %dK</td><td>Alignment: %d</td><td><a href=/cgi-imp/acct.cgi?step=15&cn=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=12&cn=%d>Delete</a></td></tr>\n",
 		       n, n,
-		       (ch[n].flags & CF_RESPAWN) ? "<b>" : "",
-		       ch[n].name,
-		       (ch[n].flags & CF_RESPAWN) ? "</b>" : "",
-		       ch[n].x, ch[n].y, ch[n].points_tot >> 10, ch[n].alignment, n, n);
+		       (ch_temp[n].flags & CF_RESPAWN) ? "<b>" : "",
+		       ch_temp[n].name,
+		       (ch_temp[n].flags & CF_RESPAWN) ? "</b>" : "",
+		       ch_temp[n].x, ch_temp[n].y, ch_temp[n].points_tot >> 10, ch_temp[n].alignment, n, n);
 	}
 
 	printf("</table>\n");
@@ -3361,27 +3391,30 @@ void list_new_characters(LIST *head)        // listing characters with high IDs
 void list_objects(LIST *head)
 {
 	int n;
+	printf("<center><a href=/cgi-imp/acct.cgi>Home</a></center><br><br>\n");
 
 	printf("<table>\n");
 
 	for (n = 1; n<MAXTITEM; n++)
 	{
-		if (it[n].used==USE_EMPTY)
+		if (it_temp[n].used==USE_EMPTY)
 		{
 			continue;
 		}
-//                if (it[n].driver!=23) continue;
-//		if (!(it[n].flags&IF_TAKE)) continue;
+//                if (it_temp[n].driver!=23) continue;
+//		if (!(it_temp[n].flags&IF_TAKE)) continue;
 
 		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=23&in=%d>%30.30s</a></td>\n"
 		       "<td>price: %dG, %dS</td><td>data4: %d</td>\n"
 		       "<td><a href=/cgi-imp/acct.cgi?step=25&in=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=22&in=%d>Delete</a></td></tr>\n",
-		       n, n, it[n].name,
-		       it[n].value / 100, it[n].value % 100, it[n].data[4],
+		       n, n, it_temp[n].name,
+		       it_temp[n].value / 100, it_temp[n].value % 100, it_temp[n].data[4],
 		       n, n);
 	}
 
 	printf("</table>\n");
+	printf("<center><a href=/cgi-imp/acct.cgi>Home</a></center><br><br>\n");
+
 }
 
 void list_object_drivers(LIST *head)
@@ -3393,9 +3426,9 @@ void list_object_drivers(LIST *head)
 	// Find out how many drivers there are
 	for (n = 1; n<MAXTITEM; n++)
 	{
-		if (it[n].driver > ndrivers)
+		if (it_temp[n].driver > ndrivers)
 		{
-			ndrivers = it[n].driver;
+			ndrivers = it_temp[n].driver;
 		}
 	}
 	printf("<ul compact>\n");
@@ -3404,11 +3437,11 @@ void list_object_drivers(LIST *head)
 		found = 0;
 		for (n = 1; n<MAXTITEM; n++)
 		{
-			if (it[n].used==USE_EMPTY)
+			if (it_temp[n].used==USE_EMPTY)
 			{
 				continue;
 			}
-			if (it[n].driver == nd)
+			if (it_temp[n].driver == nd)
 			{
 				if (!found)
 				{
@@ -3419,7 +3452,7 @@ void list_object_drivers(LIST *head)
 				printf("<li>"
 				       "<a href=/cgi-imp/acct.cgi?step=23&in=%d>%d:</a>"
 				       "&nbsp;&nbsp;&nbsp;%s"
-				       "\n</li>\n", n, n, it[n].name);
+				       "\n</li>\n", n, n, it_temp[n].name);
 			}
 		}
 		if (found)
@@ -3483,52 +3516,52 @@ int main(int argc, char *args[])
 		}
 	}
 
-	ch[1].used = USE_ACTIVE;
-	strcpy(ch[1].name, "Blank Template");
+	ch_temp[1].used = USE_ACTIVE;
+	strcpy(ch_temp[1].name, "Blank Template");
 
-	it[1].used = USE_ACTIVE;
-	strcpy(it[1].name, "Blank Template");
+	it_temp[1].used = USE_ACTIVE;
+	strcpy(it_temp[1].name, "Blank Template");
 
 	/* for (n=1; n<MAXTCHARS; n++) {
-	        if (ch[n].used==USE_EMPTY) continue;
+	        if (ch_temp[n].used==USE_EMPTY) continue;
 	   } */
 
 /*      for (n=1; n<MAXTITEM; n++) {
-                if (it[n].used==USE_EMPTY) continue;
-                it[n].value/=5;
+                if (it_temp[n].used==USE_EMPTY) continue;
+                it_temp[n].value/=5;
         } */
 
 	switch(step)
 	{
 	case    11:
-		list_characters(head);
+		list_characters_template(head);
 		break;
 	case    12:
-		delete_character(head);
+		delete_character_template(head);
 		break;
 	case    13:
-		view_character(head);
+		view_character_template(head);
 		break;
 	case    14:
-		update_character(head);
+		update_character_template(head);
 		break;
 	case    15:
-		copy_character(head);
+		copy_character_template(head);
 		break;
 	case    16:
-		list_characters_good(head);
+		list_characters_template_good(head);
 		break;
 	case 17:
-		list_named_characters(head);
+		list_named_characters_template(head);
 		break;
 	case 18:
-		list_characters_non_monster(head);
+		list_characters_template_non_monster(head);
 		break;
 	case 19:
 		list_all_player_characters();
 		break;
 	case 20:
-		view_player(head);
+		view_character_player(head);
 		break;
 	case    21:
 		list_objects(head);
@@ -3546,26 +3579,27 @@ int main(int argc, char *args[])
 		copy_object(head);
 		break;
 	case 26:
-		update_player_character(head);
+		update_character_player(head);
 		break;
 	case    31:
 		list_object_drivers(head);
 		break;
 	case    41:
-		list_characters2(head);
+		list_characters2_template(head);
 		break;
 	case    51:
-		list_new_characters(head);
+		list_new_characters_template(head);
 		break;
 
 
 	default:
+		printf("Player Web Editing (Experimental)<br>\n");
+		printf("<a href=/cgi-imp/acct.cgi?step=19>All Player Characters </a><br><br>\n");
 		printf("Together those lists include all character-templates<br>\n");
 		printf("<a href=/cgi-imp/acct.cgi?step=11>Characters (without Grolms, Gargoyles, Icegargs)</a><br>\n");
 		printf("<a href=/cgi-imp/acct.cgi?step=16>Characters (only with Positive Alignment) </a><br>\n");
 		printf("<a href=/cgi-imp/acct.cgi?step=17>Characters (only Named) </a><br>\n");
 		printf("<a href=/cgi-imp/acct.cgi?step=18>Characters (Non Monster) </a><br>\n");
-		printf("<a href=/cgi-imp/acct.cgi?step=19>All Player Characters </a><br>\n");
 		printf("<a href=/cgi-imp/acct.cgi?step=41>Characters (only Grolms, Gargoyles, Icegargs) </a><br><br>\n");
 		printf("This list includes only characters with high IDs for fast access<br>\n");
 		printf("<a href=/cgi-imp/acct.cgi?step=51>New characters (only if they got a high ID)</a><br><br>\n");

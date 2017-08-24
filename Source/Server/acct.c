@@ -1415,8 +1415,8 @@ void update_player_character(LIST *head)
 	tmp = find_val(head, "name");
 	if (tmp)
 	{
-		strncpy(player[cn].name, tmp, 40);
-		player[cn].name[40] = 0;
+		strncpy(player[cn].name, tmp, 35);
+		player[cn].name[35] = 0;
 	}
 	else
 	{
@@ -1427,8 +1427,8 @@ void update_player_character(LIST *head)
 	tmp = find_val(head, "reference");
 	if (tmp)
 	{
-		strncpy(player[cn].reference, tmp, 40);
-		player[cn].reference[40] = 0;
+		strncpy(player[cn].reference, tmp, 35);
+		player[cn].reference[35] = 0;
 	}
 	else
 	{

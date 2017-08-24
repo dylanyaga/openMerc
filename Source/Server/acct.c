@@ -3472,7 +3472,7 @@ int main(int argc, char *args[])
 		copy_object(head);
 		break;
 	case 26:
-		update_character(head);
+		update_player_character(head);
 		break;
 	case    31:
 		list_object_drivers(head);

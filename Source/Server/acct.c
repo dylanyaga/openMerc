@@ -583,6 +583,10 @@ void list_all_player_characters()
 		{
 			continue;
 		}
+		if (ch[n].used==USE_EMPTY)
+		{
+			continue;
+		}
 		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=20&cn=%d>%s</a></td></tr>", n, n, ch[n].name);
 	}
 	printf("</table>\n");

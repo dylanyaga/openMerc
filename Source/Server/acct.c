@@ -3714,10 +3714,10 @@ void list_objects(LIST *head)
 //		if (!(it_temp[n].flags&IF_TAKE)) continue;
 
 		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=23&in=%d>%30.30s</a></td>\n"
-		       "<td>price: %dG, %dS</td><td>data4: %d</td>\n"
+		       "<td>price: %dG, %dS</td><td>data0: %d</td><td>data1: %d</td><td>data2: %d</td><td>data3: %d</td><td>data4: %d</td>\n"
 		       "<td><a href=/cgi-imp/acct.cgi?step=25&in=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=22&in=%d>Delete</a></td></tr>\n",
 		       n, n, it_temp[n].name,
-		       it_temp[n].value / 100, it_temp[n].value % 100, it_temp[n].data[4],
+		       it_temp[n].value / 100, it_temp[n].value % 100, it_temp[n].data[0], it_temp[n].data[1], it_temp[n].data[2], it_temp[n].data[3], it_temp[n].data[4],
 		       n, n);
 	}
 
@@ -3753,10 +3753,10 @@ void list_items(LIST *head)
 //		if (!(it_temp[n].flags&IF_TAKE)) continue;
 
 		printf("<tr><td>%d:</td><td><a href=/cgi-imp/acct.cgi?step=28&in=%d>%30.30s</a></td>\n"
-		       "<td>price: %dG, %dS</td><td>data4: %d</td>\n"
+		       "<td>price: %dG, %dS</td><td>data0: %d</td><td>data1: %d</td><td>data2: %d</td><td>data3: %d</td><td>data4: %d</td>\n"
 		       /*"<td><a href=/cgi-imp/acct.cgi?step=25&in=%d>Copy</a></td><td><a href=/cgi-imp/acct.cgi?step=22&in=%d>Delete</a></td></tr>\n"*/,
 		       n, n, it[n].name,
-		       it[n].value / 100, it[n].value % 100, it[n].data[4]/*,
+		       it[n].value / 100, it[n].value % 100, it[n].data[0], it[n].data[1], it[n].data[2], it[n].data[3], it[n].data[4]/*,
 		                                                             n, n*/);
 	}
 

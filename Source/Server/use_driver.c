@@ -1227,6 +1227,11 @@ int use_labyrinth(int cn, int in)
 		flag = god_transfer_char(cn, 33, 597);
 		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
 		break;
+	case    10:
+		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
+		flag = god_transfer_char(cn, 53, 838);
+		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
+		break;
 	default:
 		do_char_log(cn, 0, "You have already solved all existing parts of the labyrinth. Please come back later.\n");
 		break;

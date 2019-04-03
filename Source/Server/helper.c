@@ -1181,6 +1181,9 @@ int use_labtransfer(int cn, int nr, int exp)
 	case 9:
 		co = pop_create_char(919, 0);
 		break;                                          // riddle
+	case 10:
+		co = pop_create_char(1164, 0);
+		break;                                          // seasons
 	default:
 		do_char_log(cn, 0, "Sorry, could not determine which enemy to send you.\n");
 		chlog(cn, "Sorry, could not determine which enemy to send you");

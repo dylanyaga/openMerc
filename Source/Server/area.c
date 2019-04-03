@@ -83,16 +83,20 @@ struct area area[] = {
 	{ 16, 459, 56,   487, "Labyrinth, Undead Gorge",       1},
 	{ 16, 489, 81,   529, "Labyrinth, Light&Dark Gorge",   1},
 	{ 16, 529, 81,   591, "Labyrinth, Water Gorge",        1},
-
-	{ 16, 593, 37,   602, "Labyrinth, Final Entry",        1},
-	{ 16, 602, 48,   608, "Labyrinth, Final Preparations", 1},
-	{ 38, 593, 48,   602, "Labyrinth, Final Test",         1},
-	{ 49, 593, 80,   608, "Labyrinth, Final Reward",       1},
 	{ 15, 611, 126,  703, "Labyrinth, Forest Gorge",       1},
 	{112, 703, 126,  708, "Labyrinth, Forest Gorge",       1},
 	{ 15, 704, 66,   724, "Labyrinth, Riddle Gorge",       1},
 	{ 15, 724, 48,   804, "Labyrinth, Riddle Gorge",       1},
 	{ 15, 804, 37,   812, "Labyrinth, Riddle Gorge",       1},
+	// 53, 838
+	//113, 851
+	{ 50, 787, 117, 848, "Labyrinth, Seasons Gorge", 1},
+
+	{ 16, 593, 37,   602, "Labyrinth, Final Entry",        1},
+	{ 16, 602, 48,   608, "Labyrinth, Final Preparations", 1},
+	{ 38, 593, 48,   602, "Labyrinth, Final Test",         1},
+	{ 49, 593, 80,   608, "Labyrinth, Final Reward",       1},
+
 	{210, 300, 410,  600, "Pentagram Quest",               1},
 	{330, 246, 408,  299, "Ice Pentagram Quest",           1},
 

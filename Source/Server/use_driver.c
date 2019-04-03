@@ -1177,59 +1177,59 @@ int use_labyrinth(int cn, int in)
 
 	switch(ch[cn].data[20])
 	{
-	case    0:
+	case 0:
 		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
 		flag = god_transfer_char(cn, 64, 56);
 		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
 		break;
-	case    1:
+	case 1:
 		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
 		flag = god_transfer_char(cn, 95, 207);
 		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
 		break;
-	case    2:
+	case 2:
 		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
 		flag = god_transfer_char(cn, 74, 240);
 		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
 		break;
-	case    3:
+	case 3:
 		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
 		flag = god_transfer_char(cn, 37, 370);
 		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
 		break;
-	case    4:
+	case 4:
 		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
 		flag = god_transfer_char(cn, 114, 390);
 		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
 		break;
-	case    5:
+	case 5:
 		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
 		flag = god_transfer_char(cn, 28, 493);
 		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
 		break;
-	case    6:
+	case 6:
 		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
 		flag = god_transfer_char(cn, 24, 534);
 		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
 		break;
-	case    7:
+	case 7:
 		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
 		flag = god_transfer_char(cn, 118, 667);
 		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
 		break;
-	case    8:
+	case 8:
 		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
 		flag = god_transfer_char(cn, 63, 720);
 		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
 		break;
-	case    9:
-		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
-		flag = god_transfer_char(cn, 33, 597);
-		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
-		break;
-	case    10:
+	case 9:
 		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
 		flag = god_transfer_char(cn, 53, 838);
+		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
+		break;
+	case 10:
+		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
+		flag = god_transfer_char(cn, 33, 597);
 		fx_add_effect(6, 0, ch[cn].x, ch[cn].y, 0);
 		break;
 	default:

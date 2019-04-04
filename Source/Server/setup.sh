@@ -7,7 +7,7 @@ if [ ! -d ".obj" ]; then
 fi
 
 #install zlib (compression lib) and apache2 (server for world builder)
-sudo apt-get install -y zlib1g-dev gcc make apache2
+sudo apt-get install -y zlib1g-dev:i386 gcc make apache2 gcc-multilib
 
 printf "<IfModule mod_alias.c>\n\t<IfModule mod_cgi.c>\n\t\tDefine ENABLE_USR_LIB_CGI_BIN\n\t</IfModule>\n\n\t<IfModule mod_cgid.c>\n\t\tDefine ENABLE_USR_LIB_CGI_BIN\n\t</IfModule>\n\n\t<IfDefine ENABLE_USR_LIB_CGI_BIN>\n\t\tScriptAlias /cgi-imp/ /usr/lib/cgi-imp/\n\t\t<Directory \"/usr/lib/cgi-imp\">\n\t\t\tAllowOverride None\n\t\t\tOptions +ExecCGI -MultiViews +SymLinksIfOwnerMatch\n\t\t\tRequire all granted\n\t\t</Directory>\n\t</IfDefine>\n\n\t<IfDefine ENABLE_USR_LIB_CGI_BIN>\n\t\tScriptAlias /cgi-bin/ /usr/lib/cgi-bin/\n\t\t<Directory \"/usr/lib/cgi-bin\">\n\t\t\tAllowOverride None\n\t\t\tOptions +ExecCGI -MultiViews +SymLinksIfOwnerMatch\n\t\t\tRequire all granted\n\t\t</Directory>\n\t</IfDefine>\n</IfModule>\n\n# vim: syntax=apache ts=4 sw=4 sts=4 sr noet" > serve-cgi-bin.conf
 

@@ -1,4 +1,4 @@
-all: server respawn password cgi/info.cgi cgi/acct.cgi
+all: server respawn password cgi/info.cgi cgi/acct.cgi owner
 
 CC=gcc -m32
 DEBUG=-g
@@ -21,13 +21,17 @@ SERVERDIR=/home/merc
 CGIIMP=/usr/lib/cgi-imp
 CGIBIN=/usr/lib/cgi-bin
 WEB=/var/www/html/
-USERNAME := $(shell whoami)
+USERNAME := $(shell logname)
 structure:
 	sudo mkdir -p $(SERVERDIR)
 	sudo mkdir -p $(SERVERDIR)/.obj
 	sudo mkdir -p $(SERVERDIR)/.dat
 	sudo mkdir -p $(SERVERDIR)/.save
 	sudo mkdir -p $(SERVERDIR)/.tmp
+	sudo cp start.sh $(SERVERDIR)/start.sh
+	sudo cp shutdown.sh $(SERVERDIR)/shutdown.sh
+	sudo chmod a+x $(SERVERDIR)/start.sh
+	sudo chmod a+x $(SERVERDIR)/shutdown.sh
 	sudo cp .dat/*.* $(SERVERDIR)/.dat/
 	sudo chmod -R a+rwx $(SERVERDIR)/.dat/
 	sudo chmod a+rwx $(SERVERDIR)/.save
@@ -36,10 +40,14 @@ structure:
 	sudo cp -R Web/* $(WEB)
 	sudo touch $(SERVERDIR)/server.log
 	sudo touch $(SERVERDIR)/server.pid
-	sudo chown $(USERNAME) $(SERVERDIR)/server.log
-	sudo chown $(USERNAME) $(SERVERDIR)/server.pid
-	sudo chgrp $(USERNAME) $(SERVERDIR)/server.log
-	sudo chgrp $(USERNAME) $(SERVERDIR)/server.pid
+
+owner:
+	sudo chown $(USERNAME) $(SERVERDIR)/*.*
+	sudo chown $(USERNAME) $(SERVERDIR)/*
+	sudo chown $(USERNAME) $(SERVERDIR)/.*
+	sudo chgrp $(USERNAME) $(SERVERDIR)/*.*
+	sudo chgrp $(USERNAME) $(SERVERDIR)/*
+	sudo chgrp $(USERNAME) $(SERVERDIR)/.*
 
 server:	$(OBJS) structure
 	$(CC) $(LDFLAGS) -o server $(OBJS) $(ENDFLAGS)
